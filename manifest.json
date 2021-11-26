@@ -1,0 +1,55 @@
+{
+    "name": "药智数据企业版",
+    "short_name": "药智数据企业版",
+    "description": "药智数据企业版是专为VIP企业用户量身打造的医药数据智能系统，高度整合，深度分析，智能情报，体验升级、因为专业，所以信赖。药智数据企业版涵盖药品注册、药物报告、企业报告、临床试验、专利信息、药品上市、药品中标、器械上市、药品销售等核心数据，为医药企业提供专业精准的医药情报信息，打通研发、生产、使用、销售等各个环节的信息通道，助力企业决策",
+    "background_color": "#4877e8",
+    "theme_color": "#4877e8",
+    "display": "standalone",
+    "icons": [{
+            "src": "/images/pwa/icon-maskable.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/images/pwa/icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/pwa/icon-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/pwa/icon-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/pwa/icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/pwa/icon-152x152.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/pwa/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/pwa/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/pwa/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
