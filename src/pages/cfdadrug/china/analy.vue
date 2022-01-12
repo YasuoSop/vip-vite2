@@ -115,7 +115,7 @@
 <script>
   import LoadingGif from '@/components/common/globalCom/loading-gif.vue'
   import DbEcharts from "@/components/common/db-echarts.vue"
-  import MyChart from './children/MyChart.vue'
+  import MyChart from './children/MyChart'
   import { mapState, mapGetters } from "vuex"
 
 const types = ['yaopingpaihang','qiyepaihang','shangshiqushi','guojia','zhiliaolinyu','xinji','yb','yaopingleibie']
@@ -129,7 +129,7 @@ export default {
   data() {
     return {
       itemWidth: 700,
-      map:'world',
+      mapType:'world',
       promise: null,
       loading: true,
       dialogVisible: false,
@@ -277,7 +277,7 @@ export default {
         } else {
           window.removeEventListener('resize', this.echartsResizeHandler);
         }
-        if(this.$route.path==='/cfdadrug/list.vue'){
+        if(this.$route.path==='/cfdadrug/list'){
           //智能分析重新搜索清空列表数据tab无法自动复位
           let tabname= this.activeTabName
           Store.commit('CfdaDrug/tabname','')
@@ -452,7 +452,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 .pc-cfdadrug-analy {
   .nodata,.nodata-box,.nodata-box-atc {

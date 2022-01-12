@@ -863,7 +863,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 /*
  *大小节点共用

@@ -14,15 +14,15 @@
               <p>地址：重庆市南岸区茶园新区玉马路8号科创园2F（药智网）</p>
               <p>客服热线：<span>400-678-0778</span></p>
               <p>邮箱：service@yaozh.com</p>
-              <p>Copyright © 2009-2021 药智网YAOZH.COM All Rights Reserved.</p>
+              <p>Copyright © 2009-2022 药智网YAOZH.COM All Rights Reserved.</p>
             </div>
           </div>
           <div class="right">
-            <img src="@/assets/imgs/footer_erwei.jpg">
+            <img src="~@/assets/imgs/footer_erwei.jpg">
             <p>药智网二维码</p>
           </div>
           <div class="right">
-            <img src="@/assets/imgs/scan_vipty_bottom_1.png">
+            <img src="~@/assets/imgs/scan_vipty_bottom_1.png">
             <p>药智数据APP</p>
           </div>
         </div>
@@ -30,7 +30,7 @@
 </template>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .la_footer1{
   width: 100%;
   height: 180px;
@@ -97,7 +97,7 @@
       float: right;
       margin-top:4px;
       margin-left: 30px;
-      // background: url(@/assets/imgs/footer_erwei.png)
+      // background: url(~@/assets/imgs/footer_erwei.png)
       img{
         width:94px;
       }

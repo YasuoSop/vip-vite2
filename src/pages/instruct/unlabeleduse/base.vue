@@ -5,7 +5,7 @@
       <div slot="title" class="dialog-header">
         保存条件
       </div>
-      <SavedPop @closeSavedPop="closeSavedPop" vuex_name="ShuomingshuCsm"></SavedPop>
+      <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="ShuomingshuCsm"></SavedPop>
     </el-dialog>
 
     <!-- 左边部分 -->
@@ -95,8 +95,8 @@
   import Optioned from '@/components/common/options.vue'
   import Main from '@/components/layouts/main.vue'
   import { mapState } from 'vuex'
-  import List from './list.vue'
-  import Nav from '../components/nav.vue'
+  import List from './list'
+  import Nav from '../components/nav'
 
   export default{
     components: {
@@ -175,7 +175,7 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
   .el-dialog {
     border-radius: 20px!important;
   }

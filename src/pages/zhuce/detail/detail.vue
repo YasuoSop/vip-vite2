@@ -4,7 +4,7 @@
     <LoadingGif :loadFlag="isLoading" v-if="isLoading"></LoadingGif>
     <!-- 加载完成显示部分 -->
     <div class="detail-list" v-else>
-      <div class="detail-header">
+      <div class="detail-header header-fixed">
         <div class="header-left">
           <div class="left-top">
             <div class="top-id" :title="data.shoulihao">
@@ -80,7 +80,7 @@
                 <a
                   :href="
                     '/search?comprehensive=company&searchwords=' +
-                    data.qiyemingcheng
+                      data.qiyemingcheng
                   "
                   >{{ data.qiyemingcheng }}</a
                 >
@@ -121,7 +121,7 @@
             <span
               class="id-green bg-green round"
               style="margin-right: 10px !important; margin-left: 0 !important"
-              v-if="data.yxsp ===1 || data.yxsp === 4"
+              v-if="data.yxsp === 1 || data.yxsp === 4"
               title="优先审评"
               >优</span
             >
@@ -167,7 +167,7 @@
               "
               class="dingyue-btn"
               :class="{
-                'dingyue-btn-cancel': !nopms.rss && rssStatus.shoulihao,
+                'dingyue-btn-cancel': !nopms.rss && rssStatus.shoulihao
               }"
             >
               {{ !nopms.rss && rssStatus.shoulihao ? "取消订阅" : "订阅" }}
@@ -178,10 +178,20 @@
       <div class="main">
         <div
           class="left-nav"
-          :style="{ top: (showPromtNotice ? 88 : 88) + 'px' }"
+          :style="{ top: (showPromtNotice ? 128 : 98) + 'px' }"
         >
           <div class="nav-list nav-event" @click="handleNavClick">
-            <a class="nav-item active" v-if="hasPartOne">基本信息</a>
+            <a class="nav-item active" v-if="hasPartOne">注册信息</a>
+            <a
+              class="nav-item"
+              v-if="
+                data.targets.length > 0 ||
+                  data.targets_abbr.length > 0 ||
+                  data.indication2 ||
+                  data.atc
+              "
+              >更多信息</a
+            >
             <a class="nav-item" v-if="hasPartTwo">注册时光轴</a>
             <a class="nav-item" v-if="hasPartThree">注册生产现场检查公告</a>
             <a class="nav-item" v-if="hasPartFour">注册生产现场检查进度</a>
@@ -193,7 +203,7 @@
         </div>
         <div class="right-list">
           <slide-section
-            :title="'基本信息'"
+            :title="'注册信息'"
             class="the-part part-one"
             v-if="hasPartOne"
           >
@@ -202,46 +212,156 @@
                 <div class="state-sign" v-if="Boolean(Number(xulie))">
                   <img :src="`/static/imgs/xulie/xulie_${xulie}.jpg`" />
                 </div>
-                <tr>
-                  <td>药品类型</td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '药品类型')">{{
-                      data.yaopinleixing_1
-                    }}</span>
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                  <td>申请类型</td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '申请类型')">{{
-                      data.shenqingleixing_1
-                    }}</span>
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                </tr>
-                <tr>
+
+                <tr
+                  v-if="
+                    data.qiyemingcheng &&
+                      data.qiyemingcheng !== '无' &&
+                      data.qiyemingcheng !== '/' &&
+                      data.qiyemingcheng !== '---'
+                  "
+                >
                   <td>企业名称(NMPA)</td>
-                  <td>
+                  <td colspan="3">
                     <span v-if="vueCheckDetailPms('Zhuce', '企业名称(NMPA)')">{{
                       data.qiyemingcheng
                     }}</span>
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.guifanqiyemingcheng &&
+                      data.guifanqiyemingcheng !== '无' &&
+                      data.guifanqiyemingcheng !== '/' &&
+                      data.guifanqiyemingcheng !== '---'
+                  "
+                >
                   <td>企业名称(CDE)</td>
-                  <td>
+                  <td colspan="3">
                     <span v-if="vueCheckDetailPms('Zhuce', '企业名称(CDE)')">{{
                       data.guifanqiyemingcheng
                     }}</span>
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
                 </tr>
-                <tr>
+
+                <tr
+                  v-if="
+                    data.banlizhuangtai &&
+                      data.banlizhuangtai !== '无' &&
+                      data.banlizhuangtai !== '/' &&
+                      data.banlizhuangtai !== '---'
+                  "
+                >
+                  <td>办理状态(NMPA)</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '办理状态(NMPA)')">{{
+                      data.banlizhuangtai
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.zhuangtai &&
+                      data.zhuangtai !== '无' &&
+                      data.zhuangtai !== '/' &&
+                      data.zhuangtai !== data.banlizhuangtai &&
+                      data.zhuangtaikaishishijian !== data.zhuangtaidate1 &&
+                      data.zhuangtai !== '---'
+                  "
+                >
+                  <td>办理状态(药智)</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '办理状态(药智)')">{{
+                      data.zhuangtai
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.zhuangtaikaishishijian &&
+                      data.zhuangtaikaishishijian !== '无' &&
+                      data.zhuangtaikaishishijian !== '/' &&
+                      data.zhuangtaikaishishijian !== '---'
+                  "
+                >
+                  <td>状态开始时间(NMPA)</td>
+                  <td colspan="3">
+                    <span
+                      v-if="vueCheckDetailPms('Zhuce', '状态开始时间(NMPA)')"
+                      >{{ data.zhuangtaikaishishijian }}</span
+                    >
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.zhuangtaidate1 &&
+                      data.zhuangtaidate1 !== '无' &&
+                      data.zhuangtaidate1 !== '/' &&
+                      data.zhuangtai !== data.banlizhuangtai &&
+                      data.zhuangtaikaishishijian !== data.zhuangtaidate1 &&
+                      data.zhuangtaidate1 !== '---'
+                  "
+                >
+                  <td>状态开始时间(药智)</td>
+                  <td colspan="3">
+                    <span
+                      v-if="vueCheckDetailPms('Zhuce', '状态开始时间(药智)')"
+                      >{{ data.zhuangtaidate1 }}</span
+                    >
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.drugidStatus &&
+                      data.drugidStatus !== '无' &&
+                      data.drugidStatus !== '/' &&
+                      data.drugidStatus !== '---'
+                  "
+                >
+                  <td>申请阶段</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '申请阶段')">{{
+                      data.drugidStatus
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.chengbanriqi &&
+                      data.chengbanriqi !== '无' &&
+                      data.chengbanriqi !== '/' &&
+                      data.chengbanriqi !== '---'
+                  "
+                >
                   <td>承办日期</td>
-                  <td>
+                  <td colspan="3">
                     <span v-if="vueCheckDetailPms('Zhuce', '承办日期')">{{
                       data.chengbanriqi
                     }}</span>
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.yaopinleixing_1 ||
+                      data.zhuceleixing ||
+                      data.zhucebanben
+                  "
+                >
                   <td>
                     注册分类
                     <!-- <el-tooltip class="item tooltips-position" effect="light" placement="right">
@@ -249,135 +369,74 @@
                       <i class="el-icon-question cl-green"></i>
                     </el-tooltip> -->
                   </td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '注册分类')"
-                      >{{ data.zhuceleixing
-                      }}<span v-if="data.zhucebanben"
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '注册分类')">
+                      <span v-if="data.yaopinleixing_1">{{
+                        data.yaopinleixing_1
+                      }}</span>
+                      <span v-if="data.zhuceleixing">{{
+                        data.zhuceleixing
+                      }}</span>
+                      <span v-if="data.zhucebanben"
                         >（{{ data.zhucebanben }}）</span
-                      ></span
-                    >
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>办理状态(药智)</td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '办理状态(药智)')">{{
-                      data.zhuangtai
-                    }}</span>
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                  <td>状态开始时间(药智)</td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '状态开始时间(药智)')">{{
-                      data.zhuangtaidate1
-                    }}</span>
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>办理状态(NMPA)</td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '办理状态(NMPA)')">{{
-                      data.banlizhuangtai
-                    }}</span>
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                  <td>状态开始时间(NMPA)</td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '状态开始时间(NMPA)')">{{
-                      data.zhuangtaikaishishijian
-                    }}</span>
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                </tr>
-                <tr>
-                  <!-- <td>原研/仿制（药智）
-                    <el-tooltip class="item tooltips-position" effect="light" placement="right">
-                      <div slot="content">原研/仿制（药智）的分类主要是根据药品注册分类和新闻等信息综合判断。</div>
-                      <i class="el-icon-question cl-green"></i>
-                    </el-tooltip>
-                  </td> -->
-                  <!-- <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '原研/仿制（药智）')">{{data.yuanyanhuofangzhi}}</span>
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td> -->
-                  <td>靶点全称</td>
-                  <td>
-                    <span
-                      :style="wordBreak"
-                      class="t-line5"
-                      v-if="vueCheckDetailPms('Zhuce', '靶点全称')"
-                    >
-                      <router-link
-                        tag="a"
-                        :to="'/targetdatas/' + value"
-                        target="_blank"
-                        v-for="(value, key, index) in data.targets"
-                        v-if="value != ''"
-                        :key="index"
-                        style="
-                          display: flex;
-                          width: 95%;
-                          overflow: hidden;
-                          text-overflow: ellipsis;
-                          color: #4877e8;
-                        "
-                        >{{ key }}</router-link
-                      >
-                      <span
-                        v-else
-                        style="
-                          display: flex;
-                          width: 95%;
-                          overflow: hidden;
-                          text-overflow: ellipsis;
-                        "
-                        >{{ key }}</span
                       >
                     </span>
-                    <div v-else class="abandon-click-method">暂无权限</div>
-                  </td>
-                  <td>靶点简称</td>
-                  <td>
-                    <span
-                      :style="wordBreak"
-                      class="t-line5"
-                      v-if="vueCheckDetailPms('Zhuce', '靶点简称')"
-                    >
-                      <router-link
-                        tag="a"
-                        :to="'/targetdatas/' + value"
-                        target="_blank"
-                        v-for="(value, key, index) in data.targets_abbr"
-                        v-if="value != ''"
-                        :key="index"
-                        style="
-                          display: flex;
-                          width: 95%;
-                          overflow: hidden;
-                          text-overflow: ellipsis;
-                          white-space: nowrap;
-                          color: #4877e8;
-                        "
-                        >{{ key }}</router-link
-                      >
-                      <span
-                        v-else
-                        style="
-                          display: flex;
-                          width: 95%;
-                          overflow: hidden;
-                          text-overflow: ellipsis;
-                          white-space: nowrap;
-                        "
-                        >{{ key }}</span
-                      >
-                    </span>
-                    <div v-else class="abandon-click-method">暂无权限</div>
+                    <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
                 </tr>
-                <tr>
+
+                <tr
+                  v-if="
+                    data.guige &&
+                      data.guige !== '无' &&
+                      data.guige !== '/' &&
+                      data.guige !== '---'
+                  "
+                >
+                  <td>规格</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '规格')">{{
+                      data.guige
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.shenpingrenwufenlei &&
+                      data.shenpingrenwufenlei !== '无' &&
+                      data.shenpingrenwufenlei !== '/' &&
+                      data.shenpingrenwufenlei !== '---'
+                  "
+                >
+                  <td>任务类型</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '任务类型')">{{
+                      data.shenpingrenwufenlei
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.shenqingleixing_1 &&
+                      data.shenqingleixing_1 !== '无' &&
+                      data.shenqingleixing_1 !== '/' &&
+                      data.shenqingleixing_1 !== '---'
+                  "
+                >
+                  <td>申请类型</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '申请类型')">{{
+                      data.shenqingleixing_1
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr v-if="data.lcsydjh && data.lcsydjh.length > 0">
                   <td>临床试验登记号</td>
                   <td colspan="3">
                     <span
@@ -398,135 +457,18 @@
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    审评结论
-                    <el-tooltip
-                      class="item tooltips-position"
-                      effect="light"
-                      placement="right"
-                    >
-                      <div slot="content" v-html="helpDesc.jielun"></div>
-                      <i class="el-icon-question cl-green"></i>
-                    </el-tooltip>
-                  </td>
-                  <td>
-                    <div style="display: flex">
-                      <span
-                        :style="wordBreak"
-                        class="t-line5"
-                        v-if="vueCheckDetailPms('Zhuce', '审评结论')"
-                        >{{ data.jielun }}</span
-                      >
-                      <span v-else class="abandon-click-method">暂无权限</span>
-                      <!-- 判断类型是否为预测状态：0(预测)、1(预测结论)、2(预测对的结论)、3(有争议的)  v-if="data.type == '0'" -->
-                      <em
-                        v-if="data.type == '1' && data.jielun != ''"
-                        class="status-fore"
-                        title="预测结论"
-                        >预</em
-                      >
-                    </div>
-                  </td>
-                  <td>
-                    适应症（受理号）
-                    <el-tooltip
-                      class="item tooltips-position"
-                      effect="light"
-                      placement="right"
-                    >
-                      <div slot="content">
-                        该受理号对应的适应症，来源临床默示许可、优先审评、临床试验、新闻信息等。
-                      </div>
-                      <i class="el-icon-question cl-green"></i>
-                    </el-tooltip>
-                  </td>
-                  <td>
-                    <span
-                      :style="wordBreak"
-                      class="t-line5"
-                      v-if="vueCheckDetailPms('Zhuce', '适应症（受理号）')"
-                      v-html="data.indication1"
-                      ></span
-                    >
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    适应症（品种）
-                    <el-tooltip
-                      class="item tooltips-position"
-                      effect="light"
-                      placement="right"
-                    >
-                      <div slot="content">
-                        该药品对应的适应症，来源药品说明书、 百度百科等。
-                      </div>
-                      <i class="el-icon-question cl-green"></i>
-                    </el-tooltip>
-                  </td>
-                  <td>
-                    <span
-                      :style="wordBreak"
-                      class="t-line5"
-                      v-if="vueCheckDetailPms('Zhuce', '适应症（品种）')"
-                      v-html="data.indication2"
-                      ></span
-                    >
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                  <td>收费情况</td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '收费情况')">{{
-                      data.shoufeiqingkuang
+
+                <tr v-if="data.yzxpj == 1">
+                  <td>一致性品种</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '一致性品种')">{{
+                      data.yzxpj == 1 ? "是" : "否"
                     }}</span>
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
                 </tr>
-                <tr>
-                  <td>费用收到日</td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '费用收到日')">{{
-                      data.feiyongdaozhiri
-                    }}</span>
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                  <td>检验报告收到日</td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '检验报告收到日')">{{
-                      data.jianyanbaogaoshoudaori
-                    }}</span>
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>标准品回执收到日</td>
-                  <td>
-                    <span
-                      v-if="vueCheckDetailPms('Zhuce', '标准品回执收到日')"
-                      >{{ data.biaozhunpinhuizhishoudaori }}</span
-                    >
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                  <td>是否突破性治疗品种</td>
-                  <td>
-                    <span
-                      v-if="vueCheckDetailPms('Zhuce', '是否突破性治疗品种')"
-                      >{{ data.tpxzl }}</span
-                    >
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>是否直接行政审批</td>
-                  <td>
-                    <span
-                      v-if="vueCheckDetailPms('Zhuce', '是否直接行政审批')"
-                      >{{ data.zjxzsp }}</span
-                    >
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
+
+                <tr v-if="data.wftjcbzj && data.wftjcbzj !== '否'">
                   <td>
                     无需开展一致性评价品种
                     <el-tooltip
@@ -538,7 +480,7 @@
                       <i class="el-icon-question cl-green"></i>
                     </el-tooltip>
                   </td>
-                  <td>
+                  <td colspan="3">
                     <span
                       v-if="
                         vueCheckDetailPms('Zhuce', '无需开展一致性评价品种')
@@ -548,7 +490,8 @@
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
                 </tr>
-                <tr>
+
+                <tr v-if="data.gdcf && data.gdcf !== '否'">
                   <td>
                     过度重复品种
                     <el-tooltip
@@ -560,39 +503,15 @@
                       <i class="el-icon-question cl-green"></i>
                     </el-tooltip>
                   </td>
-                  <td>
+                  <td colspan="3">
                     <span v-if="vueCheckDetailPms('Zhuce', '过度重复品种')">{{
                       data.gdcf
                     }}</span>
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
-                  <td>
-                    是否优先审评品种
-                    <el-tooltip
-                      class="item tooltips-position"
-                      effect="light"
-                      placement="right"
-                    >
-                      <div slot="content" v-html="helpDesc.yxsp"></div>
-                      <i class="el-icon-question cl-green"></i>
-                    </el-tooltip>
-                  </td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '是否优先审评品种')"
-                      >{{ data.yxsp == 1 || data.yxsp == 4 ? "是" : "否" }}
-                      <span
-                        v-if="
-                          data.yxsply != '否' &&
-                          data.yxsply !== '' &&
-                          data.yxsp !== 0
-                        "
-                        >（纳入理由：{{ data.yxsply }}）</span
-                      >
-                    </span>
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td>
                 </tr>
-                <tr>
+
+                <tr v-if="data.lcjxjwxy == 2">
                   <td>
                     临床急需境外新药
                     <el-tooltip
@@ -610,50 +529,182 @@
                     </span>
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
-                  <!-- <td>是否是CTD格式</td>
-                  <td>
-                    <span v-if="vueCheckDetailPms('Zhuce', '是否是CTD格式')">{{data.ctd}}</span>
-                    <span v-else class="abandon-click-method">暂无权限</span>
-                  </td> -->
                 </tr>
-                <tr>
+
+                <tr v-if="data.tpxzl && data.tpxzl !== '否'">
+                  <td>是否突破性治疗品种</td>
+                  <td colspan="3">
+                    <span
+                      v-if="vueCheckDetailPms('Zhuce', '是否突破性治疗品种')"
+                      >{{ data.tpxzl }}</span
+                    >
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr v-if="data.zjxzsp && data.zjxzsp !== '否'">
+                  <td>是否直接行政审批</td>
+                  <td colspan="3">
+                    <span
+                      v-if="vueCheckDetailPms('Zhuce', '是否直接行政审批')"
+                      >{{ data.zjxzsp }}</span
+                    >
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr v-if="data.yxsp == 1 || data.yxsp == 4">
                   <td>
-                    临床试验默认许可日期
+                    是否优先审评品种
                     <el-tooltip
                       class="item tooltips-position"
                       effect="light"
                       placement="right"
                     >
-                      <div
-                        slot="content"
-                        v-html="helpDesc.defaultLicenseDate"
-                      ></div>
+                      <div slot="content" v-html="helpDesc.yxsp"></div>
                       <i class="el-icon-question cl-green"></i>
                     </el-tooltip>
                   </td>
-                  <td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '是否优先审评品种')"
+                      >{{ data.yxsp == 1 || data.yxsp == 4 ? "是" : "否" }}
+                      <span
+                        v-if="
+                          data.yxsply != '否' &&
+                            data.yxsply !== '' &&
+                            data.yxsp !== 0
+                        "
+                        >（纳入理由：{{ data.yxsply }}）</span
+                      >
+                    </span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr v-if="data.tspz == 1">
+                  <td>特殊审批品种</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '特殊审批品种')">{{
+                      data.tspz ? "是" : "否"
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr v-if="data.zdzx == 1">
+                  <td>重大专项品种</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '重大专项品种')">{{
+                      data.zdzx ? "是" : "否"
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.shoufeiqingkuang &&
+                      data.shoufeiqingkuang !== '无' &&
+                      data.shoufeiqingkuang !== '/' &&
+                      data.shoufeiqingkuang !== '---'
+                  "
+                >
+                  <td>收费情况</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '收费情况')">{{
+                      data.shoufeiqingkuang
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.feiyongdaozhiri &&
+                      data.feiyongdaozhiri !== '无' &&
+                      data.feiyongdaozhiri !== '/' &&
+                      data.feiyongdaozhiri !== '---'
+                  "
+                >
+                  <td>费用收到日</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '费用收到日')">{{
+                      data.feiyongdaozhiri
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.jianyanbaogaoshoudaori &&
+                      data.jianyanbaogaoshoudaori !== '无' &&
+                      data.jianyanbaogaoshoudaori !== '/' &&
+                      data.jianyanbaogaoshoudaori !== '---'
+                  "
+                >
+                  <td>检验报告收到日</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '检验报告收到日')">{{
+                      data.jianyanbaogaoshoudaori
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.biaozhunpinhuizhishoudaori &&
+                      data.biaozhunpinhuizhishoudaori !== '无' &&
+                      data.biaozhunpinhuizhishoudaori !== '/' &&
+                      data.biaozhunpinhuizhishoudaori !== '---'
+                  "
+                >
+                  <td>标准品回执收到日</td>
+                  <td colspan="3">
                     <span
-                      v-if="vueCheckDetailPms('Zhuce', '临床试验默认许可日期')"
-                      >{{ data.linchuangdate }}</span
+                      v-if="vueCheckDetailPms('Zhuce', '标准品回执收到日')"
+                      >{{ data.biaozhunpinhuizhishoudaori }}</span
                     >
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.tongzhineirong &&
+                      data.tongzhineirong !== '无' &&
+                      data.tongzhineirong !== '/' &&
+                      data.tongzhineirong !== '---'
+                  "
+                >
                   <td>通知内容</td>
-                  <td>
+                  <td colspan="3">
                     <span v-if="vueCheckDetailPms('Zhuce', '通知内容')">{{
                       data.tongzhineirong
                     }}</span>
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
                 </tr>
-                <tr>
+
+                <tr
+                  v-if="
+                    data.tongzhishijian &&
+                      data.tongzhishijian !== '无' &&
+                      data.tongzhishijian !== '/' &&
+                      data.tongzhishijian !== '---'
+                  "
+                >
                   <td>通知时间</td>
-                  <td>
+                  <td colspan="3">
                     <span v-if="vueCheckDetailPms('Zhuce', '通知时间')">{{
                       data.tongzhishijian
                     }}</span>
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
+                </tr>
+
+                <tr v-if="data.songda && data.songda.length > 0">
                   <td>
                     送达信息
                     <el-tooltip
@@ -668,7 +719,7 @@
                       <i class="el-icon-question cl-green"></i>
                     </el-tooltip>
                   </td>
-                  <td>
+                  <td colspan="3">
                     <span v-if="vueCheckDetailPms('Zhuce', '送达信息')">
                       <div v-for="(item, index) in data.songda" :key="index">
                         {{ item }}
@@ -677,19 +728,121 @@
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
                 </tr>
-                <tr>
-                  <td>备注信息</td>
+
+                <tr
+                  v-if="
+                    data.jielun &&
+                      data.jielun !== '无' &&
+                      data.jielun !== '/' &&
+                      data.jielun !== '---'
+                  "
+                >
+                  <td>
+                    审评结论
+                    <el-tooltip
+                      class="item tooltips-position"
+                      effect="light"
+                      placement="right"
+                    >
+                      <div slot="content" v-html="helpDesc.jielun"></div>
+                      <i class="el-icon-question cl-green"></i>
+                    </el-tooltip>
+                  </td>
+                  <td colspan="3">
+                    <div style="display: flex">
+                      <span
+                        :style="wordBreak"
+                        class="t-line5"
+                        v-if="vueCheckDetailPms('Zhuce', '审评结论')"
+                        >{{ data.jielun }}</span
+                      >
+                      <span v-else class="abandon-click-method">暂无权限</span>
+                      <!-- 判断类型是否为预测状态：0(预测)、1(预测结论)、2(预测对的结论)、3(有争议的)  v-if="data.type == '0'" -->
+                      <em
+                        v-if="data.type == '1' && data.jielun != ''"
+                        class="status-fore"
+                        title="预测结论"
+                        >预</em
+                      >
+                    </div>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.linchuangdate &&
+                      data.linchuangdate !== '无' &&
+                      data.linchuangdate !== '/' &&
+                      data.linchuangdate !== '---'
+                  "
+                >
+                  <td>
+                    临床试验默认许可日期
+                    <el-tooltip
+                      class="item tooltips-position"
+                      effect="light"
+                      placement="right"
+                    >
+                      <div
+                        slot="content"
+                        v-html="helpDesc.defaultLicenseDate"
+                      ></div>
+                      <i class="el-icon-question cl-green"></i>
+                    </el-tooltip>
+                  </td>
                   <td colspan="3">
                     <span
-                      v-if="vueCheckDetailPms('Zhuce', '备注信息')"
-                      v-html="data.remarks"
-                    ></span>
+                      v-if="vueCheckDetailPms('Zhuce', '临床试验默认许可日期')"
+                      >{{ data.linchuangdate }}</span
+                    >
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
                 </tr>
-                <tr>
+
+                <tr
+                  v-if="
+                    data.qianfadate &&
+                      data.qianfadate !== '无' &&
+                      data.qianfadate !== '/' &&
+                      data.qianfadate !== '---'
+                  "
+                >
+                  <td>批件签发日期</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '批件签发日期')">{{
+                      data.qianfadate
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.date &&
+                      data.date !== '无' &&
+                      data.date !== '/' &&
+                      data.date !== '---'
+                  "
+                >
+                  <td>结论公示日期</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '结论公示日期')">{{
+                      data.date
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.report &&
+                      data.report !== '无' &&
+                      data.report !== '/' &&
+                      data.report !== '---'
+                  "
+                >
                   <td>审评报告</td>
-                  <td>
+                  <td colspan="3">
                     <template v-if="data.report != ''">
                       <span
                         class="linksBtn"
@@ -701,8 +854,18 @@
                     </template>
                     <span v-else>&nbsp;</span>
                   </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.instruct &&
+                      data.instruct !== '无' &&
+                      data.instruct !== '/' &&
+                      data.instruct !== '---'
+                  "
+                >
                   <td>说明书</td>
-                  <td>
+                  <td colspan="3">
                     <template v-if="data.instruct != ''">
                       <span
                         class="linksBtn"
@@ -715,7 +878,107 @@
                     <span v-else>&nbsp;</span>
                   </td>
                 </tr>
-                <tr>
+
+                <tr
+                  v-if="
+                    data.pizhunwenhao &&
+                      data.pizhunwenhao !== '无' &&
+                      data.pizhunwenhao !== '/' &&
+                      data.pizhunwenhao !== '---'
+                  "
+                >
+                  <td>批准文号</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '批准文号')">{{
+                      data.pizhunwenhao
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.yuanpizhunwenhao &&
+                      data.yuanpizhunwenhao !== '无' &&
+                      data.yuanpizhunwenhao !== '/' &&
+                      data.yuanpizhunwenhao !== '---'
+                  "
+                >
+                  <td>原批准文号</td>
+                  <td colspan="3">
+                    <span v-if="vueCheckDetailPms('Zhuce', '原批准文号')">{{
+                      data.yuanpizhunwenhao
+                    }}</span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.indication1 &&
+                      data.indication1 !== '无' &&
+                      data.indication1 !== '/' &&
+                      data.indication1 !== '---'
+                  "
+                >
+                  <td>
+                    适应症(受理号)
+                    <el-tooltip
+                      class="item tooltips-position"
+                      effect="light"
+                      placement="right"
+                    >
+                      <div slot="content">
+                        该受理号对应的适应症，来源临床默示许可、优先审评、临床试验、新闻信息等。
+                      </div>
+                      <i class="el-icon-question cl-green"></i>
+                    </el-tooltip>
+                  </td>
+                  <td colspan="3">
+                    <span
+                      :style="wordBreak"
+                      class="t-line5"
+                      v-if="vueCheckDetailPms('Zhuce', '适应症(受理号)')"
+                      v-html="data.indication1"
+                    ></span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.remarks &&
+                      data.remarks !== '无' &&
+                      data.remarks !== '/' &&
+                      data.remarks !== '---'
+                  "
+                >
+                  <td>备注信息</td>
+                  <td colspan="3">
+                    <span
+                      v-if="vueCheckDetailPms('Zhuce', '备注信息')"
+                      v-html="data.remarks"
+                    ></span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </slide-section>
+
+          <slide-section
+            :title="'更多信息'"
+            class="the-part part-one"
+            v-if="
+              data.targets.length > 0 ||
+                data.targets_abbr.length > 0 ||
+                data.indication2 ||
+                data.atc
+            "
+          >
+            <div class="tb-wrap">
+              <table class="tb-t">
+                <tr v-if="data.atc">
                   <td>ATC分类</td>
                   <td colspan="3">
                     <template v-if="vueCheckDetailPms('Zhuce', 'ATC分类')">
@@ -732,43 +995,150 @@
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </td>
                 </tr>
+
+                <tr
+                  v-if="
+                    data.indication2 &&
+                      data.indication2 !== '无' &&
+                      data.indication2 !== '/' &&
+                      data.indication2 !== '---'
+                  "
+                >
+                  <td>
+                    适应症(品种)
+                    <el-tooltip
+                      class="item tooltips-position"
+                      effect="light"
+                      placement="right"
+                    >
+                      <div slot="content">
+                        该药品对应的适应症：来源药品说明书。
+                      </div>
+                      <i class="el-icon-question cl-green"></i>
+                    </el-tooltip>
+                  </td>
+                  <td colspan="3">
+                    <span
+                      :style="wordBreak"
+                      class="t-line5"
+                      v-if="vueCheckDetailPms('Zhuce', '适应症(品种)')"
+                      v-html="data.indication2"
+                    ></span>
+                    <span v-else class="abandon-click-method">暂无权限</span>
+                  </td>
+                </tr>
+
+                <tr
+                  v-if="
+                    data.targets_abbr &&
+                      Object.keys(data.targets_abbr).length > 0
+                  "
+                >
+                  <td>靶点简称</td>
+                  <td colspan="3">
+                    <span
+                      :style="wordBreak"
+                      class="t-line5"
+                      v-if="vueCheckDetailPms('Zhuce', '靶点简称')"
+                    >
+                      <div
+                        v-for="(value, key, index) in data.targets_abbr"
+                        v-if="value != ''"
+                        :key="index"
+                        style="
+                          width: 27vw;
+                          min-width: 270px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                        "
+                      >
+                        <router-link
+                          tag="a"
+                          :to="'/targetdatas/' + value"
+                          target="_blank"
+                          :title="key"
+                          style="color: #4877e8"
+                          >{{ key }}</router-link
+                        >
+                      </div>
+                      <span
+                        v-else
+                        style="
+                          display: inline-block;
+                          width: 27vw;
+                          min-width: 270px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                        "
+                        >{{ key }}</span
+                      >
+                    </span>
+                    <div v-else class="abandon-click-method">暂无权限</div>
+                  </td>
+                </tr>
+
+                <tr v-if="data.targets && Object.keys(data.targets).length > 0">
+                  <td>靶点全称</td>
+                  <td colspan="3">
+                    <span
+                      :style="wordBreak"
+                      class="t-line5"
+                      v-if="vueCheckDetailPms('Zhuce', '靶点全称')"
+                    >
+                      <div
+                        v-for="(value, key, index) in data.targets"
+                        v-if="value != ''"
+                        :key="index"
+                        style="
+                          width: 27vw;
+                          min-width: 270px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                        "
+                      >
+                        <router-link
+                          tag="a"
+                          :to="'/targetdatas/' + value"
+                          target="_blank"
+                          :title="key"
+                          style="color: #4877e8"
+                          >{{ key }}</router-link
+                        >
+                      </div>
+                      <span
+                        v-else
+                        style="
+                          width: 27vw;
+                          display: inline-block;
+                          min-width: 270px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                        "
+                        >{{ key }}</span
+                      >
+                    </span>
+                    <div v-else class="abandon-click-method">暂无权限</div>
+                  </td>
+                </tr>
               </table>
             </div>
           </slide-section>
-<!--
-          <slide-section
-            :title="'注册时光轴'"
-            class="the-part part-two"
-            v-if="hasPartTwo"
-          > -->
-            <!-- <keep-alive> -->
-            <!-- <time-line
-              @emitTimeLine="emitTimeLine"
-              v-if="!nopms.timeline"
-            ></time-line> -->
-            <!-- 时光轴 - 无权限提示 -->
-            <!-- <div class="detail-nopms" v-else> -->
-              <!-- <img src="/static/imgs/zhuce/timeline_before.jpg" class="pic-behind"> -->
-              <!-- <div class="detail-nopms-describe">
-                <img src="/static/imgs/zhuce/nopms_icon.jpg" />
-                <p>对不起，您暂无该功能权限，需升级权限享用更多功能。</p>
-                <p>
-                  请你联系客服
-                  <span class="cl-orange fs16 fw-bold">400-678-0778</span>
-                </p>
-              </div>
-            </div> -->
-            <!-- </keep-alive> -->
-          <!-- </slide-section> -->
 
           <slide-section
             :title="'注册时光轴'"
-            class="the-part part-two"
+            class="the-part part-two zc-time-node"
             v-if="hasPartTwo"
           >
             <TimeNode
               @emitTimeLine="emitTimeLine"
-              v-if="!nopms.timeline"/>
+              @changeLoading="changeLoading"
+              :info="data"
+              v-if="!nopms.timeline"
+            />
 
             <!-- 时光轴 - 无权限提示 -->
             <div class="detail-nopms" v-else>
@@ -781,7 +1151,6 @@
                 </p>
               </div>
             </div>
-
           </slide-section>
 
           <slide-section
@@ -860,8 +1229,12 @@
                   {{ data.name }}
                 </div>
                 <div class="info-item">
-                  <span class="info-name">公司：</span>
+                  <span class="info-name">NMPA企业名称：</span>
                   {{ data.qiyemingcheng }}
+                </div>
+                <div class="info-item">
+                  <span class="info-name">CDE企业名称：</span>
+                  {{ data.guifanqiyemingcheng }}
                 </div>
               </div>
               <div class="progress-info">
@@ -888,17 +1261,26 @@
                           :key="index2"
                         >
                           <div class="time" v-if="index2 === 0 && key1">
-                            <span class="m-d"
-                              >{{
-                                key1.toString().split("；")[0].split("-")[1]
-                              }}月{{
-                                key1.toString().split("；")[0].split("-")[2]
-                              }}日</span
-                            >
                             <span class="year"
                               >{{
-                                key1.toString().split("；")[0].split("-")[0]
+                                key1
+                                  .toString()
+                                  .split("；")[0]
+                                  .split("-")[0]
                               }}年</span
+                            >
+                            <span class="m-d"
+                              >{{
+                                key1
+                                  .toString()
+                                  .split("；")[0]
+                                  .split("-")[1]
+                              }}月{{
+                                key1
+                                  .toString()
+                                  .split("；")[0]
+                                  .split("-")[2]
+                              }}日</span
                             >
                           </div>
                           <!-- 没有具体年月日时，则如下显示 -->
@@ -910,7 +1292,7 @@
                           <div
                             :class="{
                               'line-one': index2 === 0,
-                              'line-other': index2 !== 0,
+                              'line-other': index2 !== 0
                             }"
                           ></div>
                           <div class="line"></div>
@@ -918,14 +1300,17 @@
                             <tr>
                               <td
                                 v-bind:rowspan="
-                                  getRowSpan(resetTableObject(item))
+                                  getRowSpan(resetTableObject(item, key1))
                                 "
                                 class="spe-td"
                               >
                                 {{ item.drugidStatus }}
                               </td>
                               <td
-                                v-for="(val2, index2) in resetTableObject(item)"
+                                v-for="(val2, index2) in resetTableObject(
+                                  item,
+                                  key1
+                                )"
                                 :key="index2"
                                 v-if="index2 >= 0 && index2 < 3"
                                 :colspan="val2.col"
@@ -934,26 +1319,84 @@
                                   {{
                                     $t("lDetail.devProgress." + val2.thename)
                                   }}
-                                  <router-link
-                                    class="link"
-                                    :to="yflcLink(item, val2.thename)"
-                                    target="_blank"
+
+                                  <span
                                     v-if="
                                       (val2.thename === 'shoulihao' ||
                                         val2.thename === 'me_id' ||
                                         (val2.thename == 'pizhunwenhao' &&
                                           item.pizhunwenhao_type != 0)) &&
-                                      item.id
+                                        item.id
                                     "
-                                    >{{ val2.thevalue }}</router-link
                                   >
-                                  <span v-else>{{ val2.thevalue }}</span>
+                                    <span
+                                      v-for="(txt,
+                                      txtKey,
+                                      txti) in val2.thevalue"
+                                      :key="txti"
+                                    >
+                                      <router-link
+                                        class="link"
+                                        :to="
+                                          yflcLink(
+                                            item,
+                                            val2.thename,
+                                            txt,
+                                            txtKey
+                                          )
+                                        "
+                                        target="_blank"
+                                        >{{ txt }}
+                                      </router-link>
+                                      <span
+                                        style="color:#545B6D;"
+                                        v-if="
+                                          txti <
+                                            Object.keys(val2.thevalue).length -
+                                              1
+                                        "
+                                      >
+                                        /
+                                      </span>
+                                    </span>
+                                  </span>
+                                  <span v-else>
+                                    {{ val2.thevalue }}
+                                    <span
+                                      v-if="
+                                        item.pijian &&
+                                          item.pijian.pizhunwenhao &&
+                                          val2.thename == 'jielun'
+                                      "
+                                    >
+                                      (批准文号：
+                                      <!-- item.pijian.tp = 1 国产 否则进口 -->
+                                      <a
+                                        class="pzh"
+                                        v-if="item.pijian.xuhao"
+                                        :href="
+                                          item.pijian.tp == 1
+                                            ? `/cfdadrug/detail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                            : `/cfdadrug/jkdetail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                        "
+                                        target="_blank"
+                                        >{{ item.pijian.pizhunwenhao }}</a
+                                      >
+                                      <span v-else>{{
+                                        item.pijian.pizhunwenhao
+                                      }}</span
+                                      >)
+                                    </span>
+                                  </span>
                                 </span>
                               </td>
                             </tr>
                             <tr>
                               <td
-                                v-for="(val2, index2) in resetTableObject(item)"
+                                v-for="(val2, index2) in resetTableObject(
+                                  item,
+                                  key1
+                                )"
                                 :key="index2"
                                 v-if="index2 >= 3 && index2 < 6"
                                 :colspan="val2.col"
@@ -962,26 +1405,84 @@
                                   {{
                                     $t("lDetail.devProgress." + val2.thename)
                                   }}
-                                  <router-link
-                                    class="link"
-                                    :to="yflcLink(item, val2.thename)"
-                                    target="_blank"
+                                  <span
                                     v-if="
                                       (val2.thename === 'shoulihao' ||
                                         val2.thename === 'me_id' ||
                                         (val2.thename == 'pizhunwenhao' &&
                                           item.pizhunwenhao_type != 0)) &&
-                                      item.id
+                                        item.id
                                     "
-                                    >{{ val2.thevalue }}</router-link
                                   >
-                                  <span v-else>{{ val2.thevalue }}</span>
+                                    <span
+                                      v-for="(txt,
+                                      txtKey,
+                                      txti) in val2.thevalue"
+                                      :key="txti"
+                                    >
+                                      <router-link
+                                        class="link"
+                                        :to="
+                                          yflcLink(
+                                            item,
+                                            val2.thename,
+                                            txt,
+                                            txtKey
+                                          )
+                                        "
+                                        target="_blank"
+                                        >{{ txt }}
+                                      </router-link>
+                                      <span
+                                        style="color:#545B6D;"
+                                        v-if="
+                                          txti <
+                                            Object.keys(val2.thevalue).length -
+                                              1
+                                        "
+                                      >
+                                        /
+                                      </span>
+                                    </span>
+                                  </span>
+                                  <span v-else>
+                                    {{ val2.thevalue }}
+
+                                    <span
+                                      v-if="
+                                        item.pijian &&
+                                          item.pijian.pizhunwenhao &&
+                                          val2.thename == 'jielun'
+                                      "
+                                    >
+                                      (批准文号：
+                                      <!-- item.pijian.tp = 1 国产 否则进口 -->
+                                      <a
+                                        class="pzh"
+                                        v-if="item.pijian.xuhao"
+                                        :href="
+                                          item.pijian.tp == 1
+                                            ? `/cfdadrug/detail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                            : `/cfdadrug/jkdetail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                        "
+                                        target="_blank"
+                                        >{{ item.pijian.pizhunwenhao }}</a
+                                      >
+                                      <span v-else>{{
+                                        item.pijian.pizhunwenhao
+                                      }}</span
+                                      >)
+                                    </span>
+                                  </span>
                                 </span>
                               </td>
                             </tr>
                             <tr>
                               <td
-                                v-for="(val2, index2) in resetTableObject(item)"
+                                v-for="(val2, index2) in resetTableObject(
+                                  item,
+                                  key1
+                                )"
                                 :key="index2"
                                 v-if="index2 >= 6 && index2 < 9"
                                 :colspan="val2.col"
@@ -990,26 +1491,83 @@
                                   {{
                                     $t("lDetail.devProgress." + val2.thename)
                                   }}
-                                  <router-link
-                                    class="link"
-                                    :to="yflcLink(item, val2.thename)"
-                                    target="_blank"
+                                  <span
                                     v-if="
                                       (val2.thename === 'shoulihao' ||
                                         val2.thename === 'me_id' ||
                                         (val2.thename == 'pizhunwenhao' &&
                                           item.pizhunwenhao_type != 0)) &&
-                                      item.id
+                                        item.id
                                     "
-                                    >{{ val2.thevalue }}</router-link
                                   >
-                                  <span v-else>{{ val2.thevalue }}</span>
+                                    <span
+                                      v-for="(txt,
+                                      txtKey,
+                                      txti) in val2.thevalue"
+                                      :key="txti"
+                                    >
+                                      <router-link
+                                        class="link"
+                                        :to="
+                                          yflcLink(
+                                            item,
+                                            val2.thename,
+                                            txt,
+                                            txtKey
+                                          )
+                                        "
+                                        target="_blank"
+                                        >{{ txt }}
+                                      </router-link>
+                                      <span
+                                        style="color:#545B6D;"
+                                        v-if="
+                                          txti <
+                                            Object.keys(val2.thevalue).length -
+                                              1
+                                        "
+                                      >
+                                        /
+                                      </span>
+                                    </span>
+                                  </span>
+                                  <span v-else>
+                                    {{ val2.thevalue }}
+                                    <span
+                                      v-if="
+                                        item.pijian &&
+                                          item.pijian.pizhunwenhao &&
+                                          val2.thename == 'jielun'
+                                      "
+                                    >
+                                      (批准文号：
+                                      <!-- item.pijian.tp = 1 国产 否则进口 -->
+                                      <a
+                                        class="pzh"
+                                        v-if="item.pijian.xuhao"
+                                        :href="
+                                          item.pijian.tp == 1
+                                            ? `/cfdadrug/detail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                            : `/cfdadrug/jkdetail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                        "
+                                        target="_blank"
+                                        >{{ item.pijian.pizhunwenhao }}</a
+                                      >
+                                      <span v-else>{{
+                                        item.pijian.pizhunwenhao
+                                      }}</span
+                                      >)
+                                    </span>
+                                  </span>
                                 </span>
                               </td>
                             </tr>
                             <tr>
                               <td
-                                v-for="(val2, index2) in resetTableObject(item)"
+                                v-for="(val2, index2) in resetTableObject(
+                                  item,
+                                  key1
+                                )"
                                 :key="index2"
                                 v-if="index2 >= 9 && index2 < 12"
                                 :colspan="val2.col"
@@ -1018,20 +1576,74 @@
                                   {{
                                     $t("lDetail.devProgress." + val2.thename)
                                   }}
-                                  <router-link
-                                    class="link"
-                                    :to="yflcLink(item, val2.thename)"
-                                    target="_blank"
+                                  <span
                                     v-if="
                                       (val2.thename === 'shoulihao' ||
                                         val2.thename === 'me_id' ||
                                         (val2.thename == 'pizhunwenhao' &&
                                           item.pizhunwenhao_type != 0)) &&
-                                      item.id
+                                        item.id
                                     "
-                                    >{{ val2.thevalue }}</router-link
                                   >
-                                  <span v-else>{{ val2.thevalue }}</span>
+                                    <span
+                                      v-for="(txt,
+                                      txtKey,
+                                      txti) in val2.thevalue"
+                                      :key="txti"
+                                    >
+                                      <router-link
+                                        class="link"
+                                        :to="
+                                          yflcLink(
+                                            item,
+                                            val2.thename,
+                                            txt,
+                                            txtKey
+                                          )
+                                        "
+                                        target="_blank"
+                                        >{{ txt }}
+                                      </router-link>
+                                      <span
+                                        style="color:#545B6D;"
+                                        v-if="
+                                          txti <
+                                            Object.keys(val2.thevalue).length -
+                                              1
+                                        "
+                                      >
+                                        /
+                                      </span>
+                                    </span>
+                                  </span>
+                                  <span v-else>
+                                    {{ val2.thevalue }}
+                                    <span
+                                      v-if="
+                                        item.pijian &&
+                                          item.pijian.pizhunwenhao &&
+                                          val2.thename == 'jielun'
+                                      "
+                                    >
+                                      (批准文号：
+                                      <!-- item.pijian.tp = 1 国产 否则进口 -->
+                                      <a
+                                        class="pzh"
+                                        v-if="item.pijian.xuhao"
+                                        :href="
+                                          item.pijian.tp == 1
+                                            ? `/cfdadrug/detail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                            : `/cfdadrug/jkdetail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                        "
+                                        target="_blank"
+                                        >{{ item.pijian.pizhunwenhao }}</a
+                                      >
+                                      <span v-else>{{
+                                        item.pijian.pizhunwenhao
+                                      }}</span
+                                      >)
+                                    </span>
+                                  </span>
                                 </span>
                               </td>
                             </tr>
@@ -1074,16 +1686,18 @@
       </div>
     </div>
     <la-footer></la-footer>
+
+    <LoadingGif :loadFlag="isExportLoading" v-if="isExportLoading"></LoadingGif>
   </div>
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import TimeLine from "./components/time-line.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import TimeLine from "./components/time-line";
 import TimeNode from "./components/time.vue";
-import LaFooter from "@/components/layouts/footer.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
+import LaFooter from "@/components/layouts/footer.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
 import detailScrollMixins from "@/mixins/detailScroll.js";
 import { mapState } from "vuex";
 
@@ -1091,24 +1705,24 @@ import { mapState } from "vuex";
 let steps = [
   {
     name: "待企业提交申请表",
-    icon: "&#xe717;",
+    icon: "&#xe717;"
   },
   {
     name: "制定检查方案",
-    icon: "&#xe632;",
+    icon: "&#xe632;"
   },
   {
     name: "组织现场检查",
-    icon: "&#xe63e;",
+    icon: "&#xe63e;"
   },
   {
     name: "待审核结论",
-    icon: "&#xe606;",
+    icon: "&#xe606;"
   },
   {
     name: "报告已转药审中心",
-    icon: "&#xe6dc;",
-  },
+    icon: "&#xe6dc;"
+  }
 ];
 
 export default {
@@ -1124,6 +1738,7 @@ export default {
   data() {
     return {
       isLoading: true,
+      isExportLoading: false,
       id: this.$route.params.id,
       shoulihao: "",
       xulie: 0,
@@ -1150,38 +1765,33 @@ export default {
           "发补通知、通知现场检查、通知电子提交（修改） 、通知审评咨询会等；（2009年初至今的送达事项）",
         defaultLicenseDate: "更新结论的时间",
         jielun: "带“预”为药智预测结论，仅供参考",
-        gdcf: "根据中国药学会发布的过度重复药品提示性公告标记分类。过度重复：同一药品已获批准文号企业数在20家以上   ； 获批企业数≤3家 ：指在该药品大类是过度重复品种，但药品当前剂型已有批准文号企业数≤3家。",
+        gdcf:
+          "根据中国药学会发布的过度重复药品提示性公告标记分类。过度重复：同一药品已获批准文号企业数在20家以上   ； 获批企业数≤3家 ：指在该药品大类是过度重复品种，但药品当前剂型已有批准文号企业数≤3家。",
         wftjcbzj: "根据《临床价值明确，无法推荐参比制剂的化学药品目录》分类。",
         yxsp: "纳入优先审评审批的情形详细解释可查看帮助中心。",
-        lcjxjwxy: "数据来源于CDE官网公示的临床急需境外新药名单。 ",
+        lcjxjwxy: "数据来源于CDE官网公示的临床急需境外新药名单。 "
       },
-      wordBreak: "word-break: break-word;",
+      wordBreak: "word-break: break-word;"
     };
   },
   computed: {
     ...mapState({
-      allBase: (state) => state.Zhuce.allBase,
-      helpInfo: (state) => state.Zhuce.helpInfo,
-      nopms: (state) => state.Zhuce.nopms,
-      showPromtNotice: (state) => state.showPromtNotice,
-    }),
+      allBase: state => state.Zhuce.allBase,
+      helpInfo: state => state.Zhuce.helpInfo,
+      nopms: state => state.Zhuce.nopms,
+      showPromtNotice: state => state.showPromtNotice
+    })
   },
   watch: {
     showPromtNotice(val) {
       if (val) {
-        setTimeout(() => {
-          if ($(".left-nav").css("top"))
-            $(".left-nav").css(
-              "top",
-              parseInt($(".left-nav").css("top").replace("px", "")) + 30 + "px"
-            );
-        }, 600);
+        if ($(".left-nav").css("top")) {
+          $(".left-nav").css("top", "128px");
+        }
       } else {
-        setTimeout(() => {
-          if ($(".left-nav").css("top")) $(".left-nav").css("top", "88px");
-        }, 600);
+        if ($(".left-nav").css("top")) $(".left-nav").css("top", "98px");
       }
-    },
+    }
   },
   methods: {
     // 获取atc的中文
@@ -1203,7 +1813,8 @@ export default {
     redirectNewPage(pages) {
       window.open(pages, "_blank");
     },
-    yflcLink(item, val) {
+    yflcLink(item, val, txt, txtKey) {
+      console.log(item, val, txt, txtKey);
       let url;
       if (val === "shoulihao") {
         url = "/zhuce/";
@@ -1213,16 +1824,14 @@ export default {
       }
       if (val === "pizhunwenhao") {
         if (item.pizhunwenhao_type == 1) {
-          return `/cfdadrug/detail/${
-            item.pizhunwenhao_id
-          }?pizhunwenhao=${encodeURI(item.pizhunwenhao)}`;
+          return `/cfdadrug/detail/${txtKey}?pizhunwenhao=${encodeURI(txt)}`;
         } else if (item.pizhunwenhao_type == 2) {
-          return `/pijian_jinkou_olddata/${item.pizhunwenhao_id}`;
+          return `/pijian_jinkou_olddata/${txtKey}`;
         } else {
           return true;
         }
       }
-      return url + item.id;
+      return url + txtKey;
     },
     // 判断有误订阅权限 有可跳转 无不可跳转
     handleRss(rsss, type, shoulihao, name, qiyemingcheng, ga) {
@@ -1237,26 +1846,26 @@ export default {
         "trackEvent",
         "button",
         "click",
-        "vip_zhuce_xiangqingye_" + ga,
+        "vip_zhuce_xiangqingye_" + ga
       ]);
 
       let dataObj = {
         shoulihao: shoulihao,
         name: name,
-        qiyemingcheng: qiyemingcheng,
+        qiyemingcheng: qiyemingcheng
       };
       if (!this.nopms.rss) {
         if (rsss) {
           //新页面打开
           let routeData = this.$router.resolve({
-            path: "/usercenter/take/condition",
+            path: "/usercenter/take/condition"
           });
           window.open(routeData.href, "_blank");
         } else {
-          window.vueSetCookie("rss_type", type);
-          window.vueSetCookie("rss_keyword", JSON.stringify(dataObj));
+          this.vueSetCookie("rss_type", type);
+          this.vueSetCookie("rss_keyword", JSON.stringify(dataObj));
           let routeData = this.$router.resolve({
-            path: "/usercenter/take/new",
+            path: "/usercenter/take/new"
           });
           window.open(routeData.href, "_blank");
         }
@@ -1274,7 +1883,7 @@ export default {
       $(".all-info").animate({ scrollTop: scrollTop + 200 }, 500);
     },
     handleAllInfoScroll(e) {
-      $(e.target).scroll(function () {
+      $(e.target).scroll(function() {
         var divHeight = $(this).height();
         var nScrollHeight = $(this)[0].scrollHeight;
         var nScrollTop = $(this)[0].scrollTop;
@@ -1296,10 +1905,10 @@ export default {
           url: "/api/zhuce/" + this.id,
           params: {
             accesstoken: GETCOOKIEFUN("accesstoken"),
-            msg_readid: this.$route.query.msg_readid,
-          },
+            msg_readid: this.$route.query.msg_readid
+          }
         })
-        .then((res) => {
+        .then(res => {
           if (res.data.code === 200 && res.data.data) {
             let data = res.data.data;
             this.data = data;
@@ -1318,7 +1927,7 @@ export default {
                 { name: "检查日期", state: data.nyxcjc[0].jianchariqi },
                 { name: "检查员", state: data.nyxcjc[0].jianchayuan },
                 { name: "经办人", state: data.nyxcjc[0].jingbanren },
-                { name: "受理日期", state: data.nyxcjc[0].shouliriqi },
+                { name: "受理日期", state: data.nyxcjc[0].shouliriqi }
               ];
               for (let j = 0; j < noticeInfo.length; j++) {
                 if (j % 2 === 0) {
@@ -1357,7 +1966,7 @@ export default {
             }
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
       // PART 5
@@ -1368,17 +1977,17 @@ export default {
           url: "/api/zhuce/devprocess",
           params: {
             id: this.id,
-            accesstoken: GETCOOKIEFUN("accesstoken"),
-          },
+            accesstoken: GETCOOKIEFUN("accesstoken")
+          }
         })
-        .then((res) => {
+        .then(res => {
           if (res.data.code === 200 && res.data.data) {
             let data = res.data.data;
             this.devProcess = data;
             this.hasPartFive = true;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         })
         .then(this.removeLoading)
@@ -1404,7 +2013,7 @@ export default {
       $(".state-sign").css({
         visibility: "visible",
         transform: "scale(1)",
-        transition: "all 300ms cubic-bezier(.75,0,1,1)",
+        transition: "all 300ms cubic-bezier(.75,0,1,1)"
       });
     },
     sortKeys(obj) {
@@ -1418,7 +2027,7 @@ export default {
         "banlizhuangtai",
         "zhuangtaikaishishijian",
         "jielun",
-        "drugidStatus",
+        "drugidStatus"
       ];
       let arr2 = [
         "name",
@@ -1428,7 +2037,7 @@ export default {
         "pizhunwenhao_id",
         "drugidTime",
         "yuanpizhunwenhao",
-        "drugidStatus",
+        "drugidStatus"
       ];
       let arr4 = [
         "shoulihao",
@@ -1447,7 +2056,7 @@ export default {
         "me_status",
         "start",
         "end",
-        "drugidStatus",
+        "drugidStatus"
       ];
       let current = [];
       let copy = {};
@@ -1461,7 +2070,7 @@ export default {
         default:
           current = arr4;
       }
-      current.forEach((item) => {
+      current.forEach(item => {
         if (obj.hasOwnProperty(item) && obj[item]) {
           copy[item] = obj[item];
         }
@@ -1471,10 +2080,47 @@ export default {
     emitTimeLine(data) {
       this.hasPartTwo = data;
     },
+
+    changeLoading(val) {
+      this.isExportLoading = val;
+    },
     // 循环前处理相关数据，并返回数组形式
-    resetTableObject(obj2) {
+    resetTableObject(obj2, key1) {
       let arr = [];
       let obj = this.sortKeys(obj2);
+      // 若研发历程展示过程中，药品名称和企业与顶端展示的NMPA企业名称或CDE企业名称一致时，需隐藏研发历程中的药品名称和企业；不一致时需要展示药品、企业名称信息内容。
+      if (
+        obj.shengchanqiye ==
+        (this.data.qiyemingcheng || this.data.guifanqiyemingcheng)
+      ) {
+        delete obj.shengchanqiye;
+      }
+
+      if (
+        obj.company ==
+        (this.data.qiyemingcheng || this.data.guifanqiyemingcheng)
+      ) {
+        delete obj.company;
+      }
+
+      if (
+        obj.qiyemingcheng ==
+        (this.data.qiyemingcheng || this.data.guifanqiyemingcheng)
+      ) {
+        delete obj.qiyemingcheng;
+      }
+
+      if (obj.name == this.data.name) {
+        delete obj.name;
+      }
+
+      // 状态开始时间zhuangtaikaishishijian、承办日期chengbanriqi、批准日期drugidTime、开始时间 start  当这几个时间和左侧显示的总时间相等的时候则不显示。
+      // key1 为左侧时间
+      if (obj.zhuangtaikaishishijian == key1) delete obj.zhuangtaikaishishijian;
+      if (obj.chengbanriqi == key1) delete obj.chengbanriqi;
+      if (obj.drugidTime == key1) delete obj.drugidTime;
+      if (obj.start == key1) delete obj.start;
+
       for (let key in obj) {
         if (obj["drugidStatus"] == "上市信息") {
           //上市信息类  要显示批准日期  不显示状态开始时间
@@ -1489,7 +2135,7 @@ export default {
             // 将不需要在列表中循环的在此列出
             let new_obj = {
               thename: key,
-              thevalue: obj[key],
+              thevalue: obj[key]
             };
 
             arr.push(new_obj);
@@ -1507,7 +2153,7 @@ export default {
             // 将不需要在列表中循环的在此列出
             let new_obj = {
               thename: key,
-              thevalue: obj[key],
+              thevalue: obj[key]
             };
 
             arr.push(new_obj);
@@ -1523,7 +2169,6 @@ export default {
         //   arr.push(new_obj);
         // }
       }
-
       let len = arr.length;
       let need_num = len % 3 == 0 ? 0 : 3 - (len % 3);
       if (need_num == 1 || need_num == 2) {
@@ -1539,12 +2184,12 @@ export default {
     handleScroll() {
       let top = $(".main").offset().top,
         leftNav = $(".left-nav");
-      if (top <= 50) {
-        leftNav.css("top", (this.showPromtNotice ? 88 : 58) + "px");
-      } else {
-        leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
-      }
-    },
+      // if (top <= 50) {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 98) + "px");
+      // } else {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
+      // }
+    }
   },
   created() {
     if (!this.nopms.xqy) {
@@ -1568,15 +2213,23 @@ export default {
   updated() {
     this.vueRouteToNoPms(this.nopms.xqy);
     this.vueTogglePmsTooltip();
-  },
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 .wrapper {
+  .fullscreen-loading {
+    background: #fff !important;
+  }
+
+  .pzh {
+    color: #4877e8;
+  }
+
   .t-line5 {
     display: block;
     max-height: 110px;
@@ -1584,6 +2237,7 @@ export default {
   }
   .detail-list {
     .detail-header {
+      // margin-left: 190px;
       .yzxpj {
         font-size: 20px;
         color: rgb(247, 125, 84);
@@ -1641,7 +2295,7 @@ export default {
           cursor: pointer;
           color: #fff;
           text-indent: 1.2em;
-          background: url(@/assets/imgs/dy.png) no-repeat 18px center #f56c6c;
+          background: url(~@/assets/imgs/dy.png) no-repeat 18px center #f56c6c;
           font-weight: 400;
         }
         .dingyue-btn-cancel {
@@ -1650,6 +2304,10 @@ export default {
         }
       }
     }
+
+    // .detail-header.header-fixed {
+    //   width: calc(100vw - 200px);
+    // }
     // 主要信息部分
     .main {
       // 右边 - 详细列表
@@ -2172,5 +2830,14 @@ export default {
   .top-id {
     max-width: 40vw !important;
   }
+}
+
+.slide-section .tb-t tr td:nth-child(odd),
+.slide-section .tb-f tr td:nth-child(odd) {
+  min-width: 180px !important;
+  width: 230px !important;
+  max-width: 30vw !important;
+  padding: 0 0 0 50px !important;
+  background: #f6f8fc;
 }
 </style>

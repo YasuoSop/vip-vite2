@@ -6,7 +6,7 @@
         <div slot="title" class="dialog-header">
           保存条件
         </div>
-        <SavedPop @closeSavedPop="closeSavedPop" vuex_name="CompanyReport"></SavedPop>
+        <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="CompanyReport"></SavedPop>
       </el-dialog>
 
       <div slot="left">
@@ -88,7 +88,8 @@
   import Normal from '@/components/common/normal.vue'
   import Optioned from '@/components/common/options.vue'
   import Main from '@/components/layouts/main.vue'
-  import List from './list.vue'
+  import List from './list'
+
   import { mapState } from 'vuex'
   export default{
     components:{
@@ -165,7 +166,7 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 .company-index {
   height: 100%;

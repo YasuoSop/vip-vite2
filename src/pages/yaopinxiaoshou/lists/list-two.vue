@@ -3,7 +3,7 @@
     <List :loading="listLoading" :nodata="res2 && !res2.length">
       <div class="actions">
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Yaopinxiaoshou" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Yaopinxiaoshou" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"
@@ -113,8 +113,8 @@
             <div v-if="item.prop === 'qy_count'">
               {{ scope.row.qy_count }}
             </div>
-            <div v-if="item.prop === 'yaopinfenxi'" class="extensible-td" @click="getFullScreen(scope.row.name)">
-              <a href="javascript:void(0);" class="cl-blue">药品分析</a>
+            <div v-if="item.prop === 'yaopinfenxi'">
+              <a href="javascript:void(0);" class="cl-blue"  @click="getFullScreen(scope.row.name)">药品分析</a>
             </div>
             </div>
           </template>
@@ -147,7 +147,7 @@
   import { mapState } from 'vuex'
   import tablehead from '@/config/tablehead'
   import listCheck from "@/components/common/list-check.vue"
-  import selectNuit from '../selectNuit.vue'
+  import selectNuit from '../selectNuit'
   import commonMixins from '@/mixins/common.js'
   import setTableHMixins from '@/mixins/setTableH.js'
   const defaultFiled = tablehead.yaopinxiaoshou.ypmc
@@ -454,7 +454,7 @@
 </script>
 
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   .la-ypmc{
     min-height: 100px;
     .no-data-msg {
@@ -477,7 +477,7 @@
       td{
         &.active{
           color: @PrimaryColor;
-          background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
+          background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
           border: none;
         }
       }
@@ -490,7 +490,7 @@
       }
       &.active{
         color: @PrimaryColor;
-        background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
+        background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
         border: none;
       }
     }

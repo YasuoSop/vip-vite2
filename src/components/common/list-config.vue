@@ -558,9 +558,9 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
-// @import "@/assets/less/app.less";
+// @import "~@/assets/less/app.less";
 .List_content {
   #maginfy-img-wap {
     position: fixed;

@@ -133,6 +133,13 @@
                       title="仅进口"
                       >{{ scope.row.title.country }}</span
                     >
+
+                    <span
+                      class="cfdrug-icon tg-zhong"
+                      v-if="scope.row.yuanyan == '1'"
+                      title="原研"
+                      >原研</span
+                    >
                     <!-- <div style="width:100%;"> -->
                     <!-- <span
                       class="cfdrug-icon tg-te"
@@ -223,8 +230,10 @@
                  <!-- 适应症受理号 -->
                 <div v-else-if="item.prop === 'shiyingzheng'" :title="''">
                   <template v-if="scope.row.shiyingzheng != ''">
-                    <span v-if="vueCheckListPms('CfdaDrug', item.label)" v-html="scope.row.shiyingzheng">
-                    </span>
+                    <el-tooltip v-if="vueCheckListPms('CfdaDrug', item.label)" class="" effect="zhuce" placement="right">
+                      <div slot="content" v-html="scope.row.shiyingzheng"></div>
+                      <span v-html="scope.row.shiyingzheng"></span>
+                    </el-tooltip>
                     <span v-else class="abandon-click-method">暂无权限</span>
                   </template>
                   <span v-else>/</span>
@@ -259,13 +268,13 @@
 </template>
 
 <script>
-import TooltipBD from "@/components/common/globalCom/target-tooltip.vue";
-import List from "@/components/layouts/list.vue";
-import Export from "@/components/common/export.vue";
+import TooltipBD from "@/components/common/globalCom/target-tooltip.vue"
+import List from "@/components/layouts/list.vue"
+import Export from "@/components/common/export.vue"
 import { mapState } from "vuex";
 import commonMixins from "@/mixins/common.js";
 import tablehead from "@/config/tablehead";
-import listCheck from "@/components/common/list-check.vue";
+import listCheck from "@/components/common/list-check.vue"
 import setTableHMixins from "@/mixins/setTableH.js";
 export default {
   components: {
@@ -323,6 +332,12 @@ export default {
   },
   // safari浏览器回到当前页面会导致样式错乱问题，由于使用了keepalive所以需要在activated生命周期中在调一次计算方法
   activated() {
+    let tempTableconf = _.cloneDeep(this.tableconf),
+      actionName = `${
+        this.vuex_name[0].toUpperCase() + this.vuex_name.substr(1)
+      }/tableconf`; // 第一个字母转大写
+    this.$store.commit(actionName, []);
+    this.$store.commit(actionName, tempTableconf);
     this.registerEven();
   },
   watch: {
@@ -411,7 +426,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .la-list {
   .item_top {
     height: 190px;

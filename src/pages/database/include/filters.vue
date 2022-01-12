@@ -238,7 +238,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .filter {
   .item-title {
     display: block;

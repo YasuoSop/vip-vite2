@@ -27,7 +27,8 @@ const store = new Vuex.Store({
     },
     listLoading: false,
     searchLoading: false,
-    showPromtNotice: false  // 是否显示公告提示
+    showPromtNotice: false,  // 是否显示公告提示
+    firstShowTrzNav: 1  // 判断第一次进入显示默认显示导航,1显示，0隐藏
   },
   mutations: {
     searchLoading(state, Payload) {
@@ -39,6 +40,11 @@ const store = new Vuex.Store({
     showPromtNotice(state, Payload) {
       state.showPromtNotice = Payload
     },
+    firstShowTrzNav(state, Payload) {
+      localStorage.firstShowTrzNav = Payload
+      state.firstShowTrzNav = Payload
+      console.log(state.firstShowTrzNav)
+    }
   },
   actions: {
 

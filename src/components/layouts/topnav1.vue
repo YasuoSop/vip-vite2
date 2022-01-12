@@ -2,7 +2,7 @@
   <div class="help_nav">
         <div class="help_header">
           <router-link class="logo" to="/introduce">
-            <img src="@/assets/imgs/home-logo.png">
+            <img src="~@/assets/imgs/home-logo.png">
           </router-link>
           <nav class="nav_right">
             <router-link tag="a" class="right-nav-item" to="/home" exact>首页</router-link>

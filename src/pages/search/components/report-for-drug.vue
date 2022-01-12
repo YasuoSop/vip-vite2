@@ -14,7 +14,18 @@
     >
       <div class="rp-title">
         <i class="iconfont font-doc">&#xe600;</i>
-        <span class="icon-doc-content">药品概览</span>
+        <span class="icon-doc-content">药品概览
+          <el-tooltip
+            class="item tooltips-position"
+            effect="light"
+            placement="right"
+          >
+            <div
+              slot="content"
+            >呈现关键词精确匹配到的药品概览，概览下的数据统计也与关键词精确匹配。</div>
+            <i class="el-icon-question cl-green"></i>
+          </el-tooltip>
+        </span>
       </div>
       <div class="rp-main" v-if="Object.keys(data).length">
         <div class="main-desc">
@@ -23,7 +34,7 @@
           <div class="desc-title">
             <div class="lan1 clearfix">
               <span class="zh-name fl">{{ data.name }}</span>
-              <span class="item item3 fl" v-if="data.zgss">{{
+              <span class="item item3 fl" v-if="data.chinamarked == 1">{{
                 data.zgss == "1" ? "中国上市" : ""
               }}</span>
             </div>
@@ -162,14 +173,14 @@
               <!-- 作用靶点 -->
               <tr>
                 <td>作用靶点</td>
-                <td>
-                  <li
-                    v-for="(item, index) in String(data.target).split(';')"
-                    :key="index"
-                  >
-                    {{ data.target ? item : "无" }}
-                  </li>
+                <td v-if="data.targets_abbr || data.target_unique">
+                  <span v-if="data.targets_abbr">{{ data.targets_abbr }}</span>
+                  <span v-if="data.targets_abbr && data.target_unique">;</span>
+                  <span v-if="data.target_unique">{{
+                    data.target_unique
+                  }}</span>
                 </td>
+                <td v-else>无</td>
               </tr>
               <!-- 结构式 -->
               <tr>
@@ -215,7 +226,7 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
 import { mapState } from "vuex";
 
 export default {
@@ -386,7 +397,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 @desc-width: 40%;
 
 .report-wrapper {

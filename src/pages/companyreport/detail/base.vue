@@ -136,18 +136,18 @@
 </template>
 
 <script>
-  import DetailJcxx from './DetailJcxx.vue'
-  import DetailQyfx from './DetailQyfx.vue'
-  import DetailSsyp from './DetailSsyp.vue'
-  import DetailNbsj from './DetailNbsj.vue'
-  import DetailYpxs from './DetailYpxs.vue'
-  import DetailZbxx from './DetailZbxx.vue'
-  import DetailZcsb from './DetailZcsb.vue'
-  import DetailLcsy from './DetailLcsy.vue'
+  import DetailJcxx from './DetailJcxx'
+  import DetailQyfx from './DetailQyfx'
+  import DetailSsyp from './DetailSsyp'
+  import DetailNbsj from './DetailNbsj'
+  import DetailYpxs from './DetailYpxs'
+  import DetailZbxx from './DetailZbxx'
+  import DetailZcsb from './DetailZcsb'
+  import DetailLcsy from './DetailLcsy'
   // import DetailZlbj from './DetailZlbj'
-  import DetailScrz from './DetailScrz.vue'
-  import DetailFxxx from './DetailFxxx.vue'
-  import DetailKzxx from './DetailKzxx.vue'
+  import DetailScrz from './DetailScrz'
+  import DetailFxxx from './DetailFxxx'
+  import DetailKzxx from './DetailKzxx'
   import { mapState } from 'vuex'
 
   import LoadingGif from '@/components/common/globalCom/loading-gif.vue'
@@ -335,9 +335,9 @@
 </script>
 
 <style lang="less" scoped>
-  @import "@/assets/less/var.less";
-  @import "@/assets/less/app.less";
-  @import "@/assets/less/detailCom.less";
+  @import "~@/assets/less/var.less";
+  @import "~@/assets/less/app.less";
+  @import "~@/assets/less/detailCom.less";
 .wrapper {
   .detail-list{
     margin-top: 10px;

@@ -26,7 +26,7 @@
             <i-wave />更多高级功能和权限，请使用
             <!--  -->
             <router-link
-              :to="{path:'/yyxs/list.vue',query:{ga_source:'vip',ga_name:'yyxsdata_toptips'}}"
+              :to="{path:'/yyxs/list',query:{ga_source:'vip',ga_name:'yyxsdata_toptips'}}"
               class="cl-blue"
               target="_blank"
             >医院销售数据挖掘系统</router-link>
@@ -88,16 +88,16 @@
 </template>
 
 <script>
-import IWave from "@/components/common/icon-wave.vue";
-import leftNav from "./components/leftNav.vue";
-import page1 from "./page1.vue";
-import page1Magnify from "./page1_magnify.vue";
-import page2 from "./page2.vue";
-import page2Magnify from "./page2_magnify.vue";
-import page3 from "./page3.vue";
-import page3Magnify from "./page3_magnify.vue";
+import IWave from "@/components/common/icon-wave.vue"
+import leftNav from "./components/leftNav";
+import page1 from "./page1";
+import page1Magnify from "./page1_magnify";
+import page2 from "./page2";
+import page2Magnify from "./page2_magnify";
+import page3 from "./page3";
+import page3Magnify from "./page3_magnify";
 import { mapState } from "vuex";
-import noPermission from "@/pages/permission/no-permission.vue";
+import noPermission from "@/pages/permission/no-permission";
 
 export default {
   components: {
@@ -242,8 +242,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
 
 .yyxsfx {
   clear: both;

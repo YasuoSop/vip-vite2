@@ -26,6 +26,10 @@ export default {
     putong: {},
     groups: {}, // 已选筛选条件
     shaixuan: {},
+    //热点查询
+    hot_filter_filed: {}, // 热门信息筛选列举项（来源于API的原始数据）
+    hot_checked: {}, // 已选热门筛选条件
+    hot: {}, // 热门筛选条件所用的储存对象（主要用于API前的处理）
     filters: {}, // 条件筛选结果
     filters1: [], // 添加问号标注添加条件筛选
     res1: {},
@@ -297,6 +301,26 @@ export default {
         state.shaixuan = {};
       }
     },
+    hot_checked (state,Payload) {
+      state.hot_checked = Payload
+    },
+    hot (state,Payload) {
+      let hotcheckeds = ''
+      _.map(Payload,(item,index)=>{
+        if (item.length > 0) { // 去空
+          if (hotcheckeds == '') {
+            hotcheckeds = index + '=' + _.join(item, 'ღ')
+          } else {
+            hotcheckeds += ' ' + '_and' + ' ' + index + '=' + _.join(item, 'ღ')
+          }
+        }
+      })
+      if (hotcheckeds != '') {
+        state.hot = {'hot_condition':hotcheckeds}
+      } else {
+        state.hot = {}
+      }
+    },
     // 条件筛选结果
     filters(state, Payload) {
       state.filters = Payload;
@@ -304,7 +328,11 @@ export default {
     // 条件筛选结果项
     filters1(state, Payload) {
       state.filters1 = Payload;
-    }
+    },
+    // 热门信息筛选项
+    hot_filter_filed (state, Payload) {
+      state.hot_filter_filed = Payload
+    },
   },
   actions: {
     yfjdParams(state, Payload) {
@@ -340,11 +368,12 @@ export default {
       }
       state.commit("gaoji", state.state.conditions);
       state.commit("shaixuan", state.state.groups);
+      state.commit('hot', state.state.hot_checked)
       let swords = state.state.gaoji;
       let sparam = state.state.putong;
       let sgroup = state.state.shaixuan;
       let sfourth = state.state.fourth;
-
+      let shot = state.state.hot
       param =
         Payload && Payload.params
           ? _.assign(
@@ -353,10 +382,11 @@ export default {
               sparam,
               sgroup,
               swords,
+              shot,
               Payload.params,
               state.state.param
             )
-          : _.assign({}, sfourth, sparam, swords, sgroup, {
+          : _.assign({}, sfourth, sparam, swords, sgroup, shot, {
               page: 1,
               pageSize: state.state.param.pageSize
             });
@@ -435,15 +465,16 @@ export default {
                 {},
                 state.state.putong,
                 state.state.shaixuan,
+                state.state.hot,
                 Payload.params
               )
-            : _.assign({}, state.state.putong, state.state.shaixuan);
+            : _.assign({}, state.state.putong, state.state.shaixuan, state.state.hot);
       } else if (state.state.shaixuan.filter_condition) {
         // 条件筛选条件 传过来的附加条件（如果有的话 => page pageSize order） - 进行组合
         param =
           Payload && Payload.params
-            ? _.assign({}, state.state.shaixuan, Payload.params)
-            : _.assign({}, state.state.shaixuan);
+            ? _.assign({}, state.state.shaixuan, Payload.params, state.state.hot)
+            : _.assign({}, state.state.shaixuan, state.state.hot);
       }
 
       // param = (Payload && Payload.params) ? _.assign({}, Payload.params) : {}

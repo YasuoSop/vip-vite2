@@ -15,12 +15,13 @@
         :style="{
           display: 'flex',
           minWidth: '200px',
-          width: selectWidth
+          maxWidth: selectWidth
         }"
         :placeholder="edata.select.placeholder"
         filterable
         clearable
         autoWidth
+        :collapse-tags="multiple"
         :multiple-limit="5"
         :multiple="multiple"
         :popper-append-to-body="false"
@@ -41,13 +42,13 @@
           title="柱状图"
           v-if="edata.type.indexOf('bar') > -1 && edata.curType != 'bar'"
           @click="changeEcharts('bar')"
-          ><img src="@/assets/imgs/bar.png"
+          ><img src="~@/assets/imgs/bar.png"
         /></span>
         <span
           title="饼图"
           v-if="edata.type.indexOf('pie') > -1 && edata.curType != 'pie'"
           @click="changeEcharts('pie')"
-          ><img src="@/assets/imgs/pie.png"
+          ><img src="~@/assets/imgs/pie.png"
         /></span>
         <span
           title="表格"
@@ -97,12 +98,18 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
 import MEcharts from "../../yiyuanxiaoshou/components/echarts.vue";
-import Select from "@/components/inputs/select.vue";
+import Select from "@/components/inputs/select.vue"
 import { mapState } from "vuex";
 export default {
   props: {
+    atc: {
+      type: String
+    },
+    categ: {
+      type: String
+    },
     qyTitle: {
       type: String
     },
@@ -245,10 +252,11 @@ export default {
       this.$emit("selChange", this.edata.select.model, () => {
         this.edata.loading = false;
       });
-      let len = this.edata.select.model.toString().length;
-      this.selectWidth = len > 0 ? len * 17 : 0;
+      let len = this.edata.select.model[0].length;
+      this.selectWidth = (len > 0 ? len * 17 : 0) + 60;
       this.selectWidth =
         (this.selectWidth > 200 ? this.selectWidth : 200) + "px";
+      $(".el-select-dropdown__item").css("width", this.selectWidth);
     },
     //导出单元表格
     clickeExport() {
@@ -271,9 +279,16 @@ export default {
       ) {
         let qyStr;
         if (this.edata.select.model) {
-          qyStr = this.type
-            ? `guifanqiye=${this.edata.select.model}`
-            : `name=${this.edata.select.model}`;
+          let guifanqiye = "",
+            name = this.edata.select.model.join(",") || "";
+          if (this.edata.select.model.length > 0) {
+            guifanqiye = this.edata.select.model.join(",");
+            qyStr = this.type
+              ? `guifanqiyestr=${guifanqiye}`
+              : `name=${name}`;
+          } else {
+            qyStr = this.type ? `` : `name=${name}`;
+          }
         } else {
           qyStr = "";
         }
@@ -296,10 +311,17 @@ export default {
         }
         url += `,tablename=${this.edata.title}&accesstoken=${token}`;
       } else {
-        url = `/api/yyxs/dlyyxsoutdata?`;
-        if (yearStr != "") {
-          url += `${yearStr}&`;
+        let str = "";
+        if (this.atc != "") {
+          str += `atc=${this.atc}&`;
         }
+        if (this.categ != "") {
+          str += `categ=${this.categ}&`;
+        }
+        if (this.year != "") {
+          str += `year=${this.year}&`;
+        }
+        url = `/api/yyxs/dlyyxsoutdata?${str}`;
         if (this.queryName && this.name) {
           url += `${this.queryName}=${this.name}&`;
         }
@@ -309,9 +331,13 @@ export default {
         url += `outdata_column=${headStr}tablename=${this.edata.title}&outdata_action=${this.edata.url}&accesstoken=${token}`;
       }
       url += "&is_magnify=1";
+      console.log(url);
       if (
         this.edata.name === "销售趋势" ||
         this.edata.name === "省份分析" ||
+        this.edata.url == "dlypjxfx" ||
+        this.edata.url == "dlqyjxfx" ||
+        this.edata.url == "dlfljxfx" ||
         this.edata.url == "dlflhxcf" ||
         this.edata.url == "dlflpzfx" ||
         this.edata.url == "dlflqyfx" ||
@@ -597,10 +623,7 @@ export default {
             color: "transparent",
             symbolSize: 1,
             yAxisIndex: 0,
-            
-        emphasis: {
-          scale: false,
-        },
+            hoverAnimation: false,
             itemStyle: {
               color: "transparent",
               opacity: 1
@@ -831,10 +854,7 @@ export default {
             color: "transparent",
             symbolSize: 1,
             yAxisIndex: 0,
-            
-        emphasis: {
-          scale: false,
-        },
+            hoverAnimation: false,
             itemStyle: {
               color: "transparent",
               opacity: 1
@@ -1079,7 +1099,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .echart-item {
   position: relative;
   margin-top: 15px;
@@ -1171,7 +1191,6 @@ export default {
   line-height: 40px !important;
 }
 /deep/.el-select__tags {
-  display: flex;
   max-width: unset !important;
 }
 </style>

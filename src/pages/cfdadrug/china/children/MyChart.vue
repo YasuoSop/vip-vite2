@@ -56,7 +56,7 @@ export default {
     type:{
       type:String
     },
-    map:{
+    mapType:{
       type:String,
       default:'world'
     },

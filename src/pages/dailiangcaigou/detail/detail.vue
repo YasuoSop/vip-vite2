@@ -4,18 +4,23 @@
     <LoadingGif :loadFlag="isLoading" v-if="isLoading"></LoadingGif>
     <!-- 加载完成显示部分 -->
     <div class="detail-list" v-else>
-      <div class="detail-header">
+      <div class="detail-header header-fixed">
         <div class="header-left">
           <div class="left-top">
             <span class="top-id" :title="data.name">{{ data.jbxx.name }}</span>
-            <span style="margin-right:20px;">{{ data.jbxx.shengchanqiye }}</span>
+            <span style="margin-right:20px;">{{
+              data.jbxx.shengchanqiye
+            }}</span>
             <span class="id-green">{{ data.jbxx.guige }}</span>
             <span class="id-green">{{ data.pici.type }}</span>
           </div>
         </div>
       </div>
       <div class="main">
-        <div class="left-nav">
+        <div
+          class="left-nav"
+          :style="{ top: (showPromtNotice ? 128 : 98) + 'px' }"
+        >
           <div class="nav-list nav-event" @click="handleNavClick">
             <a class="nav-item active">基本信息</a>
             <a class="nav-item">各省市约定采购量</a>
@@ -136,7 +141,7 @@
                 <span
                   :class="{
                     'abandon-click-method': nopms && nopms.dailiangcaigoujzfx,
-                    'action-btn': true,
+                    'action-btn': true
                   }"
                   @click="sendGa"
                 >
@@ -254,12 +259,12 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import List from "@/components/layouts/list.vue";
-import Export from "@/components/common/export.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import LaFooter from "@/components/layouts/footer.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import List from "@/components/layouts/list.vue"
+import Export from "@/components/common/export.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import LaFooter from "@/components/layouts/footer.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
 import { mapState } from "vuex";
 import detailScrollMixins from "@/mixins/detailScroll";
 
@@ -270,7 +275,7 @@ export default {
     LoadingGif,
     SlideSection,
     LaFooter,
-    ExtendButton,
+    ExtendButton
   },
   mixins: [detailScrollMixins],
   data() {
@@ -284,84 +289,82 @@ export default {
       devprocess: null,
       extendList: [], // 扩展信息
       helpDesc: {
-        danjia: "按最小制剂单位（元/片、粒、袋、支）",
+        danjia: "按最小制剂单位（元/片、粒、袋、支）"
       },
       posi: "position:static;text-align:right;padding:0 15px;",
       exportDefaultFiled: [
         {
           prop: "name",
           label: "药品名称",
-          minWidth: 120,
+          minWidth: 120
         },
         {
           prop: "first",
           label: "供应省市",
-          minWidth: 120,
+          minWidth: 120
         },
         {
           prop: "guige",
           label: "规格",
-          minWidth: 120,
+          minWidth: 120
         },
         {
           prop: "shengchanqiye",
           label: "生产企业",
-          minWidth: 120,
+          minWidth: 120
         },
         {
           prop: "amount",
           label: "首年约定采购量计算基数（万片/支/袋）",
-          minWidth: 250,
+          minWidth: 250
         },
         {
           prop: "five",
           label: "50%采购量",
-          minWidth: 120,
+          minWidth: 120
         },
         {
           prop: "sex",
           label: "60%采购量",
-          minWidth: 120,
+          minWidth: 120
         },
         {
           prop: "seven",
           label: "70%采购量",
-          minWidth: 120,
+          minWidth: 120
         },
         {
           prop: "eight",
           label: "80%采购量",
-          minWidth: 120,
+          minWidth: 120
         },
         {
           prop: "amount_ck",
           label: "首年约定采购量(参考)",
-          minWidth: 180,
-        },
+          minWidth: 180
+        }
       ],
       currentPage: 1,
       pageSize: 10,
-      paramStr: {},
+      paramStr: {}
     };
   },
   computed: {
     ...mapState({
-      allBase: (state) => state.Dailiangcaigou.allBase,
-      helpInfo: (state) => state.Dailiangcaigou.helpInfo,
-      nopms: (state) => state.Dailiangcaigou.nopms,
-      param: (state) => state.Dailiangcaigou.param, // 附加参数(存于vuex内)
-    }),
+      allBase: state => state.Dailiangcaigou.allBase,
+      helpInfo: state => state.Dailiangcaigou.helpInfo,
+      nopms: state => state.Dailiangcaigou.nopms,
+      param: state => state.Dailiangcaigou.param // 附加参数(存于vuex内)
+    })
   },
   watch: {
-    showPromtNotice(val) {
+ showPromtNotice(val) {
       if (val) {
-        setTimeout(() => {
-          if ($(".left-nav").css("top")) $(".left-nav").css("top", parseInt($(".left-nav").css("top").replace('px', '')) + 30 + 'px');
-        }, 600);
+        if ($(".left-nav").css("top")) {
+          $(".left-nav").css("top", "128px");
+        }
       } else {
-        setTimeout(() => {
-          if ($(".left-nav").css("top")) $(".left-nav").css("top", '118px');
-        }, 600);
+        if ($(".left-nav").css("top")) $(".left-nav").css("top", "98px");
       }
     }
   },
@@ -376,30 +379,33 @@ export default {
           shengchanqiye: this.paramStr.shengchanqiye,
           type: this.paramStr.type,
           accesstoken: GETCOOKIEFUN("accesstoken"),
-          outdata_column: `name=药品名称,first=供应省市,guige=规格,shengchanqiye=生产企业,amount=首年约定采购量计算基数（万片/支/袋）,five=50%采购量,sex=60%采购量,seven=70%采购量,eight=80%采购量,amount_ck=首年约定采购量(参考)`,
+          outdata_column: `name=药品名称,first=供应省市,guige=规格,shengchanqiye=生产企业,amount=首年约定采购量计算基数（万片/支/袋）,five=50%采购量,sex=60%采购量,seven=70%采购量,eight=80%采购量,amount_ck=首年约定采购量(参考)`
         },
         urlEncode = "/api/dailiangcaigou/infooutdata?" + Qs.stringify(param);
       // this.downloadFile(urlEncode);
-      window.open(
-        decodeURI(urlEncode)
-      )
-      window.Axios({
-          method: 'get',
+      window.open(decodeURI(urlEncode));
+      window
+        .Axios({
+          method: "get",
           url: urlEncode,
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            "Content-Type": "application/x-www-form-urlencoded"
           },
-          responseType: 'arraybuffer',//arraybuffer/blob//加上格式，二进制
-        }).then((res)=>{
-        let name =res.headers["file_name_urlencode"]
-        const {data} = res;
-        if(name){
-          const blob = new Blob([res.data], {type: 'application/zip;charset=utf-8'});
-          const fileName = decodeURIComponent(name) || ((dbname || '数据库') +'.xls')//下载的文件名称及其后缀，后缀要和后台保持的一致
-          let objectURL = window.URL.createObjectURL(blob);
-          window.URL.revokeObjectURL(objectURL); // 释放内存
-        }
-      })
+          responseType: "arraybuffer" //arraybuffer/blob//加上格式，二进制
+        })
+        .then(res => {
+          let name = res.headers["file_name_urlencode"];
+          const { data } = res;
+          if (name) {
+            const blob = new Blob([res.data], {
+              type: "application/zip;charset=utf-8"
+            });
+            const fileName =
+              decodeURIComponent(name) || (dbname || "数据库") + ".xls"; //下载的文件名称及其后缀，后缀要和后台保持的一致
+            let objectURL = window.URL.createObjectURL(blob);
+            window.URL.revokeObjectURL(objectURL); // 释放内存
+          }
+        });
     },
     sendGa() {
       if (this.nopms.dailiangcaigoujzfx) return;
@@ -414,7 +420,7 @@ export default {
         "trackEvent",
         "button",
         "cilick",
-        "dailiangcaigou_details_analysis",
+        "dailiangcaigou_details_analysis"
       ]);
       let routeData = this.$router.resolve({
         path: "/dailiangcaigou/analysis",
@@ -423,8 +429,8 @@ export default {
           guifanname: this.paramStr.guifanname,
           guifanguige: this.paramStr.guifanguige,
           type: this.paramStr.type,
-          guifanqiyezhongbiao: this.paramStr.guifanqiyezhongbiao,
-        },
+          guifanqiyezhongbiao: this.paramStr.guifanqiyezhongbiao
+        }
       });
       window.open(routeData.href, "_blank");
     },
@@ -453,10 +459,10 @@ export default {
             feiyong: this.paramStr.feiyong,
             shengchanqiye: this.paramStr.shengchanqiye,
             type: this.paramStr.type,
-            accesstoken: GETCOOKIEFUN("accesstoken"),
-          },
+            accesstoken: GETCOOKIEFUN("accesstoken")
+          }
         })
-        .then((res) => {
+        .then(res => {
           if (res.data.code === 200 && res.data.data) {
             let data = res.data.data;
             this.data = data;
@@ -465,7 +471,7 @@ export default {
           }
         })
         .then(this.removeLoading)
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -474,14 +480,14 @@ export default {
       this.isLoading = false;
     },
     handleScroll() {
-      let top = $('.main').offset().top,
-          leftNav = $(".left-nav");
-      if (top <= 50) {
-        leftNav.css("top", (this.showPromtNotice ? 88 : 58) + "px")
-      } else {
-        leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px")
-      }
-    },
+      let top = $(".main").offset().top,
+        leftNav = $(".left-nav");
+      // if (top <= 50) {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 98) + "px");
+      // } else {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
+      // }
+    }
   },
   created() {
     if (!this.nopms.xqy) {
@@ -497,7 +503,7 @@ export default {
   },
   mounted() {
     Store.dispatch("Dailiangcaigou/getBaseInfo");
-    window.addEventListener('scroll', this.handleScroll, true)
+    window.addEventListener("scroll", this.handleScroll, true);
   },
   activated() {
     this.vueRouteToNoPms(this.nopms.xqy);
@@ -505,19 +511,16 @@ export default {
   updated() {
     this.vueRouteToNoPms(this.nopms.xqy);
     this.vueTogglePmsTooltip();
-  },
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 @FontsizeSmall: 13px;
 @FontsizeSmallBold: bold;
-/deep/.header-fixed {
-  position: unset !important;
-}
 
 .span-a {
   cursor: pointer;

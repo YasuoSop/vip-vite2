@@ -5,6 +5,17 @@
       <router-link to="/usercenter/take/dynamic" class="nav-lan nav-lan-active">订阅动态&nbsp;&nbsp;></router-link>
       <router-link to="/usercenter/take/condition" class="nav-lan">订阅条件</router-link>
       <router-link to="/usercenter/take/new" class="nav-lan">新增订阅</router-link>
+      <div style="margin-top: 20px; padding: 0 20px; font-weight: 400">
+        关注药智数据服务号
+        <p style="color: #868ea3">随时随地掌握最新动态</p>
+      </div>
+      <img
+        width="96"
+        height="96"
+        style="margin: 10px 0 0 18px"
+        src="../../../../../static/imgs/wechart/code.png"
+        alt=""
+      />
     </div>
     <!--  -->
     <div class="right-view">
@@ -30,7 +41,7 @@
               </div>
               <div class="right">未读</div>
             </div>
-            <div class="hang new">
+            <!-- <div class="hang new">
               <div class="left">
                 <span class="iconfont">&#xe616;</span>
                 <span class="name">新申请</span>
@@ -40,7 +51,7 @@
                 <span class="dw">个</span>
               </div>
               <div class="right">未读</div>
-            </div>
+            </div> -->
           </div>
           <div class="lans">
             <div class="lan" :class="{'readed': item.status === 1}" v-for="(item, index) in data.res" :key="index">
@@ -51,10 +62,10 @@
                   <span class="topic"><span v-if="item.type_title">#</span>{{item.type_title}}</span>
                 </router-link>
                 <!-- 新申请 -->
-                <router-link v-if="item.type == 2" :to="{path: '/zhuce/' + item.infoid, query:{msg_readid: item.id}}" @click.native="changeToReaded(item.id)" target="_blank" class="main">
+                <!-- <router-link v-if="item.type == 2" :to="{path: '/zhuce/' + item.infoid, query:{msg_readid: item.id}}" @click.native="changeToReaded(item.id)" target="_blank" class="main">
                   {{item.title}}
                   <span class="topic"><span v-if="item.type_title">#</span>{{item.type_title}}</span>
-                </router-link>
+                </router-link> -->
                 <!-- 点击标记为已读 -->
                 <i class="handle-read el-icon-circle-check cl-green" @click="changeToReaded(item.id)"></i>
               </div>
@@ -172,7 +183,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .mc {
   .right-view {
     .section {

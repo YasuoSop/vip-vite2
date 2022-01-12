@@ -234,7 +234,7 @@ export default {
     },
     drawSqjxPie() {
       let dom = this.$refs.echarts_sz;
-      this.myChart = Echarts.init(dom);
+      this.myChart = Echarts.init(dom, 'yaozh_theme');
       this.myChart.setOption({
         tooltip: {
           trigger: "item",
@@ -271,7 +271,7 @@ export default {
     },
     drawZllyPie() {
       let dom = this.$refs.echarts_zl;
-      this.myChart1 = Echarts.init(dom);
+      this.myChart1 = Echarts.init(dom, 'yaozh_theme');
       this.myChart1.setOption({
         tooltip: {
           trigger: "item",
@@ -436,7 +436,7 @@ export default {
 };
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .classified-info {
   .zcsb_items {
     border-radius: 4px;

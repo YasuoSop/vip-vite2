@@ -44,7 +44,7 @@
       <section class="sec2 newsec2">
         <div class="la-body-tab">
           <div class="market_nav">
-            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/clinical/list.vue'}">
+            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/clinical/list'}">
               <span class="nav"><i class="iconfont pr5" style="font-size:20px;">&#xe62d;</i>全球临床试验</span>
             </a>
             <a @click.prevent="navRouteTo(2)" class="nav_one" :class="{'router-link-active': $route.path == '/clinical/cate'}">
@@ -61,7 +61,7 @@
 <script>
   import { mapState } from 'vuex'
   import Main from '@/components/layouts/main.vue'
-  import CateNav from './components/cate-nav.vue'
+  import CateNav from './components/cate-nav'
 
   export default{
     components: {
@@ -92,7 +92,7 @@
           window.ga("send","event", "tab", "click", "clinical_list");
           window._paq.push(['trackEvent', 'tab', 'click', 'clinical_list'])
 
-          this.$router.push({ path: '/clinical/list.vue'})
+          this.$router.push({ path: '/clinical/list'})
         }
       },
     },
@@ -119,8 +119,8 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
 
 
   .la-right{

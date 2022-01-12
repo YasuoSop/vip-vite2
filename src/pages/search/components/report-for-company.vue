@@ -3,7 +3,18 @@
     <LoadingGif :loadFlag="!Object.keys(data).length" :className="'report-dialog'"></LoadingGif>
     <div class="rp-title">
       <i class="iconfont font-doc">&#xe600;</i>
-      <span class="icon-doc-content">企业概览</span>
+      <span class="icon-doc-content">企业概览
+        <el-tooltip
+          class="item tooltips-position"
+          effect="light"
+          placement="right"
+        >
+          <div
+            slot="content"
+          >呈现关键词精确匹配到的企业概览，概览下的数据统计也与关键词精确匹配。</div>
+          <i class="el-icon-question cl-green"></i>
+        </el-tooltip>
+      </span>
     </div>
     <div class="rp-main" v-if="Object.keys(data).length">
       <div class="main-desc">
@@ -59,7 +70,7 @@
           </div>
       </div>
     </div>
-      
+
     </div>
     <!-- 药物概述 -->
     <div class="rp-desc" v-if="Object.keys(data).length">
@@ -128,7 +139,7 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      
+
     }
   },
   props: {
@@ -142,10 +153,10 @@ export default {
             // 数字动效
           let pr = new Promise((resolve, reject) => {
             let options = {
-              useEasing: true, 
-              useGrouping: true, 
-              separator: ',', 
-              decimal: '.', 
+              useEasing: true,
+              useGrouping: true,
+              separator: ',',
+              decimal: '.',
             };
             let cu1 = new CountUp('countup1', 0, this.data.count_arr.count_zhuce ? this.data.count_arr.count_zhuce : 0, 0, 1, options);
             let cu2 = new CountUp('countup2', 0, this.data.count_arr.count_zhuce_year ? this.data.count_arr.count_zhuce_year : 0, 0, 1, options);
@@ -201,7 +212,7 @@ export default {
 
         // 加上margin和padding的宽度
         if (cLen == 5) {
-          one_width = one_width + 3 + 3 + 14 + 14 
+          one_width = one_width + 3 + 3 + 14 + 14
         } else if (cLen == 2) {
           one_width = one_width + 3
         }
@@ -216,13 +227,13 @@ export default {
     },
   },
   mounted() {
-    
+
   },
 }
 </script>
 
 <style lang="less" scoped>
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   @desc-width: 40%;
 
   .report {
@@ -450,7 +461,7 @@ export default {
         font-weight: 400;
         color: #545B6D;
         line-height: 20px;
-        
+
         .content{
           line-height: 20px;
           font-size: 12px;

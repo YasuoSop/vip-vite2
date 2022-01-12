@@ -16,7 +16,7 @@
     <transition name="el-fade-in-linear">
       <div v-if="showPromtNotice" class="prompt-notice">
         <div class="prompt-content">
-          <img src="@/assets/imgs/notice_icon.png" />
+          <img src="~@/assets/imgs/notice_icon.png" />
           <div class="text-container">
             <marquee
               v-if="noticeMsgStr.length - (61 * noticeMsg.length - 1) > 70"
@@ -30,7 +30,7 @@
           <img
             @click="closeNotice"
             class="close_notice_icon"
-            src="@/assets/imgs/notice_close.png"
+            src="~@/assets/imgs/notice_close.png"
           />
         </div>
       </div>
@@ -51,7 +51,7 @@
       <div class="right-content">
         <div class="right-wrap">
           <div class="right-logo">
-            <img src="@/assets/imgs/login-sign.jpg" alt class="logo-sign" />
+            <img src="~@/assets/imgs/login-sign.jpg" alt class="logo-sign" />
           </div>
           <div class="right-word">
             <span v-if="isVipIp === 1">药智数据多用户版</span>
@@ -78,7 +78,7 @@
                         class="prompt"
                         :class="{
                           'cl-red': acc.prompt.indexOf('成功') == -1,
-                          'cl-green': acc.prompt.indexOf('成功') != -1,
+                          'cl-green': acc.prompt.indexOf('成功') != -1
                         }"
                       >
                         <span v-html="acc.prompt"></span>
@@ -90,7 +90,7 @@
                           border:
                             iptFocus.acc == true
                               ? '1px solid #4877e8'
-                              : '1px solid #babbc1',
+                              : '1px solid #babbc1'
                         }"
                       >
                         <i class="iconfont">&#xe640;</i>
@@ -109,7 +109,7 @@
                         class="prompt"
                         :class="{
                           'cl-red': acc.promptPwd.indexOf('成功') == -1,
-                          'cl-green': acc.promptPwd.indexOf('成功') != -1,
+                          'cl-green': acc.promptPwd.indexOf('成功') != -1
                         }"
                       >
                         <span v-html="acc.promptPwd"></span>
@@ -120,7 +120,7 @@
                           border:
                             iptFocus.pwd == true
                               ? '1px solid #4877e8'
-                              : '1px solid #babbc1',
+                              : '1px solid #babbc1'
                         }"
                       >
                         <i class="iconfont">&#xe61d;</i>
@@ -193,7 +193,7 @@
                       class="prompt"
                       :class="{
                         'cl-red': sms.prompt.indexOf('成功') == -1,
-                        'cl-green': sms.prompt.indexOf('成功') != -1,
+                        'cl-green': sms.prompt.indexOf('成功') != -1
                       }"
                     >
                       <span v-html="sms.prompt"></span>
@@ -205,7 +205,7 @@
                           border:
                             iptFocus.sms == true
                               ? '1px solid #4877e8'
-                              : '1px solid #babbc1',
+                              : '1px solid #babbc1'
                         }"
                       >
                         <i class="iconfont">&#xe687;</i>
@@ -222,7 +222,7 @@
                         class="prompt"
                         :class="{
                           'cl-red': sms.prompt.indexOf('成功') == -1,
-                          'cl-green': sms.prompt.indexOf('成功') != -1,
+                          'cl-green': sms.prompt.indexOf('成功') != -1
                         }"
                       >
                         <span v-html="sms.promptCode"></span>
@@ -277,7 +277,7 @@
         </div>
       </div>
       <div class="company-info">
-        Copyright © 2009-2021 YAOZH.COM All Rights Reserved
+        Copyright © 2009-2022 YAOZH.COM All Rights Reserved
       </div>
     </section>
   </div>
@@ -285,14 +285,13 @@
 
 <script>
 import CryptoJS from "crypto-js";
-import DialogProbation from "@/components/common/dialog-probation.vue";
+import DialogProbation from "@/components/common/dialog-probation.vue"
 import { mapState } from "vuex";
 import Moment from "moment";
-;
 
 export default {
   components: {
-    DialogProbation,
+    DialogProbation
   },
   data() {
     return {
@@ -309,11 +308,15 @@ export default {
       t: {
         a: "登录",
         b: "发送验证码",
-        c: '该账号暂未开通药智数据企业版权限，<a href="javascript:void(0);" onclick="window.global.methods.showProbation()">申请试用</a> 或 <a href="https://vip.yaozh.com/service?ga_source=vip&ga_name=login_nopermission" target="_blank">联系客服</a>。',
-        p: '账号不存在，点击<a href="https://www.yaozh.com/register?ga_source=vip&ga_position=registered_2" target="_blank">注册</a>',
-        p3: '账号不存在，点击<a href="https://www.yaozh.com/register?ga_source=vip&ga_position=registered_3" target="_blank">注册</a>',
+        c:
+          '该账号暂未开通药智数据企业版权限，<a href="javascript:void(0);" onclick="window.global.methods.showProbation()">申请试用</a> 或 <a href="https://vip.yaozh.com/service?ga_source=vip&ga_name=login_nopermission" target="_blank">联系客服</a>。',
+        p:
+          '账号不存在，点击<a href="https://www.yaozh.com/register?ga_source=vip&ga_position=registered_2" target="_blank">注册</a>',
+        p3:
+          '账号不存在，点击<a href="https://www.yaozh.com/register?ga_source=vip&ga_position=registered_3" target="_blank">注册</a>',
         d: "登录中...",
-        e: '登录失败,<a href="javascript:void(0)" onclick="location.reload()">请刷新重试</a>',
+        e:
+          '登录失败,<a href="javascript:void(0)" onclick="location.reload()">请刷新重试</a>',
         f: "正在发送...",
         g: "短信发送失败",
         h: "账户不能为空",
@@ -323,7 +326,7 @@ export default {
         k: "手机号格式错误",
         l: "验证码不能为空",
         m: "验证码错误",
-        n: "登录成功，正在跳转...",
+        n: "登录成功，正在跳转..."
         // o: '该账号暂未开通药智数据企业版权限，<a href="https://www.yaozh.com/register/" target="_blank">申请试用</a>或<a href="https://www.yaozh.com/register/" target="_blank">联系客服</a>',
       },
       pwdOnlyRead: true,
@@ -340,8 +343,8 @@ export default {
         allowSubmit: {
           localAcc: true,
           localPwd: true,
-          remoteAcc: true,
-        },
+          remoteAcc: true
+        }
       },
       sms: {
         phone: "",
@@ -359,8 +362,8 @@ export default {
         allowSubmit: {
           localPhone: true,
           localCode: true,
-          remotePhone: true,
-        },
+          remotePhone: true
+        }
       },
       iptType: "password",
       rememberPassword:
@@ -369,14 +372,14 @@ export default {
       iptFocus: {
         acc: false,
         pwd: false,
-        sms: false,
-      },
+        sms: false
+      }
     };
   },
   computed: {
     ...mapState({
-      showPromtNotice: (state) => state.showPromtNotice,
-    }),
+      showPromtNotice: state => state.showPromtNotice
+    })
   },
   methods: {
     base64(val, flag) {
@@ -396,7 +399,7 @@ export default {
         "event",
         "button",
         "click",
-        "viptrial_nopermission",
+        "viptrial_nopermission"
       ]);
 
       this.serviceGa = "vip_pc_applyforatrial_submit4";
@@ -409,7 +412,7 @@ export default {
         "event",
         "button",
         "click",
-        "viptrial_loginbackground",
+        "viptrial_loginbackground"
       ]);
 
       this.serviceGa = "vip_pc_applyforatrial_submit1";
@@ -430,14 +433,20 @@ export default {
     loginWWW() {
       //老版项目登录后
       let _this = this;
-      let timeStamp = Number(Date.now().toString().slice(0, 10));
-      let randStr = Math.random().toString(36).slice(2); // 生成随机字符串
+      let timeStamp = Number(
+        Date.now()
+          .toString()
+          .slice(0, 10)
+      );
+      let randStr = Math.random()
+        .toString(36)
+        .slice(2); // 生成随机字符串
       Axios.post("/api/synclogin", {
         timeStamp: timeStamp,
         randStr: randStr,
-        signature: this.getSignature([timeStamp + "", randStr, "newdb"]),
+        signature: this.getSignature([timeStamp + "", randStr, "newdb"])
       })
-        .then((res) => {
+        .then(res => {
           // console.info(JSON.stringify(res));
           // alert(JSON.stringify(res));
           if (!res) {
@@ -449,9 +458,9 @@ export default {
               let _data = res.data.data;
               let accessToken = _data.accessToken;
               // this.loginToWWW(accessToken)
-              window.vueSetCookie("accesstoken", accessToken);
-              window.vueSetCookie("userPicture", _data.picture);
-              window.vueSetCookie("userName", _data.username);
+              this.vueSetCookie("accesstoken", accessToken);
+              this.vueSetCookie("userPicture", _data.picture);
+              this.vueSetCookie("userName", _data.username);
               localStorage.setItem("accesstoken", accessToken);
               delete _data.accessToken;
               Store.commit(
@@ -489,7 +498,7 @@ export default {
             }
           }
         })
-        .catch((err) => {
+        .catch(err => {
           this.setAccountPrompt("submit-fail", this.t.e);
           this.acc.btnEnable = false;
           this.acc.btnText = this.t.a;
@@ -518,7 +527,7 @@ export default {
     },
     // 判断账户登录表单验证是否通过
     accPass() {
-      return Object.values(this.acc.allowSubmit).find((a) => {
+      return Object.values(this.acc.allowSubmit).find(a => {
         return !a;
       }) === undefined
         ? true
@@ -526,7 +535,7 @@ export default {
     },
     // 判断短信登录表单验证是否通过
     smsPass() {
-      return Object.values(this.sms.allowSubmit).find((a) => {
+      return Object.values(this.sms.allowSubmit).find(a => {
         return !a;
       }) === undefined
         ? true
@@ -571,7 +580,7 @@ export default {
     getBanben() {
       let _this = this;
       Axios.get("/api/usercenter/edition")
-        .then((res) => {
+        .then(res => {
           let _data = res.data;
           let code = _data.code;
           let valD = _data.data;
@@ -581,7 +590,7 @@ export default {
             _this.edition = null;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           _this.edition = null;
           console.log(err);
         });
@@ -590,9 +599,9 @@ export default {
     getTimeStamp() {
       return Axios.get("/api/user/getTime", {
         params: {
-          date: Date.parse(new Date()),
-        },
-      }).then((res) => {
+          date: Date.parse(new Date())
+        }
+      }).then(res => {
         let data = res.data;
         console.log(data);
         if (data.code === 200) {
@@ -613,15 +622,21 @@ export default {
           this.acc.btnText = this.t.d;
           return true;
         })() &&
-        this.remoteAccount(this).then((res) => {
+        this.remoteAccount(this).then(res => {
           if (!res) {
             this.acc.btnEnable = false;
             this.acc.btnText = this.t.a;
             return false;
           }
           if (this.accPass()) {
-            let timeStamp = Number(Date.now().toString().slice(0, 10));
-            let randStr = Math.random().toString(36).slice(2); // 生成随机字符串
+            let timeStamp = Number(
+              Date.now()
+                .toString()
+                .slice(0, 10)
+            );
+            let randStr = Math.random()
+              .toString(36)
+              .slice(2); // 生成随机字符串
 
             Axios.post("/api/user/login", {
               name: this.acc.account,
@@ -629,9 +644,9 @@ export default {
               timeStamp: timeStamp,
               randStr: randStr,
               signature: this.getSignature([timeStamp + "", randStr, "newdb"]),
-              client: "Android",
+              client: "Android"
             })
-              .then((res) => {
+              .then(res => {
                 if (!res) {
                   this.setAccountPrompt("submit-fail", this.t.e);
                   this.acc.btnEnable = false;
@@ -643,27 +658,27 @@ export default {
                     // 登陆成功，写入cookie，页面跳转
                     this.setAccountPrompt("submit-success", this.t.n);
                     // vueSetCookie 公共方法写在了 assets/js/func.js
-                    window.vueSetCookie("accesstoken", userdata.accessToken);
-                    window.vueSetCookie("userPicture", userdata.picture);
-                    window.vueSetCookie("userName", userdata.username);
-                    window.vueSetCookie("userComname", userdata.comname);
-                    window.vueSetCookie("userGradeName", userdata.grade_name);
-                    window.vueSetCookie(
+                    this.vueSetCookie("accesstoken", userdata.accessToken);
+                    this.vueSetCookie("userPicture", userdata.picture);
+                    this.vueSetCookie("userName", userdata.username);
+                    this.vueSetCookie("userComname", userdata.comname);
+                    this.vueSetCookie("userGradeName", userdata.grade_name);
+                    this.vueSetCookie(
                       "userEndtime",
                       this.vueTimestampToTime(userdata.endtime)
                     );
                     localStorage.setItem("accesstoken", userdata.accessToken);
                     if (this.rememberPassword) {
-                      window.vueSetCookie(
+                      this.vueSetCookie(
                         "password",
                         this.base64(this.acc.pwd, true)
                       );
-                      window.vueSetCookie("uname", this.acc.account);
-                      window.vueSetCookie("rememberType", true);
+                      this.vueSetCookie("uname", this.acc.account);
+                      this.vueSetCookie("rememberType", true);
                     } else {
                       this.vueDelCookie("password");
                       this.vueDelCookie("uname");
-                      window.vueSetCookie("rememberType", false);
+                      this.vueSetCookie("rememberType", false);
                     }
                     delete userdata.accessToken;
                     Store.commit(
@@ -705,7 +720,7 @@ export default {
                   this.acc.btnText = this.t.a;
                 }
               })
-              .catch((err) => {
+              .catch(err => {
                 this.setAccountPrompt("submit-fail", this.t.e);
                 this.acc.btnEnable = false;
                 this.acc.btnText = this.t.a;
@@ -744,7 +759,9 @@ export default {
         // 如果手机号格式正确
         await this.getTimeStamp();
         let timeStamp = this.timeStamp;
-        let randStr = Math.random().toString(36).slice(2);
+        let randStr = Math.random()
+          .toString(36)
+          .slice(2);
         this.sms.codeBtnBan = true;
         this.sms.codeBtnText = this.t.f;
         // alert(timeStamp)
@@ -757,9 +774,9 @@ export default {
           mobile: this.sms.phone,
           timeStamp: timeStamp,
           randStr: randStr,
-          signature: this.getSignature([timeStamp + "", randStr, "newdb"]),
+          signature: this.getSignature([timeStamp + "", randStr, "newdb"])
         })
-          .then((res) => {
+          .then(res => {
             if (res.data.code == 200 && res.data.code == 200) {
               let t = 60;
               this.sms.codeBtnText = t + "s重新获取";
@@ -779,7 +796,7 @@ export default {
               this.sms.codeBtnBan = false;
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err);
             this.sms.prompt = this.t.g;
             this.sms.codeBtnText = this.t.b;
@@ -790,8 +807,14 @@ export default {
     // 短信登录-提交
     smsSubmit() {
       if (this.localPhone() && this.localCode()) {
-        let timeStamp = Number(Date.now().toString().slice(0, 10));
-        let randStr = Math.random().toString(36).slice(2);
+        let timeStamp = Number(
+          Date.now()
+            .toString()
+            .slice(0, 10)
+        );
+        let randStr = Math.random()
+          .toString(36)
+          .slice(2);
         this.setSmsPrompt("submit-start", "");
         this.sms.btnEnable = true;
         this.sms.btnText = this.t.d;
@@ -801,9 +824,9 @@ export default {
           timeStamp: timeStamp,
           randStr: randStr,
           signature: this.getSignature([timeStamp + "", randStr, "newdb"]),
-          client: "Android",
+          client: "Android"
         })
-          .then((res) => {
+          .then(res => {
             if (res.data.code == 200 && res.data.code == 200) {
               // // 登陆成功，写入cookie，页面跳转
               // this.setSmsPrompt('submit-success', this.t.n);
@@ -819,9 +842,9 @@ export default {
               // vueSetCookie 公共方法写在了 assets/js/func.js
               let accessToken = res.data.data.accessToken;
               // this.loginToWWW(accessToken)
-              window.vueSetCookie("accesstoken", accessToken);
-              window.vueSetCookie("userPicture", res.data.data.picture);
-              window.vueSetCookie("userName", res.data.data.username);
+              this.vueSetCookie("accesstoken", accessToken);
+              this.vueSetCookie("userPicture", res.data.data.picture);
+              this.vueSetCookie("userName", res.data.data.username);
               localStorage.setItem("accesstoken", accessToken);
               delete res.data.data.accessToken;
               Store.commit(
@@ -864,7 +887,7 @@ export default {
             this.sms.btnEnable = false;
             this.sms.btnText = this.t.a;
           })
-          .catch((err) => {
+          .catch(err => {
             this.setSmsPrompt("submit-fail", this.t.e);
             this.sms.btnEnable = false;
             this.sms.btnText = this.t.a;
@@ -923,9 +946,9 @@ export default {
       that.acc.allowSubmit.remoteAcc = false;
       return new Promise((resolve, reject) => {
         Axios.post("/api/user/usercheck", {
-          name: that.acc.account,
+          name: that.acc.account
         })
-          .then((res) => {
+          .then(res => {
             let datas = [];
             if (typeof res.data == "string") {
               datas = JSON.parse(res.data);
@@ -947,13 +970,17 @@ export default {
               that.acc.allowSubmit.remoteAcc = true;
               resolve(false);
               that.setAccountPrompt("acc", that.t.c);
+            } else if (datas.code == 11047) {
+              that.acc.allowSubmit.remoteAcc = true;
+              resolve(false);
+              that.setAccountPrompt("acc", datas.msg);
             } else {
               that.acc.allowSubmit.remoteAcc = true;
               resolve(false);
               that.setAccountPrompt("acc", that.t.p);
             }
           })
-          .catch((err) => {
+          .catch(err => {
             that.acc.allowSubmit.remoteAcc = true;
           });
       });
@@ -961,12 +988,12 @@ export default {
 
     // 远程校验---手机号
     remotePhone: _.debounce(
-      function (that) {
+      function(that) {
         that.sms.allowSubmit.remotePhone = false;
         return Axios.post("/api/user/usercheck", {
-          name: that.sms.phone,
+          name: that.sms.phone
         })
-          .then((res) => {
+          .then(res => {
             let datas = [];
             if (typeof res.data == "string") {
               datas = JSON.parse(res.data);
@@ -991,7 +1018,7 @@ export default {
               that.sms.allowSubmit.remotePhone = true;
             }
           })
-          .catch((err) => {
+          .catch(err => {
             that.sms.allowSubmit.remotePhone = true;
           });
       },
@@ -1009,12 +1036,12 @@ export default {
     },
     getNoticeMsg() {
       window.Axios.post("/api/config/notice")
-        .then((res) => {
+        .then(res => {
           let data = res.data;
           if (data.code == 200) {
             let curTimeStamp = Moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
             this.noticeMsg = [];
-            data.data.forEach((item) => {
+            data.data.forEach(item => {
               if (
                 (Moment(curTimeStamp).isAfter(
                   Moment(item.time_start * 1000).format("YYYY-MM-DD HH:mm:ss")
@@ -1033,7 +1060,7 @@ export default {
               }
             });
             this.noticeMsgStr = "";
-            this.noticeMsg.forEach((item) => {
+            this.noticeMsg.forEach(item => {
               this.noticeMsgStr +=
                 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
                 item.content;
@@ -1075,22 +1102,22 @@ export default {
             }, 100);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
-    },
+    }
   },
   beforeCreate() {},
   created() {
     Axios.get("/api/user/isiplogin")
-      .then((res) => {
+      .then(res => {
         if (res.status === 200 && res.data.data) {
           this.isVipIp = res.data.data.is_iplogin;
         } else {
           this.isVipIp = 0;
         }
       })
-      .catch((err) => {
+      .catch(err => {
         this.isVipIp = 0;
       });
     setTimeout(() => {
@@ -1112,8 +1139,8 @@ export default {
     this.getNoticeMsg();
     window.global = {
       methods: {
-        showProbation: this.showProbation,
-      },
+        showProbation: this.showProbation
+      }
     };
     this.getBanben(); //获取版本号
     let yaozh_mylogin = this.vueGetCookie("yaozh_mylogin");
@@ -1131,13 +1158,13 @@ export default {
         this.$refs.foo.$el.querySelector("input").focus();
       }, 500);
     });
-  },
+  }
 };
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
-@import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/app.less";
 .la-app {
   .la-app-main {
     .la-content {
@@ -1145,7 +1172,7 @@ export default {
       width: 100vw;
       height: 100vh;
       position: relative;
-      background: url(@/assets/imgs/login_box_bg.png) no-repeat center 0;
+      background: url(~@/assets/imgs/login_box_bg.png) no-repeat center 0;
       background-size: cover;
 
       .prompt-notice {
@@ -1215,7 +1242,7 @@ export default {
         left: 50%;
         margin-top: -357px;
         margin-left: -582px;
-        background: url(@/assets/imgs/login_bg.png) no-repeat center 0;
+        background: url(~@/assets/imgs/login_bg.png) no-repeat center 0;
         .company-info {
           position: fixed;
           bottom: 31px;

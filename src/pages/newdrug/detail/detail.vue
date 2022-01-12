@@ -36,7 +36,7 @@
               class="ywbg-btn"
               @click="ywbgLink(data.reportid, 'newdrug_detail_righttop')"
             >
-              <img src="@/assets/imgs/ywbg.png" />
+              <img src="~@/assets/imgs/ywbg.png" />
               <span>药物报告</span>
             </div>
           </div>
@@ -500,12 +500,12 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import LaFooter from "@/components/layouts/footer.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
-import China from "./components/china.vue";
-import Global from "./components/global.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import LaFooter from "@/components/layouts/footer.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
+import China from "./components/china";
+import Global from "./components/global";
 import detailScrollMixins from "@/mixins/detailScroll.js";
 import { mapState } from "vuex";
 
@@ -711,8 +711,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 .wrapper {
   .detail-list {

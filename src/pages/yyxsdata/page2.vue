@@ -74,11 +74,11 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import inputPopover from "@/components/inputs/input-popover.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import inputPopover from "@/components/inputs/input-popover.vue"
 import Total from "./components/total.vue";
 import EchartsItem from "./components/echartsItem.vue";
-import Select from "@/components/inputs/select.vue";
+import Select from "@/components/inputs/select.vue"
 import { mapState } from "vuex";
 
 export default {
@@ -582,7 +582,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .page-wrap {
   background: #fff;
   box-shadow: 0 0 5px #c4d3f8;

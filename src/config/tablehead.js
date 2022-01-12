@@ -2820,7 +2820,8 @@ export default {
                 label: "最新注册时间",
                 sort: "custom",
                 width: 120, //最少宽度
-                checked: true //默认是否选择
+                checked: true, //默认是否选择
+                tips: true
             }
             // {
             //   prop: "piwenshijian",
@@ -2964,7 +2965,7 @@ export default {
             },
             {
                 prop: "referencedrug",
-                label: "参比药物",
+                label: "参比制剂",
                 tips: true,
                 width: 150, //最少宽度
                 checked: true //默认是否选择
@@ -3137,7 +3138,7 @@ export default {
             },
             {
                 prop: "tname",
-                label: "商标名称(日文)",
+                label: "商品名称(日文)",
                 width: 120, //最少宽度
                 checked: true //默认是否选择
             },
@@ -5416,20 +5417,20 @@ export default {
                 checked: true //默认是否选择
             },
             {
-              prop: "count_zgss",
-              label: "中国上市",
-              width: 150, //最少宽度
-              sort: "custom",
-              okWidth: 150, //指定宽度
-              checked: true //默认是否选择
+                prop: "count_zgss",
+                label: "中国上市",
+                width: 150, //最少宽度
+                sort: "custom",
+                okWidth: 150, //指定宽度
+                checked: true //默认是否选择
             },
             {
-              prop: "count_qqlc",
-              label: "全球临床",
-              width: 150, //最少宽度
-              sort: "custom",
-              okWidth: 150, //指定宽度
-              checked: true //默认是否选择
+                prop: "count_qqlc",
+                label: "全球临床",
+                width: 150, //最少宽度
+                sort: "custom",
+                okWidth: 150, //指定宽度
+                checked: true //默认是否选择
             },
             // {
             //     prop: "count_sqss",
@@ -5564,7 +5565,7 @@ export default {
             },
             {
                 prop: "activeingredient",
-                label: "通用名称",
+                label: "活性成分",
                 width: 150, //最少宽度
                 checked: true //默认是否选择
             },
@@ -5651,7 +5652,7 @@ export default {
         ],
         tymc: [{
                 prop: "activeingredient",
-                label: "通用名称",
+                label: "活性成分",
                 width: 150, //最少宽度
                 checked: true //默认是否选择
             },
@@ -5724,7 +5725,7 @@ export default {
             },
             {
                 prop: "activeingredient",
-                label: "通用名称",
+                label: "活性成分",
                 width: 150, //最少宽度
                 checked: true //默认是否选择
             },
@@ -5799,7 +5800,7 @@ export default {
         ],
         sqjgExpand: [{
                 prop: "activeingredient",
-                label: "通用名称",
+                label: "活性成分",
                 width: 150, //最少宽度
                 checked: true //默认是否选择
             },
@@ -5965,5 +5966,159 @@ export default {
                 checked: false //默认是否选择
             }
         ]
+    },
+    globalapproval: { // 全球上市
+      // 按活性名称浏览表头
+      hxcf: [{
+        prop: "activeingredient",
+        label: "活性成分(英文)",
+        width: 150, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "cname",
+        label: "活性成分(中文)",
+        width: 150, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "zwform",
+        label: "剂型",
+        width: 80, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "olddate",
+        label: "最早批准日期",
+        width: 150, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "oldsource",
+        label: "国家或地区",
+        width: 80, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "newestdate",
+        label: "最新批准日期",
+        width: 150, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "newsource",
+        label: "国家或地区",
+        width: 80, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "oldchina",
+        label: "中国最早批准日期",
+        width: 150, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "newchina",
+        label: "中国最新批准日期",
+        width: 150, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "zhucecount",
+        label: "中国注册",
+        width: 80, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "chinesecompany",
+        label: "中国企业",
+        width: 80, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "fensantu",
+        label: "单品种分析",
+        width: 90, //最少宽度
+        checked: true //默认是否选择
+      }],
+      // 活性成分2级列表
+      hxcfExpand: [{
+        prop: "source",
+        label: "国家或地区",
+        width: 90, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "drugid",
+        label: "批准号",
+        width: 150, //最少宽度
+        tips: true,
+        checked: true //默认是否选择
+      },{
+        prop: "name",
+        label: "药品名称",
+        width: 120, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "activeingredient",
+        label: "活性成分(英文)",
+        width: 150, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "cname",
+        label: "活性成分(中文)",
+        width: 150, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "company",
+        label: "企业名称",
+        width: 120, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "administrationroute",
+        label: "给药途径",
+        width: 100, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "zwform",
+        label: "剂型",
+        width: 100, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "status",
+        label: "市场状态",
+        width: 80, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "date",
+        label: "批准日期",
+        width: 120, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "fensantu",
+        label: "单品种分析",
+        width: 90, //最少宽度
+        checked: true //默认是否选择
+      }],
+      // 按企业名称浏览
+      qymc: [{
+        prop: "guifanqiye",
+        label: "企业名称",
+        width: 150, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "activeingredientCounts",
+        label: "上市品种数(总数)",
+        width: 100, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "newestdate",
+        label: "最新品种批准日期",
+        width: 150, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "olddate",
+        label: "最早品种批准日期",
+        width: 150, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "chinesecompany",
+        label: "在中国上市品种数",
+        width: 100, //最少宽度
+        checked: true //默认是否选择
+      },{
+        prop: "zhucecount",
+        label: "在中国注册品种数",
+        width: 100, //最少宽度
+        checked: true //默认是否选择
+      },]
     }
 };

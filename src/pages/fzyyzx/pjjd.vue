@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import ListOne from './lists/list-one.vue'
-import ListTwo from './lists/list-two.vue'
-import ListThree from './lists/list-three.vue'
+import ListOne from './lists/list-one'
+import ListTwo from './lists/list-two'
+import ListThree from './lists/list-three'
 import { mapState } from 'vuex'
 
 export default{
@@ -82,7 +82,7 @@ export default{
 </script>
 
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   .el-tabs__header{
     padding-left: 14px;
     margin: 0px;

@@ -6,6 +6,7 @@
       :placeholder="placeholder"
       :loading="loading"
       @change="updateValue"
+      :multiple="multiple"
       :collapse-tags="collapseTags"
       :filterable="filterable"
       :clearable="clearable"
@@ -45,73 +46,78 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   props: {
     multiple: {
-      type: Boolean,
+      type: Boolean
     },
     collapseTags: {
-      type: Boolean,
+      type: Boolean
     },
     placeholder: {
-      type: String,
+      type: String
     },
     option: {
       type: Array,
       default() {
         return [];
-      },
+      }
     },
     value: {
-      type: [String, Number],
+      type: [String, Number]
     },
     valueList: {
       type: Array,
       default() {
         return [];
-      },
+      }
     },
     index: {
-      type: Number,
+      type: Number
     },
     loading: {
-      type: Boolean,
+      type: Boolean
     },
     filterable: {
-      type: Boolean,
+      type: Boolean
     },
     clearable: {
-      type: Boolean,
+      type: Boolean
     },
     autoWidth: {
-      type: Boolean,
-    },
+      type: Boolean
+    }
+  },
+  model: {
+    prop: this.multiple ? "valueList" : "value",
+    event: this.multiple ? "updateValue" : "change"
   },
   data() {
     return {
-      selVal: this.value,
+      selVal: this.value
     };
   },
   watch: {
     value(val) {
       this.selVal = val;
-    },
+    }
   },
   methods: {
     updateValue(value) {
       this.multiple
         ? this.$emit("updateValue", this.index, value)
         : this.$emit("change", value);
-    },
+    }
   },
   mounted() {
     this.selectPopMouseleave(this);
-  },
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .la-advenced-select {
   /deep/.el-select {
     width: 100%;

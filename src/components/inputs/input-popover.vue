@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style lang="less"> // 这里不能加scoped
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .input-error-popover.el-popper {
   padding: 5px 12px;
   font-size: 12px;

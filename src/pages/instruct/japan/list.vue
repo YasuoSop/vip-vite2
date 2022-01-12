@@ -324,8 +324,8 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-// @import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+// @import "~@/assets/less/app.less";
 .bg-green {
   background-color: @Green;
 }

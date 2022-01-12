@@ -218,7 +218,7 @@
 
 <script>
 import LoadingGif from '@/components/common/globalCom/loading-gif.vue'
-import iEchart from './components/i-echarts.vue'
+import iEchart from './components/i-echarts'
 export default {
   components: {
     LoadingGif,
@@ -1242,7 +1242,7 @@ export default {
     goYpzb(name) {
       window.ga("send","event", "button", "cilick", "dailiangcaigoumiss_yaopinzhongbiao__" + name)
       window._paq.push(['trackEvent', 'button', 'cilick', 'dailiangcaigoumiss_yaopinzhongbiao__' + name, ])
-      let routeData = this.$router.resolve({ path: '/yaopinzhongbiao/list.vue', query: {name:name}})
+      let routeData = this.$router.resolve({ path: '/yaopinzhongbiao/list', query: {name:name}})
       window.open(routeData.href, '_blank')
     },
 
@@ -1268,7 +1268,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
 
   .pici-analy {
     min-height: calc(100vh - 150px);

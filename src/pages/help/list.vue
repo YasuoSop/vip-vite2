@@ -17,7 +17,7 @@ export default{
 } 
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .help_right{
   width: 1010px;
   height: auto;

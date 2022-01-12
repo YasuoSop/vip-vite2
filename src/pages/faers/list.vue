@@ -327,7 +327,7 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .la-list {
   .item_top {
     height: 190px;

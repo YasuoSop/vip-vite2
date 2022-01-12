@@ -4,7 +4,7 @@
       <div class="actions" :style="posi">
         <!-- <a class="action-btn" target="_blank" href="https://db.yaozh.com/bigdata/yzxpj?source=db&dbname=orangebook" style="text-decoration: none"><i class="iconfont">&#xe63c;</i> 大数据可视化分析</a> -->
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Orangebook" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" style="text-align:left;" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Orangebook" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" style="text-align:left;" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"
@@ -262,8 +262,8 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-// @import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+// @import "~@/assets/less/app.less";
 
 .la-list{
   .item_top {

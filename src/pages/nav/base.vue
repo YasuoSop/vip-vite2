@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="empty-wrap" v-if="navList.length === 0">
-          <img src="@/assets/imgs/menu-nodata-grey.png" />
+          <img src="~@/assets/imgs/menu-nodata-grey.png" />
           <div class="msg">
             对不起，小智暂时没有找到相关数据，换个关键词试试吧~
           </div>
@@ -49,9 +49,9 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import MainTop from "@/components/common/main-top.vue";
-import Input from "@/components/inputs/input.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import MainTop from "@/components/common/main-top.vue"
+import Input from "@/components/inputs/input.vue"
 import { mapState } from "vuex";
 export default {
   data() {
@@ -143,7 +143,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .title-input {
   margin-left: 30px;
   /deep/input {

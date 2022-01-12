@@ -42,7 +42,7 @@ export default{
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .totals{
   box-shadow: 0 0 5px #c4d3f8;
   height: 110px;

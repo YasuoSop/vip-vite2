@@ -20,7 +20,7 @@
             <el-checkbox-group v-model="exportArr">
               <table class="fields-table">
                 <tbody>
-                  <tr v-for="(item, index) in exportDefaultFiled">
+                  <tr v-for="(item, index) in exportDefaultFiled" :key="index">
                     <td style="width:330px;"><el-checkbox :label="(item.prop ? item.prop : item.field)">{{item.label}}</el-checkbox></td>
                   </tr>
                 </tbody>
@@ -94,8 +94,11 @@ export default {
       return Store.state[this.vuex_name].nopms
     },
     exportDefaultFiled () {
+      let defaultAtt = this.defaultFiled.filter(item=> {
+        return item.prop !== 'fensantu'
+      })
       let arr = []
-      for (let item of this.defaultFiled) {
+      for (let item of defaultAtt) {
         arr.push(item)
       }
       return arr
@@ -165,6 +168,37 @@ export default {
       //导出条件
       query = Object.assign({}, this.storeState.order&&this.storeState.order[this.outdataAction] ? {order: this.storeState.order[this.outdataAction]} : {}, this.storeState.putong, this.storeState.shaixuan,this.storeState.hot, {outdata_action : this.outdataAction, outdata_column : _.join(column, ',')},{fourth_condition:this.storeState.fourth?this.storeState.fourth.fourth_condition:""})
       url = '/api/' + this.api_name + `/outdata${this.otherOut}?accesstoken=` + GETCOOKIEFUN("accesstoken") + '&'
+      console.log(query)
+      // 全球上市国家和地区特殊处理
+      if (this.storeState.filtersSource && this.storeState.filtersSource.length>0) {
+        let sourceAnd = [] // 接收选中的国家或地区
+        let sourceNot = [] // 接收排除的国家或地区
+        let sourceAndStr = ''
+        let sourceNotStr = ''
+        _.map(this.storeState.filtersSource, (item, index) => {
+          if (item.checked == 1) {
+            sourceAnd.push(item.label)
+          } else if (item.checked == -1) {
+            sourceNot.push(item.label)
+          }
+        })
+        if (sourceAnd.length>0) {
+          sourceAndStr = ` _and source=${_.join(sourceAnd, 'ღ')}`
+        }
+
+        if (sourceNot.length>0) {
+          sourceNot.forEach((item, i) => {
+            sourceNotStr += ` _not source=${item}`
+          });
+        }
+
+        if (query.filter_condition) {
+          query.filter_condition = query.filter_condition + sourceAndStr + sourceNotStr
+        } else {
+          query.filter_condition = sourceAndStr + sourceNotStr
+        }
+      }
+      // 结束
       if (this.params) {
         query = Object.assign(query,this.params)
       };
@@ -247,7 +281,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 .action-btn {
   margin-right: 0 !important;

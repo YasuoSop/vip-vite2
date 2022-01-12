@@ -26,9 +26,10 @@
 </template>
 <script>
   import { mapState } from "vuex"
-  import  MianSearch from './search.vue';
-  import  Customization from './customization.vue'
+  import  MianSearch from './search';
+  import  Customization from './customization'
   import RenewTips from "@/components/common/RenewTips.vue"
+  import { setTimeout, setInterval, clearInterval, clearTimeout } from 'timers';
   import videojs from 'video.js'
 
 export default{
@@ -244,7 +245,7 @@ export default{
 }
 </script>
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   video::-webkit-media-controls-fullscreen-button {
       display: none;
   }

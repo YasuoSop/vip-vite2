@@ -425,7 +425,7 @@
 			// 营销分析 - 混合图
 			drawLeftMix () {
 				let dom = document.getElementById("echarts_yxfx")
-				this.myChart = Echarts.init(dom)
+				this.myChart = Echarts.init(dom, 'yaozh_theme')
 				this.myChart.setOption({
 					tooltip: {
 						trigger: 'axis',
@@ -511,7 +511,7 @@
 			// 营业收入 - 饼状图
 			drawRightOnePie () {
 				let dom = document.getElementById("echarts_yysr")
-				this.myChart = Echarts.init(dom)
+				this.myChart = Echarts.init(dom, 'yaozh_theme')
 				this.myChart.setOption({
 					title:{
 						text:'主营业收入占比',
@@ -554,7 +554,7 @@
 			// 营业成本 - 饼状图
 			drawRightTwoPie () {
 				let dom = document.getElementById("echarts_yycb")
-				this.myChart = Echarts.init(dom)
+				this.myChart = Echarts.init(dom, 'yaozh_theme')
 				this.myChart.setOption({
 					title:{
 						text:'主营业成本占比',
@@ -751,8 +751,8 @@
 </script>
 
 <style lang="less">
-	@import "@/assets/less/var.less";
-	@import "@/assets/less/app.less";
+	@import "~@/assets/less/var.less";
+	@import "~@/assets/less/app.less";
 	#nbsj {
 		@conWidth: 100%;
 		background: @White;
@@ -770,7 +770,7 @@
 		.el-table .cell {
 			padding-left: 39px;
 		}
-		
+
 		// 标题
 		.title {
 			color: @FontColorHover;
@@ -868,12 +868,12 @@
 				min-height: 355px;
 				margin-top: 30px;
         &>.item {
-          min-width: 45%;
+          width: 750px;
           height: 355px;
           margin: 0 30px;
         }
         &>.right-two {
-          min-width: 45%;
+          width: 750px;
           height: 322px;
           margin: 20px 30px 0px 30px;
           position: relative;
@@ -908,8 +908,8 @@
             display: none;
             box-sizing: border-box;
             padding: 8px;
-            width: 100%;
-            height: 100%;
+            width: 750px;
+            height: 322px;
             &.ec_active {
               display: block!important;
             }

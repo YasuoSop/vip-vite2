@@ -641,7 +641,7 @@ export default {
     // 市值 - 折线图
     drawLineSz () {
       let dom = this.$refs.echarts_sz
-      this.echarts_sz = Echarts.init(dom)
+      this.echarts_sz = Echarts.init(dom, 'yaozh_theme')
       this.echarts_sz.setOption({
         xAxis: {
           type: 'category',
@@ -701,7 +701,7 @@ export default {
     // 营收趋势 - 柱形图
     drawBarYsqs () {
       let dom = this.$refs.echarts_ysqs
-      this.echarts_ysqs = Echarts.init(dom)
+      this.echarts_ysqs = Echarts.init(dom, 'yaozh_theme')
       this.echarts_ysqs.setOption({
         xAxis: [
           {
@@ -788,7 +788,7 @@ export default {
     // 研发投入 - 柱形&折线图
     drawBarYftr () {
       let dom = this.$refs.echarts_yftr
-      this.echarts_yftr = Echarts.init(dom)
+      this.echarts_yftr = Echarts.init(dom, 'yaozh_theme')
       this.echarts_yftr.setOption({
         tooltip: {
           trigger: 'axis',
@@ -863,7 +863,7 @@ export default {
     // 申报趋势 - 折线图
     drawLineSbqs () {
       let dom = this.$refs.echarts_sbqs
-      this.echarts_sbqs = Echarts.init(dom)
+      this.echarts_sbqs = Echarts.init(dom, 'yaozh_theme')
       this.echarts_sbqs.setOption({
         xAxis: {
           type: 'category',
@@ -928,7 +928,7 @@ export default {
     // 国内临床试验 - 柱形图
     drawBarGnlcsy () {
       let dom = this.$refs.echarts_gnlcsy
-      this.echarts_gnlcsy = Echarts.init(dom)
+      this.echarts_gnlcsy = Echarts.init(dom, 'yaozh_theme')
       this.echarts_gnlcsy.setOption({
         tooltip : {
           trigger: 'axis',
@@ -1152,7 +1152,7 @@ export default {
       });
 
       let dom = this.$refs.echarts_zbdqrlfb
-      this.echarts_zbdqrlfb = Echarts.init(dom)
+      this.echarts_zbdqrlfb = Echarts.init(dom, 'yaozh_theme')
       this.echarts_zbdqrlfb.setOption({
         tooltip: {
           position: 'top'
@@ -1285,7 +1285,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 // 本页的样式
 .detail-qyfx {

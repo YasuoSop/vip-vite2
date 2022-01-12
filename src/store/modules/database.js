@@ -291,7 +291,7 @@ export default {
                         let iaccurate = Payload[i].accurate
                         let pivalue = Payload[i].value
                         let atcs_sel = Payload[i].atcs_sel
-                        //atc多分类
+                            //atc多分类
                         if (atcs_sel) {
                             obj.atcs_sel = 1
                         };
@@ -344,10 +344,11 @@ export default {
             _.map(Payload, (item, index) => {
                 index = index.replace('_eq', '')
                 if (item.length > 0) { // 去空
+                    let eqStr = (location.href.includes("yuanliaoxinxi") ? '=' : "_eq=")
                     if (group == "") {
-                        group = index + "_eq=" + _.join(item, 'ღ')
+                        group = index + eqStr + _.join(item, 'ღ')
                     } else {
-                        group += ' ' + "_and" + ' ' + index + "_eq=" + _.join(item, 'ღ')
+                        group += ' ' + "_and" + ' ' + index + eqStr + _.join(item, 'ღ')
                     }
                 }
             })
@@ -429,7 +430,7 @@ export default {
             this.iffirstCommonIn = false;
 
             state.commit("listLoading", true)
-            // 确定api的url
+                // 确定api的url
             if (Payload !== undefined) {
                 if (Payload.path) {
                     state.commit("path", Payload.path)
@@ -442,8 +443,8 @@ export default {
             }
 
             let param = {} // 储存axios获取数据的API参数
-            // state.state.putong = {}
-            // state.state.gaoji = {}
+                // state.state.putong = {}
+                // state.state.gaoji = {}
 
             // if (state.state.query && state.state.query.length != 0) {
             // state.commit("putong", state.state.query)
@@ -488,7 +489,7 @@ export default {
             state.commit("search_api_param", paramAfter)
 
             let type = (Payload && Payload.type) ? Payload.type : 'get'
-            // 当没有跟其他参数时，正常搜索，或者 结构式检索 回到第一页
+                // 当没有跟其他参数时，正常搜索，或者 结构式检索 回到第一页
             if (!Payload) {
                 state.commit("paramPage", 1)
                 state.commit("res1", [])
@@ -523,11 +524,11 @@ export default {
                         state.commit("extendCount", 0)
                     }
                     state.commit("refreshFilter", false)
-                    // 千分位配置设置开始（千分位举例：123,456每三位逗号隔开）
+                        // 千分位配置设置开始（千分位举例：123,456每三位逗号隔开）
                     await this.vue.thousandSet(data.res, 'Database').then(value => {
-                        data.res = value
-                    })
-                    // 千分位配置设置结束
+                            data.res = value
+                        })
+                        // 千分位配置设置结束
                     state.commit("res1", data.res ? data.res : [])
 
                     state.commit("listLoading", false)
@@ -575,7 +576,7 @@ export default {
             }).then(res => {
                 if (res.data.code === 200 && res.data) {
                     let data = res.data.data
-                    // 普通搜索项
+                        // 普通搜索项
                     let normal = data.normal
                     _.forEach(normal, (item) => {
                         if (item.type === "select") {
@@ -588,7 +589,7 @@ export default {
                     state.commit("nomalFiled", normal)
                     state.commit("match_putong", normal)
                     state.commit("setHighStatus", res.data.data.high)
-                    // 添加问号标注添加条件筛选
+                        // 添加问号标注添加条件筛选
                     state.commit("filters1", data.filter)
                 }
             })
@@ -607,7 +608,7 @@ export default {
             }).then(res => {
                 if (res.data.code === 200 && res.data) {
                     let data = res.data.data
-                    // 更改document.title
+                        // 更改document.title
                     if (data.baseconf.dbname) {
                         store.commit("Normal/dbname", data.baseconf.dbname)
                     }
@@ -617,7 +618,7 @@ export default {
                     state.commit("info_conf", data.infoconf)
                     state.commit("tableconf", data.tableconf)
                     state.commit("update_conf", data.updatelog)
-                    // 设置关联快捷入口
+                        // 设置关联快捷入口
                     state.commit("base_conf_nav_show", data.baseconf.open_nav == 1 ? true : false)
                     state.commit("base_conf_nav", data.baseconf.nav_link ? data.baseconf.nav_link : "")
 
@@ -659,7 +660,7 @@ export default {
 
                     state.state.nopms.list = data.norules.list
                     state.state.nopms.detail = data.norules.detail
-                    // 权限处理 end
+                        // 权限处理 end
                 }
             }).catch(err => {
                 console.log(err)

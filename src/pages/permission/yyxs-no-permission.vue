@@ -26,8 +26,8 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
 
 .no-pms-msg {
   box-sizing: border-box;

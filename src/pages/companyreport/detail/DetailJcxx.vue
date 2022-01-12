@@ -279,7 +279,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 // 本页的样式
 .detail-jcxx {

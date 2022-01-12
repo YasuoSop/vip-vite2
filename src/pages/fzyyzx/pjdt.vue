@@ -9,7 +9,7 @@
         <div class="head">
           <span class="title">一致性评价最新动态</span>
           <span class="pdf-btn" @click="getPdf">
-            <img width="20px" src="@/assets/imgs/yzx/pdf_i.png">
+            <img width="20px" src="~@/assets/imgs/yzx/pdf_i.png">
             <span>生成报告</span>
           </span>
         </div>
@@ -112,7 +112,7 @@
 
 					<div class="view-bottom">
 						<div class="title">
-							<div class="main phb-title"><img src="@/assets/imgs/yzx/phb-title.png">一致性评价排行榜</div>
+							<div class="main phb-title"><img src="~@/assets/imgs/yzx/phb-title.png">一致性评价排行榜</div>
 							<div class="phb-list-box">
 								<ul>
 									<li v-for="(item,index) in phbList" :key="index" :class="{'active':index === phbActive}" @click="changePhb(index)">{{ item }}</li>
@@ -144,7 +144,7 @@
 <script>
 import LoadingGif from '@/components/common/globalCom/loading-gif.vue'
 import { mapState } from 'vuex'
-import jspdf from './jspdf/jspdf.vue'
+import jspdf from './jspdf/jspdf'
 
 export default {
 	components: {
@@ -354,7 +354,7 @@ export default {
       if (num) {
         //受理号
         if (code === 'num_slh') {
-          href = '/zhuce/list.vue'
+          href = '/zhuce/list'
           query = {
             filter_condition: JSON.stringify({yzxpj:["1"]})
           }
@@ -364,7 +364,7 @@ export default {
         }
         // //289受理号
         // if (code === 'num_me289') {
-        //   href = '/zhuce/list.vue'
+        //   href = '/zhuce/list'
         //   query = {
         //     filter_condition: JSON.stringify({yzxpj:["1"],me289:[1]}),
         //     chengbanriqi: date
@@ -395,7 +395,7 @@ export default {
         }
         //一致性评价受理号
         if (code === 'num_yzxpjslh') {
-          href = '/zhuce/list.vue'
+          href = '/zhuce/list'
 
           query = {
             filter_condition: JSON.stringify({yzxpj:["1"]}),
@@ -422,7 +422,7 @@ export default {
           // let dataS = (this.dateval[0] < 20160304) ? "20160304" : this.dateval[0]
           // let dataE = this.dateval[1] || this.vueGetDate(0)
           // _date = dataS + ':' + dataE
-          href = '/zhuce/list.vue'
+          href = '/zhuce/list'
 
           query = {
             filter_condition: JSON.stringify({yzxpj: ['2']}),
@@ -445,7 +445,7 @@ export default {
         }
         //一致性评价申报品种数
         if (code === 'num_yzxsbzs') {
-          href = '/zhuce/list.vue'
+          href = '/zhuce/list'
 
           query = {
             filter_condition: JSON.stringify({yzxpj:["1"]}),
@@ -457,7 +457,7 @@ export default {
         }
         //一致性评价申报企业数
         if (code === 'num_yzxsbqys') {
-          href = '/zhuce/list.vue'
+          href = '/zhuce/list'
 
           query = {
             filter_condition: JSON.stringify({yzxpj:["1"]}),
@@ -469,7 +469,7 @@ export default {
         }
         // //289受理号
         // if (code === 'num_289slh') {
-        //   href = '/zhuce/list.vue'
+        //   href = '/zhuce/list'
         //   query = {
         //     filter_condition: JSON.stringify({yzxpj:["1"],me289:[1]}),
         //     chengbanriqi: date
@@ -477,7 +477,7 @@ export default {
         // }
         // //289品种数
         // if (code === 'num_289pzs') {
-        //   href = '/zhuce/list.vue'
+        //   href = '/zhuce/list'
         //   query = {
         //     filter_condition: JSON.stringify({yzxpj:["1"],me289:[1]}),
         //     chengbanriqi: date,
@@ -752,7 +752,7 @@ export default {
         dataZoom_start = 0;
       }
 		  let dom = this.$refs.echarts_qs
-		  this.echarts_qs = Echarts.init(dom)
+		  this.echarts_qs = Echarts.init(dom, 'yaozh_theme')
 		  this.echarts_qs.setOption({
 		    xAxis: {
 		      type: 'category',
@@ -822,7 +822,7 @@ export default {
 		//申报剂型echarts
 		drawPieJx () {
 			let dom = this.$refs.echarts_jx
-			this.echarts_jx = Echarts.init(dom)
+			this.echarts_jx = Echarts.init(dom, 'yaozh_theme')
 			this.echarts_jx.setOption({
 				series : [
 					{
@@ -848,7 +848,7 @@ export default {
 		//排行榜echarts
 		drawBarPh (id,title,ydata,data,index){
 			let dom = document.getElementById(id)
-			let echarts = Echarts.init(dom)
+			let echarts = Echarts.init(dom, 'yaozh_theme')
       let option = {
         grid:{
           left: 180,
@@ -1010,7 +1010,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 // 本页的样式
 .yzx-pjdt {

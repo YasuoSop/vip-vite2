@@ -81,6 +81,9 @@
                 <div v-if="item.prop === 'guige'">
                   {{ scope.row.guige || "/" }}
                 </div>
+                <div v-if="item.prop === 'jixing'">
+                  {{ scope.row.jixing || "/" }}
+                </div>
                 <div v-if="item.prop === 'shengchanqiye'">
                   {{ scope.row.shengchanqiye || "/" }}
                 </div>
@@ -386,10 +389,10 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import pdfTable from "../pdfReport/table.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import pdfTable from "../pdfReport/table";
 import tablehead from "@/config/tablehead";
-import DetailKzxx from "./kzxx.vue";
+import DetailKzxx from "./kzxx";
 const chinaFiled = tablehead.drugreport.sspz.china;
 const usFiled = tablehead.drugreport.sspz.us;
 const euFiled = tablehead.drugreport.sspz.eu;
@@ -619,7 +622,7 @@ export default {
     handleExport(url) {
       window.open(
         url +
-          "englishname=" +
+          "&englishname=" +
           this.res.englishname +
           "&ylbm=" +
           this.ylbm +
@@ -676,7 +679,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 @import "../css/com.less";
 
 .tabs {

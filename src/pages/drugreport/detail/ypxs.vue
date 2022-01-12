@@ -92,10 +92,10 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import pdfTable from "../pdfReport/table2.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import pdfTable from "../pdfReport/table2";
 import tablehead from "@/config/tablehead";
-import DetailKzxx from "./kzxx.vue";
+import DetailKzxx from "./kzxx";
 const tableFiled = tablehead.drugreport.ypxs;
 
 export default {
@@ -319,9 +319,7 @@ export default {
         yAxisIndex: 0,
         data: totals,
         symbolSize: 1,
-        emphasis: {
-          scale: false,
-        },
+        hoverAnimation: false,
         itemStyle: {
           color: "transparent",
           opacity: 1,
@@ -376,7 +374,8 @@ export default {
     drawSbqsStack() {
       var _that = this;
       Echarts.init(
-        document.getElementById(this.echartsID)
+        document.getElementById(this.echartsID),
+        "yaozh_theme"
       ).setOption({
         title: {
           text: this.info.name + "全球销售情况",
@@ -513,7 +512,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 @import "../css/com.less";
 .ypxs_unit {
   position: relative;

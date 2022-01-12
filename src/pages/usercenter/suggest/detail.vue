@@ -82,16 +82,16 @@ export default {
           msg_readid: ids[1],
           id: ids[0],
           // from: 1,
-          
+
         }
       }).then(res => {
         if (res.data.code === 200 && res.data) {
           let data = res.data.data
           this.data = data
 
-          Store.dispatch("UserCenter/handleXxtzAxios", this.param)
+          // Store.dispatch("UserCenter/handleXxtzAxios", this.param)
           Store.dispatch("UserCenter/handleHeaderMsgAxios", {page: 1, pageSize: 5})
-          
+
         }
       })
     },
@@ -145,7 +145,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .mc {
   .right-view {
     float: right;
@@ -239,7 +239,7 @@ export default {
               right: -8px;
               top: 22px;
               width:0;
-              height:0; 
+              height:0;
               border-top:8px solid transparent;
               border-bottom: 8px solid transparent;
               border-left: 8px solid #eff2fa;
@@ -274,7 +274,7 @@ export default {
               left: -8px;
               top: 22px;
               width:0;
-              height:0; 
+              height:0;
               border-top:8px solid transparent;
               border-bottom: 8px solid transparent;
               border-right: 8px solid #97a2bf;

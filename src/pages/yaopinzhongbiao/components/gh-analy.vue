@@ -404,7 +404,7 @@ import { mapState } from 'vuex'
 								// 用一个图表模板
 								chartType = 'G';
 							}
-							Echarts.init(this.$refs['chartRef'+index][0], ).setOption(this[chartType+'_option'](curr));
+							Echarts.init(this.$refs['chartRef'+index][0], "yaozh_theme", ).setOption(this[chartType+'_option'](curr));
 						}
 					})
 				})
@@ -415,7 +415,7 @@ import { mapState } from 'vuex'
 				return {
 				    title: {
 				        text: obj.titleChart,
-				        align: 'center',
+				        textAlign: 'center',
 				        left: '50%'
 				    },
 				    tooltip : {
@@ -459,7 +459,7 @@ import { mapState } from 'vuex'
 				return {
 					title: {
 				        text: obj.titleChart,
-				        align: 'center',
+				        textAlign: 'center',
 				        left: '50%'
 				    },
 				    tooltip: {
@@ -528,7 +528,7 @@ import { mapState } from 'vuex'
 				return {
 					title: {
 				        text: obj.titleChart,
-				        align: 'center',
+				        textAlign: 'center',
 				        left: '50%',
 				        subtext: obj.subtext
 				    },
@@ -710,7 +710,7 @@ import { mapState } from 'vuex'
 				return {
 					title: {
 				        text: obj.titleChart,
-				        align: 'center',
+				        textAlign: 'center',
 				        left: '50%'
 				    },
 				    tooltip: {
@@ -768,8 +768,8 @@ import { mapState } from 'vuex'
 	}
 </script>
 <style lang="less">
-	@import "@/assets/less/app.less";
-	@import "@/assets/less/var.less";
+	@import "~@/assets/less/app.less";
+	@import "~@/assets/less/var.less";
 
 	.gh-analy.el-select-dropdown {
 		margin-top: 0;

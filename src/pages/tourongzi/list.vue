@@ -9,7 +9,7 @@
           智能分析
         </span>
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Tourongzi" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Tourongzi" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"
@@ -228,7 +228,7 @@
         immediate: true
       },
       /* $route(){
-        if(this.$route.path==='/tourongzi/list.vue'&&!this.res1.length){
+        if(this.$route.path==='/tourongzi/list'&&!this.res1.length){
           Store.dispatch('Tourongzi/nomalSearch',{queryToPutong: false,tabs:true})
         }
       }, */
@@ -259,7 +259,7 @@
   }
 </script>
 <style lang="less" >
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
   .la-trz{
     min-height: 100px;

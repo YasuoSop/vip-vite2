@@ -6,7 +6,7 @@
       <div slot="title" class="dialog-header">
         保存条件
       </div>
-      <SavedPop @closeSavedPop="closeSavedPop" vuex_name="Faers"></SavedPop>
+      <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="Faers"></SavedPop>
     </el-dialog>
 
     <!-- 高级搜索弹出框 -->
@@ -226,7 +226,7 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
   .el-dialog {
     border-radius: 20px!important;
   }

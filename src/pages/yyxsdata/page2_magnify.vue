@@ -78,11 +78,11 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import inputPopover from "@/components/inputs/input-popover.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import inputPopover from "@/components/inputs/input-popover.vue"
 import Total from "./components/total.vue";
 import EchartsItemMagnify from "./components/echartsItemMagnify.vue";
-import Select from "@/components/inputs/select.vue";
+import Select from "@/components/inputs/select.vue"
 import { mapState } from "vuex";
 
 export default {
@@ -312,34 +312,51 @@ export default {
         year: this.yearSel.model || null,
         is_magnify: 1
       };
+      let name = "";
+      console.log(this.guifanname);
+      if (
+        this.guifanname.length > 0 &&
+        this.guifanname.slice(0, this.inpMaxLen).length > 0
+      ) {
+        name = this.guifanname.slice(0, this.inpMaxLen).join(",");
+      }
+      let xsqsParams = {
+        year: this.yearSel.model || null,
+        guifanqiye: this.nameSel.model.slice(0, this.inpMaxLen),
+        is_magnify: 1
+      };
+      if (
+        this.guifanname.length > 0 &&
+        this.guifanname.slice(0, this.inpMaxLen).length > 0
+      ) {
+        xsqsParams.namestr = name;
+      }
       //销售趋势的api
       let xsqsUrlList = [
         {
           url: "dlqyxsqslist",
           params: {
             year: this.yearSel.model || null,
-            name: this.guifanname.slice(0, this.inpMaxLen) || null,
-            guifanqiyestr: {
-              guifanqiye: this.nameSel.model.slice(0, this.inpMaxLen)
-            },
+            name,
+            guifanqiye: this.nameSel.model.slice(0, this.inpMaxLen),
             is_magnify: 1
           }
         }, //销售趋势列表
         {
           url: "dlqyxsqs",
-          params: this.keywordStatistics(
-            {
-              year: this.yearSel.model || null,
-              name: this.guifanname.slice(0, this.inpMaxLen) || null,
-              guifanqiyestr: {
-                guifanqiye: this.nameSel.model.slice(0, this.inpMaxLen)
-              },
-              is_magnify: 1
-            },
-            { guifanqiyestr: "企业名称", name: "药品名称", year: "年份" }
-          )
+          params: this.keywordStatistics(xsqsParams, {
+            namestr: "药品名称",
+            year: "年份",
+            guifanqiye: "企业名称"
+          })
         } //销售趋势
       ];
+      if (
+        this.guifanname.length > 0 &&
+        this.guifanname.slice(0, this.inpMaxLen).length > 0
+      ) {
+        xsqsUrlList[0].params.namestr = name;
+      }
       //其余图表的api
       let echartsUrlList = [
         { url: "dlqyjxfx", params: commonParam }, //剂型分析
@@ -462,24 +479,30 @@ export default {
         this.nameModel}${gfName}${title}`;
       this.qyTitle = `${this.titleYearStr}年-${this.screenModel ||
         this.nameModel}${this.guifanqiye ? `-${this.guifanqiye[0]}等` : ""}`;
+      let name = "";
+      if (
+        this.guifanname.length > 0 &&
+        this.guifanname.slice(0, this.inpMaxLen).length > 0
+      ) {
+        name = this.guifanname.slice(0, this.inpMaxLen).join(",");
+      }
       let params = {
         year: this.yearSel.model || null,
-        namestr: {
-          name: this.guifanname && this.guifanname.slice(0, this.inpMaxLen)
-        },
-        guifanqiyestr: {
-          guifanqiye:
-            this.nameSel.model && this.nameSel.model.slice(0, this.inpMaxLen)
-        },
+        guifanqiye:
+          this.nameSel.model && this.nameSel.model.slice(0, this.inpMaxLen),
         is_magnify: 1
       };
+      if (this.guifanname.slice(0, this.inpMaxLen).length > 0) {
+        params.namestr = name;
+      }
+      console.log(this.guifanname.slice(0, this.inpMaxLen).length > 0, params);
       Axios.all([
         Store.dispatch("Yyxs/getApi", {
           url: "dlqyxsqs",
           params: this.keywordStatistics(params, {
-            guifanqiyestr: "企业名称",
-            name: "药品名称",
-            year: "年份"
+            namestr: "药品名称",
+            year: "年份",
+            guifanqiye: "企业名称"
           })
         }),
         Store.dispatch("Yyxs/getApi", { url: "dlqyxsqslist", params: params })
@@ -567,7 +590,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .page-wrap {
   background: #fff;
   box-shadow: 0 0 5px #c4d3f8;
@@ -610,5 +633,9 @@ export default {
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
+}
+/deep/.el-select-dropdown__item {
+  width: 300px;
+  display: block;
 }
 </style>

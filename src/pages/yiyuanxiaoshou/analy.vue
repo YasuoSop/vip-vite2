@@ -23,13 +23,13 @@
       </div>
       <div class="chart_bottom">
         <div class="go-list">
-          <router-link tag="a" :to="{ path: '/yyxs/list.vue' }"
+          <router-link tag="a" :to="{ path: '/yyxs/list' }"
             >返回列表</router-link
           >
         </div>
         <div class="chart-boxes">
           <DbEcharts
-            :title="item.title"
+            :title="i < 3 ? tempTitle[i] : item.title"
             v-for="(item, i) in echartsList"
             :key="i"
           >
@@ -59,7 +59,10 @@
         </div>
         <div class="echarts-items-wap">
           <div class="echarts-items-title">
-            <span class="echart-title">{{ title[openIndex] }}</span>
+            <span class="echart-title" v-if="openIndex < 3">{{
+              tempTitle[openIndex]
+            }}</span>
+            <span class="echart-title" v-else>{{ title[openIndex] }}</span>
             <a class="esc-btn" href="javascript:;" @click="handleCloseIndex()">
               <i></i>
               <img
@@ -112,8 +115,8 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import DbEcharts from "@/components/common/db-echarts.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import DbEcharts from "@/components/common/db-echarts.vue"
 import MEcharts from "./components/echarts.vue";
 import { mapState, mapGetters } from "vuex";
 
@@ -125,6 +128,9 @@ export default {
   },
   data() {
     return {
+      specType: 0, // 0：占比统计 1：数据统计 默认占比统计
+      tempTitle: [],
+      titles: ["药品排行", "品牌排行", "企业排行"],
       n: 0,
       kshResTotal: {},
       totalList: [
@@ -162,6 +168,13 @@ export default {
           option: {}
         },
         {
+          title: "医疗机构等级",
+          api: "djfb_xszb",
+          ykey: "field",
+          skey: "sale",
+          option: {}
+        },
+        {
           title: "ATC分类",
           api: "atc",
           ykey: "field",
@@ -194,6 +207,13 @@ export default {
       if (this.$route.path === "/yyxs/analy") {
         this.kshResTotal = obj.aggs;
         this.tempTotalData = obj.view;
+        if (document.getElementById("echarts4")) {
+          let chart = Echarts.getInstanceByDom(
+            document.getElementById("echarts4")
+          );
+          chart && chart.clear();
+        }
+        obj.view.djfb_xse.forEach(item => (item.sale = item.sale / 10000));
         this.update(obj.view);
       }
     },
@@ -246,10 +266,10 @@ export default {
     }
   },
   methods: {
-    async exportHandler(index) {
+    async exportHandler(index, subIndex) {
       this.analyLoading = true;
       let moduleName = "",
-        unit = this.echartsList[index].isBillion ? "亿" : "万",
+        unit = "万",
         outdata_action = this.echartsList[index].api,
         title = "";
       switch (outdata_action) {
@@ -275,6 +295,19 @@ export default {
           break;
       }
       let outdata_column = `field=${title},sale=销售额（${unit}元）`;
+      // 特殊：医疗机构等级
+      if (index === 4) {
+        moduleName = "医疗机构等级";
+        // 占比统计
+        if (subIndex === 0) {
+          outdata_action = "djfb_xszb";
+          outdata_column = `field=医院等级,sale=销售数据占比`;
+        } else if (subIndex === 1) {
+          outdata_action = "djfb_xse";
+          // 数据统计
+          outdata_column = `field=医院等级,sale=销售额（万元）`;
+        }
+      }
       const res = await Store.dispatch("Yyxs/exportAsExcel", {
         moduleName,
         outdata_column,
@@ -358,13 +391,14 @@ export default {
         option.series[0].label.formatter = data => {
           return this.echartsTooltipMoney(data.value);
         };
+      } else if (type == "doughnut") {
+        let { pie_data, yAxis_data, series_data } = data;
+        option = this.drawDoughnutEcharts(i, pie_data, yAxis_data, series_data);
       } else if (type == "bar") {
         let { yAxis_data, series_data } = data;
-        option = this.drawBarEchartsY(
-          i,
-          yAxis_data.reverse(),
-          series_data.reverse()
-        );
+        yAxis_data = yAxis_data.reverse();
+        series_data = series_data.reverse();
+        option = this.drawBarEchartsY(i, yAxis_data, series_data);
         option.toolbox.feature.myMagnify.show = true;
         option.tooltip.formatter = params => {
           return (
@@ -413,10 +447,13 @@ export default {
             }
           },
           isBillion = this.isBillion(originalData, this.echartsList[i].skey),
+          originalData = [];
+        if (i !== 3) {
           originalData = this.unitChange(
             this.tempTotalData[api],
             this.echartsList[i].skey
           );
+        }
         this.echartsList[i].isBillion = isBillion;
         if (api === "ndph") {
           this.tempTotalData[api].forEach(item => {
@@ -491,11 +528,9 @@ export default {
         };
       } else if (type == "bar") {
         let { yAxis_data, series_data } = data;
-        option = this.drawBarEchartsY(
-          i,
-          yAxis_data.reverse(),
-          series_data.reverse()
-        );
+        yAxis_data = yAxis_data.reverse();
+        series_data = series_data.reverse();
+        option = this.drawBarEchartsY(i, yAxis_data, series_data);
         option.toolbox.feature.myMagnify.show = false;
         option.tooltip.formatter = params => {
           return (
@@ -510,6 +545,9 @@ export default {
         option.series[0].label.formatter = data => {
           return this.echartsTooltipMoney(data.value);
         };
+      } else if (type == "doughnut") {
+        let { pie_data, yAxis_data, series_data } = data;
+        option = this.drawDoughnutEcharts(i, pie_data, yAxis_data, series_data);
       } else if (type == "barLine") {
         let { xAxis_data, series_data } = data,
           api = this.echartsList[i].api,
@@ -544,10 +582,13 @@ export default {
             }
           },
           isBillion = this.isBillion(originalData, this.echartsList[i].skey),
+          originalData = [];
+        if (i !== 3) {
           originalData = this.unitChange(
             this.tempTotalData[api],
             this.echartsList[i].skey
           );
+        }
         this.echartsList[i].isBillion = isBillion;
         if (api === "ndph") {
           this.tempTotalData[api].forEach(item => {
@@ -598,6 +639,11 @@ export default {
     // 统一处理echarts数据
     echartsData(key, i) {
       let originalData = this.kshRes.view[key];
+      this.tempTotalData[this.echartsList[i].api] = originalData;
+      if (key === "djfb_xse") {
+        this.tempTotalData[key] = this.kshRes.view[key];
+        this.echartsList[i].isBillion = isBillion;
+      }
       let eitem = this.echartsList[i];
       let api = eitem.api;
       let yAxis_data = [];
@@ -651,8 +697,8 @@ export default {
             rate.push(item[barKey]);
           } else {
             yAxis_data.push(item[ykey]);
-            series_data.push(item[skey]);
-            pie_data.push({ value: item[skey], name: item[ykey] });
+            series_data.push(Number(item[skey]));
+            pie_data.push({ value: Number(item[skey]), name: item[ykey] });
           }
         }
         let option;
@@ -666,12 +712,17 @@ export default {
           ]);
         } else if (api === "atc") {
           option = this.drawPieEcharts(i, pie_data, yAxis_data, series_data);
-        } else {
-          option = this.drawBarEchartsY(
+        } else if (api === "djfb_xszb") {
+          this.tempType[i] = "doughnut";
+          this.specType = 0;
+          option = this.drawDoughnutEcharts(
             i,
-            yAxis_data.reverse(),
-            series_data.reverse()
+            pie_data,
+            yAxis_data,
+            series_data
           );
+        } else {
+          option = this.drawBarEchartsY(i, yAxis_data, series_data);
         }
         this.echartsList[i].option = _.cloneDeep(option);
         this.echartsListOpen[i].option = _.cloneDeep(option);
@@ -724,23 +775,29 @@ export default {
     drawBarEchartsY(i, yAxis_data, series_data) {
       let pie_data = [];
       const that = this;
-      yAxis_data.length > 0 &&
-        yAxis_data.forEach((item, i) => {
-          pie_data.push({
-            name: item,
-            value: series_data[i]
+      if (i !== 4) {
+        yAxis_data.length > 0 &&
+          yAxis_data.forEach((item, i) => {
+            pie_data.push({
+              name: item,
+              value: series_data[i]
+            });
           });
-        });
-      yAxis_data = [];
-      series_data = [];
-      this.tempTotalData[this.echartsList[i].api].forEach(item =>
-        yAxis_data.push(item.field)
-      );
-      this.tempTotalData[this.echartsList[i].api].forEach(item =>
-        series_data.push(item.sale)
-      );
-      yAxis_data = yAxis_data.reverse();
-      series_data = series_data.reverse();
+        yAxis_data = [];
+        series_data = [];
+        this.tempTotalData[this.echartsList[i].api].forEach(item =>
+          yAxis_data.push(item.field)
+        );
+        this.tempTotalData[this.echartsList[i].api].forEach(item =>
+          series_data.push(item.sale)
+        );
+        yAxis_data = yAxis_data.reverse();
+        series_data = series_data.reverse();
+      } else {
+        series_data = series_data.reverse();
+        yAxis_data = yAxis_data.reverse();
+      }
+      this.tempTitle[i] = this.titles[i] + "(TOP100)";
       this.tempData[i] = { yAxis_data, series_data };
       this.tempType[i] = "bar";
       let unit = this.echartsList[i].isBillion ? "亿" : "万",
@@ -787,7 +844,11 @@ export default {
               title: "导出",
               icon: "image:///static/imgs/echarts/download.png",
               onclick: () => {
-                that.exportHandler(i);
+                if (i !== 4) {
+                  that.exportHandler(i);
+                } else {
+                  that.exportHandler(4, that.specType);
+                }
               }
             },
             myMagnify: {
@@ -795,6 +856,13 @@ export default {
               title: "全屏",
               icon: "image:///static/imgs/echarts/fullscreen.png",
               onclick: () => {
+                let specType = that.specType == 0 ? "djfb_xszb" : "djfb_xse",
+                  yAxis_data = that.tempTotalData[specType]
+                    .map(item => item.field)
+                    .reverse(),
+                  series_data = that.tempTotalData[specType]
+                    .map(item => item.sale)
+                    .reverse();
                 that.initOpendKsh(i, { yAxis_data, series_data });
               }
             }
@@ -802,7 +870,7 @@ export default {
         },
         grid: {
           containLabel: true,
-          right: '100px'
+          right: "100px"
         },
         yAxis: {
           type: "category",
@@ -819,7 +887,7 @@ export default {
         },
         xAxis: {
           type: "value",
-          name: `销售额（${unit}元）`,
+          name: `销售额（亿元）`,
           axisLabel: {
             formatter: value => {
               return this.echartsUnitTransform(value);
@@ -842,63 +910,141 @@ export default {
         ]
       };
       if (i < this.echartsList.length - 1) {
-        let myTogglePie = {
-          show: true,
-          title: "饼形图",
-          icon: "image:///static/imgs/echarts/pie.png",
-          onclick: () => {
-            that.tempType[i] = "pie";
-            let id = that.id + i.toString();
-            let chart = Echarts.getInstanceByDom(document.getElementById(id));
-            if (chart) {
+        if (i === 4) {
+          let myToggleDoughnut = {
+            show: true,
+            title: "占比统计",
+            icon: "image:///static/imgs/echarts/doughnut.png",
+            onclick: () => {
+              that.specType = 0;
+              that.tempType[i] = "doughnut";
+              let id = that.id + i.toString();
+              let chart = Echarts.getInstanceByDom(document.getElementById(id));
               chart.clear();
-            } else {
               chart = Echarts.init(document.getElementById(id));
-            }
-
-            let option = that.drawPieEcharts(
-              i,
-              pie_data,
-              yAxis_data,
-              series_data
-            );
-            if (that.dialogVisible) {
-              that.echartsListOpen[i].option = _.cloneDeep(option);
-              that.echartsListOpen[
-                i
-              ].option.toolbox.feature.myMagnify.show = false;
-              that.echartsListOpen[i].option.tooltip.formatter = params => {
-                return (
-                  (_.isArray(params) ? params[0].name : params.name) +
-                  "<br/>" +
-                  "销售额（亿元）: " +
-                  that.echartsTooltipMoney(
-                    _.isArray(params) ? params[0].value : params.value
-                  )
-                );
-              };
-              that.echartsListOpen[
-                i
-              ].option.series[0].label.formatter = data => {
-                return that.echartsTooltipMoney(data.value);
-              };
-            } else {
-              that.echartsList[i].option = _.cloneDeep(option);
-              if (that.echartsListOpen[i].option.toolbox.feature.myToggleLine) {
+              let series_data2 = that.tempTotalData["djfb_xszb"].map(item =>
+                  Number(item.sale)
+                ),
+                yAxis_data2 = that.tempTotalData["djfb_xszb"].map(
+                  item => item.field
+                ),
+                pie_data2 = [];
+              that.tempTotalData["djfb_xszb"].forEach(item => {
+                pie_data2.push({ value: Number(item.sale), name: item.field });
+              });
+              let option = that.drawDoughnutEcharts(
+                i,
+                pie_data2,
+                yAxis_data2,
+                series_data2
+              );
+              option.toolbox.feature.myTogglePie = false;
+              option.series[0].data = pie_data2;
+              if (that.dialogVisible) {
+                that.echartsListOpen[i].option = _.cloneDeep(option);
                 that.echartsListOpen[
                   i
-                ].option.toolbox.feature.myToggleLine.show = false;
+                ].option.toolbox.feature.myMagnify.show = false;
+                that.echartsListOpen[i].option.tooltip.formatter = params => {
+                  return params.name + "：" + params.value + "%";
+                };
+                that.echartsListOpen[
+                  i
+                ].option.series[0].label.formatter = data => {
+                  return that.echartsTooltipMoney(data.value);
+                };
+              } else {
+                that.echartsList[i].option = _.cloneDeep(option);
+                if (
+                  that.echartsListOpen[i].option.toolbox.feature.myTogglePie
+                ) {
+                  that.echartsListOpen[
+                    i
+                  ].option.toolbox.feature.myTogglePie.show = false;
+                }
+                that.echartsList[i].option.tooltip.formatter = params => {
+                  return params.name + "：" + params.value + "%";
+                };
               }
             }
-          }
-        };
-        let { saveAsImage, myExport, myMagnify } = obj.toolbox.feature;
-        obj.toolbox.feature = {
-          saveAsImage,
-          myTogglePie,
-          myExport,
-          myMagnify
-        };
+          };
+          let { saveAsImage, myExport, myMagnify } = obj.toolbox.feature;
+          obj.toolbox.feature = {
+            saveAsImage,
+            myToggleDoughnut,
+            myExport,
+            myMagnify
+          };
+        } else {
+          let myTogglePie = {
+            show: true,
+            title: "饼形图",
+            icon: "image:///static/imgs/echarts/pie.png",
+            onclick: () => {
+              that.tempType[i] = "pie";
+              let id = that.id + i.toString();
+              let chart = Echarts.getInstanceByDom(document.getElementById(id));
+              if (chart) {
+                chart.clear();
+              } else {
+                chart = Echarts.init(document.getElementById(id));
+              }
+              let ykey = this.echartsList[i].ykey,
+                skey = this.echartsList[i].skey;
+              yAxis_data = [];
+              series_data = [];
+              pie_data = [];
+              this.tempTotalData[this.echartsList[i].api].forEach(item => {
+                yAxis_data.push(item[ykey]);
+                series_data.push(item[skey]);
+                pie_data.push({ value: item[skey], name: item[ykey] });
+              });
+              let option = that.drawPieEcharts(
+                i,
+                pie_data,
+                yAxis_data,
+                series_data
+              );
+              if (that.dialogVisible) {
+                that.echartsListOpen[i].option = _.cloneDeep(option);
+                that.echartsListOpen[
+                  i
+                ].option.toolbox.feature.myMagnify.show = false;
+                that.echartsListOpen[i].option.tooltip.formatter = params => {
+                  return (
+                    (_.isArray(params) ? params[0].name : params.name) +
+                    "<br/>" +
+                    "销售额（亿元）: " +
+                    that.echartsTooltipMoney(
+                      _.isArray(params) ? params[0].value : params.value
+                    )
+                  );
+                };
+                that.echartsListOpen[
+                  i
+                ].option.series[0].label.formatter = data => {
+                  return that.echartsTooltipMoney(data.value);
+                };
+              } else {
+                that.echartsList[i].option = _.cloneDeep(option);
+                if (
+                  that.echartsListOpen[i].option.toolbox.feature.myToggleLine
+                ) {
+                  that.echartsListOpen[
+                    i
+                  ].option.toolbox.feature.myToggleLine.show = false;
+                }
+              }
+            }
+          };
+          let { saveAsImage, myExport, myMagnify } = obj.toolbox.feature;
+          obj.toolbox.feature = {
+            saveAsImage,
+            myTogglePie,
+            myExport,
+            myMagnify
+          };
+        }
       }
       return obj;
     },
@@ -939,10 +1085,13 @@ export default {
           }
         },
         isBillion = this.isBillion(originalData, this.echartsList[i].skey),
+        originalData = [];
+      if (i !== 3) {
         originalData = this.unitChange(
           this.tempTotalData[api],
           this.echartsList[i].skey
         );
+      }
       xAxis_data = [];
       bar.data = [];
       this.echartsList[i].isBillion = isBillion;
@@ -1061,6 +1210,165 @@ export default {
         series: series_data
       };
     },
+    // 环形图
+    drawDoughnutEcharts(i, data, yAxis_data, series_data) {
+      let unit = "%",
+        pie_data = [],
+        api = this.echartsList[i].api,
+        ykey = this.echartsList[i].ykey,
+        skey = this.echartsList[i].skey;
+      const that = this;
+      // yAxis_data.length > 0 &&
+      //   yAxis_data.forEach((item, i) => {
+      //     pie_data.push({
+      //       name: item,
+      //       value: series_data[i]
+      //     });
+      //   });
+      yAxis_data = [];
+      series_data = [];
+      pie_data = [];
+      this.tempTotalData[api].forEach(item => {
+        yAxis_data.push(item[ykey]);
+        series_data.push(item[skey]);
+        pie_data.push({ value: Number(item[skey]), name: item[ykey] });
+      });
+      this.tempTitle[i] = this.titles[i] + "(TOP10)";
+      this.tempData[i] = { pie_data, yAxis_data, series_data };
+      this.tempType[i] = "doughnut";
+      let obj = {
+        toolbox: {
+          feature: {
+            saveAsImage: {
+              show: false
+            },
+            myToggleBar: {
+              show: true,
+              title: "数据统计",
+              icon: "image:///static/imgs/echarts/bar-horizontal.png",
+              onclick: () => {
+                that.tempType[i] = "bar";
+                that.specType = 1;
+                let id = that.id + i.toString(),
+                  unit = "亿";
+                let chart = Echarts.getInstanceByDom(
+                  document.getElementById(id)
+                );
+                chart.clear();
+                chart = Echarts.init(document.getElementById(id));
+                let series_data2 = that.tempTotalData["djfb_xse"].map(
+                    item => item.sale
+                  ),
+                  yAxis_data2 = that.tempTotalData["djfb_xse"].map(
+                    item => item.field
+                  );
+                let option = that.drawBarEchartsY(i, yAxis_data2, series_data2);
+                option.xAxis.name = `销售额（亿元）`;
+                option.toolbox.feature.myTogglePie = false;
+                option.series[0].data = series_data2;
+                if (that.dialogVisible) {
+                  that.echartsListOpen[i].option = _.cloneDeep(option);
+                  that.echartsListOpen[
+                    i
+                  ].option.toolbox.feature.myMagnify.show = false;
+                  that.echartsListOpen[i].option.tooltip.formatter = params => {
+                    let value = Number(
+                      _.isArray(params) ? params[0].value : params.value
+                    );
+                    return (
+                      (_.isArray(params) ? params[0].name : params.name) +
+                      "<br/>" +
+                      `销售额（${unit}元）: ` +
+                      that.echartsTooltipMoney(value)
+                    );
+                  };
+                  that.echartsListOpen[
+                    i
+                  ].option.series[0].label.formatter = data => {
+                    return that.echartsTooltipMoney(data.value);
+                  };
+                } else {
+                  that.echartsList[i].option = _.cloneDeep(option);
+                  if (
+                    that.echartsListOpen[i].option.toolbox.feature.myTogglePie
+                  ) {
+                    that.echartsListOpen[
+                      i
+                    ].option.toolbox.feature.myTogglePie.show = false;
+                  }
+                  that.echartsList[i].option.tooltip.formatter = params => {
+                    let value = Number(
+                      _.isArray(params) ? params[0].value : params.value
+                    );
+                    return (
+                      (_.isArray(params) ? params[0].name : params.name) +
+                      "<br/>" +
+                      `销售额（${unit}元）: ` +
+                      that.echartsTooltipMoney(value)
+                    );
+                  };
+                }
+              }
+            },
+            myExport: {
+              title: "导出",
+              icon: "image:///static/imgs/echarts/download.png",
+              onclick: () => {
+                if (i !== 4) {
+                  that.exportHandler(i);
+                } else {
+                  that.exportHandler(4, that.specType);
+                }
+              }
+            },
+            myMagnify: {
+              show: true,
+              title: "全屏",
+              icon: "image:///static/imgs/echarts/fullscreen.png",
+              onclick: () => {
+                that.initOpendKsh(i, { pie_data, yAxis_data, series_data });
+              }
+            }
+          }
+        },
+        legend: {
+          type: "scroll",
+          bottom: 0,
+          data
+        },
+        tooltip: {
+          trigger: "item",
+          formatter: params => {
+            return params.name + "：" + params.value + unit;
+          }
+        },
+        series: [
+          {
+            type: "pie",
+            radius: ["40%", "75%"],
+            data,
+            label: {
+              normal: {
+                show: true,
+                position: "outside",
+                formatter: value => {
+                  if (value.name.length > 9) {
+                    return (
+                      value.name.substring(0, 9) + "..." + value.percent + "%"
+                    );
+                  } else {
+                    return value.name + value.percent + "%";
+                  }
+                },
+                color: "#606266"
+              }
+            },
+            itemStyle: {}
+          }
+        ]
+      };
+      return obj;
+    },
     //饼图
     drawPieEcharts(i, data, yAxis_data, series_data) {
       let unit = this.echartsList[i].isBillion ? "亿" : "万",
@@ -1084,6 +1392,7 @@ export default {
         series_data.push(item[skey]);
         pie_data.push({ value: item[skey], name: item[ykey] });
       });
+      this.tempTitle[i] = this.titles[i] + "(TOP10)";
       this.tempData[i] = { pie_data, yAxis_data, series_data };
       this.tempType[i] = "pie";
       let obj = {
@@ -1112,7 +1421,7 @@ export default {
         legend: {
           type: "scroll",
           bottom: 0,
-          data: data.slice(0, 10).map(item => item.name)
+          data: api == "atc" ? data : data.slice(0, 10).map(item => item.name)
         },
         tooltip: {
           trigger: "item",
@@ -1132,12 +1441,20 @@ export default {
             type: "pie",
             radius: "65%",
             center: ["50%", "45%"],
-            data: data.slice(0, 10),
+            data: api == "atc" ? data : data.slice(0, 10),
             label: {
               normal: {
                 show: true,
                 position: "outside",
-                formatter: "{b}{d}%",
+                formatter: value => {
+                  if (value.name.length > 9) {
+                    return (
+                      value.name.substring(0, 9) + "..." + value.percent + "%"
+                    );
+                  } else {
+                    return value.name + value.percent + "%";
+                  }
+                },
                 color: "#606266"
               }
             },
@@ -1159,11 +1476,7 @@ export default {
             } else {
               chart = Echarts.init(document.getElementById(id));
             }
-            let option = that.drawBarEchartsY(
-              i,
-              yAxis_data.reverse(),
-              series_data.reverse()
-            );
+            let option = that.drawBarEchartsY(i, yAxis_data, series_data);
             if (that.dialogVisible) {
               that.echartsListOpen[i].option = _.cloneDeep(option);
               that.echartsListOpen[
@@ -1217,6 +1530,9 @@ export default {
     this.$nextTick(() => {
       this.initLayout();
       this.loadData();
+      this.titles.forEach((item, i) => {
+        this.tempTitle[i] = this.titles[i] + "(TOP100)";
+      });
     });
     setTimeout(() => {
       const hashLocation = sessionStorage.getItem("hashLocation"); //缓存中获取当前页面的路由名称
@@ -1253,7 +1569,7 @@ export default {
   background: #fff;
 }
 
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .shengwuzhipin-analy {
   .totals {
     // margin-top:20px!important;

@@ -26,10 +26,10 @@
 </template>
 
 <script>
-// import ListOne from '@/components/common/list-config'
-import ListOne from './lists/list-one.vue'
-import ListTwo from './lists/list-two.vue'
-import ListThree from './lists/list-three.vue'
+// import ListOne from '@/components/common/list-config.vue'
+import ListOne from './lists/list-one'
+import ListTwo from './lists/list-two'
+import ListThree from './lists/list-three'
 import { mapState } from 'vuex'
 
 export default{
@@ -59,7 +59,7 @@ export default{
   /* watch: {
     $route:{
       handler(){
-        if(this.$route.path==='/zhuce/list.vue'){
+        if(this.$route.path==='/zhuce/list'){
           //智能分析重新搜索清空列表数据tab无法自动复位
           let tabname= this.activeTabName
           Store.commit('Zhuce/tabname','')
@@ -93,7 +93,7 @@ export default{
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .zhuce-list {
   .el-tabs__header{
     padding-left: 14px;

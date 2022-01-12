@@ -4,7 +4,7 @@
     <LoadingGif :loadFlag="isloading" v-if="isloading"></LoadingGif>
     <div class="detail-list">
       <!-- header -->
-      <div class="detail-header">
+      <div class="detail-header header-fixed">
         <div class="header-left">
           <div class="left-top">
             <span class="top-id" :title="dataBase.name || dataBase.qiye">{{
@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <div class="main">
+      <div class="main" style="padding-top: 50px">
         <div class="detail-box">
           <div class="yzx-detail-title" v-if="bianma">
             <div class="head">
@@ -170,7 +170,7 @@
                         class="view-item"
                         @click="changeTb('linchuangshiyan')"
                         :class="{
-                          active: active_catalogue === 'linchuangshiyan',
+                          active: active_catalogue === 'linchuangshiyan'
                         }"
                       >
                         <div class="center num">
@@ -282,15 +282,15 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import DetailYzx from "./DetailYzx.vue";
-import DetailOrangebei from "./DetailOrangebei.vue";
-import DetailBeian from "./DetailBeian.vue";
-import DetailLinchuangshiyan from "./DetailLinchuangshiyan.vue";
-import DetailZhuce from "./DetailZhuce.vue";
-import DetailYzxtg from "./DetailYzxtg.vue";
-import Detailrldlist from "./Detailrldlist.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import DetailYzx from "./DetailYzx";
+import DetailOrangebei from "./DetailOrangebei";
+import DetailBeian from "./DetailBeian";
+import DetailLinchuangshiyan from "./DetailLinchuangshiyan";
+import DetailZhuce from "./DetailZhuce";
+import DetailYzxtg from "./DetailYzxtg";
+import Detailrldlist from "./Detailrldlist";
+import ExtendButton from "@/components/common/extend-button.vue"
 import detailScrollMixins from "@/mixins/detailScroll.js";
 
 export default {
@@ -303,7 +303,7 @@ export default {
     DetailZhuce,
     DetailYzxtg,
     Detailrldlist,
-    ExtendButton,
+    ExtendButton
   },
   mixins: [detailScrollMixins],
   data() {
@@ -320,20 +320,20 @@ export default {
         num_linchuangshiyan: 0,
         num_zhuce: 0,
         num_tg: 0,
-        num_stt: 0,
+        num_stt: 0
       },
       active_catalogue: "yzx",
       sjsb: {},
       sjtg: {},
-      extendList: [], // 扩展信息
+      extendList: [] // 扩展信息
     };
   },
   computed: {
     ...mapState({
-      allBase: (state) => state.Yzx.allBase,
-      helpInfo: (state) => state.Yzx.helpInfo,
-      nopms: (state) => state.Yzx.nopms,
-    }),
+      allBase: state => state.Yzx.allBase,
+      helpInfo: state => state.Yzx.helpInfo,
+      nopms: state => state.Yzx.nopms
+    })
   },
   watch: {},
   methods: {
@@ -345,20 +345,20 @@ export default {
         $(".newtotals-left").hide();
         $(".newtotals-right").hide();
         $(".newtotals .total-item").css({
-          width: 65 / num + "%",
+          width: 65 / num + "%"
         });
       } else {
         $(".newtotals-left").show();
         $(".newtotals-right").show();
         $(".newtotals-scroll").css({
           width: 204 * maxNum,
-          margin: "auto",
+          margin: "auto"
         });
         $(".newtotals-scroll-inner").css({
-          width: 220 * num,
+          width: 220 * num
         });
         $(".newtotals .total-item").css({
-          width: 190,
+          width: 190
         });
       }
     },
@@ -369,7 +369,7 @@ export default {
       if (pointer != 0 && pointer % 204 == 0) {
         $(".newtotals-scroll-inner").animate(
           {
-            left: pointer + 204,
+            left: pointer + 204
           },
           300
         );
@@ -385,7 +385,7 @@ export default {
       if (pointer != 204 * (maxNum - num) && pointer % 204 == 0) {
         $(".newtotals-scroll-inner").animate(
           {
-            left: pointer - 204,
+            left: pointer - 204
           },
           300
         );
@@ -408,10 +408,10 @@ export default {
           params: {
             name: this.name,
             tps: this.bianma ? "name" : "qiye",
-            accesstoken: GETCOOKIEFUN("accesstoken"),
-          },
+            accesstoken: GETCOOKIEFUN("accesstoken")
+          }
         })
-        .then((res) => {
+        .then(res => {
           if (res.data.code === 200 && res.data) {
             let data = res.data.data;
             this.dataBase = data.base;
@@ -424,7 +424,7 @@ export default {
             }
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -436,10 +436,10 @@ export default {
           params: {
             bianma: this.bianma,
             qiyebianmatz: this.qiyebianmatz,
-            accesstoken: GETCOOKIEFUN("accesstoken"),
-          },
+            accesstoken: GETCOOKIEFUN("accesstoken")
+          }
         })
-        .then((res) => {
+        .then(res => {
           //this.isloading = false
           if (res.data.code === 200 && res.data) {
             let data = res.data.data;
@@ -447,10 +447,10 @@ export default {
             this.initShowScroll();
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
-    },
+    }
   },
   created() {
     Store.dispatch("Yzx/getBaseInfo");
@@ -471,12 +471,12 @@ export default {
   },
   updated() {
     //this.initShowScroll()
-  },
+  }
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 .detail-box {
   box-shadow: 0 0 5px #c4d3f8;

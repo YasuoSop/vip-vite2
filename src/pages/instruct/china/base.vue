@@ -5,7 +5,7 @@
       <div slot="title" class="dialog-header">
         保存条件
       </div>
-      <SavedPop @closeSavedPop="closeSavedPop" vuex_name="ShuomingshuZg"></SavedPop>
+      <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="ShuomingshuZg"></SavedPop>
     </el-dialog>
 
     <!-- 高级搜索弹出框 -->
@@ -111,8 +111,8 @@
   import Optioned from '@/components/common/options.vue'
   import Filters from '@/components/common/filters-config.vue'
   import Main from '@/components/layouts/main.vue'
-  import List from './list.vue'
-  import Nav from '../components/nav.vue'
+  import List from './list'
+  import Nav from '../components/nav'
   import { mapState } from 'vuex'
 
   export default{
@@ -219,7 +219,7 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
   .el-dialog {
     border-radius: 20px!important;
   }

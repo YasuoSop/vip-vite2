@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .menu {
   width: 180px;
   box-sizing: border-box;

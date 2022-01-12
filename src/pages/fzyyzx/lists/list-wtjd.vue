@@ -126,7 +126,7 @@ import { mapState } from 'vuex'
   }
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .search-box{
 	margin: 12px 0 12px 30px;
 	clear: both;

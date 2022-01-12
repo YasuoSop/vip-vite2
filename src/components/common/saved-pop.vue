@@ -182,7 +182,7 @@ import { mapState } from 'vuex'
 </script>
 
 <style lang="less" scoped>
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   .la-saved{
     padding: 20px 20px 20px 80px;
     position: relative;

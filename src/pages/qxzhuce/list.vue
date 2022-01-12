@@ -4,7 +4,7 @@
       <div class="actions" :style="posi">
         <!-- 显示 -->
         <list-check :defaultFiled="defaultFiled"
-            style="text-align:left;" vuex_name="Qxzhuce" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
+            style="text-align:left;.vue"x_name="Qxzhuce" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"

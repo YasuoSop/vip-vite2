@@ -5,6 +5,8 @@
       <router-link to="/usercenter/take/dynamic" class="nav-lan">订阅动态</router-link>
       <router-link to="/usercenter/take/condition" class="nav-lan nav-lan-active">订阅条件&nbsp;&nbsp;></router-link>
       <router-link to="/usercenter/take/new" class="nav-lan" >新增订阅</router-link>
+      <div style="margin-top:20px; padding: 0 20px;font-weight: 400;">关注药智数据服务号 <p style="color: #868EA3;">随时随地掌握最新动态</p></div>
+      <img width="96" height="96" style="margin:10px 0 0 18px;" src="../../../../../static/imgs/wechart/code.png" alt="">
     </div>
     <div class="right-view">
       <!-- PART:订阅条件 -->
@@ -89,10 +91,11 @@
 </template>
 
 <script>
+
 import { mapState } from 'vuex'
+
 import tableHead from '@/config/tablehead'
 const defaultFiled = tableHead.usercenter.dytj
-
 export default {
   data() {
     return {
@@ -196,8 +199,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-// @import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+// @import "~@/assets/less/app.less";
 
 .mc {
   .right-view {

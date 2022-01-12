@@ -99,7 +99,7 @@
   import Optioned from '@/components/common/options.vue'
   import Filters from '@/components/common/filters.vue'
   import Main from '@/components/layouts/main.vue'
-  import List from './list.vue'
+  import List from './list'
   import { mapState } from 'vuex'
 
   export default{
@@ -194,7 +194,7 @@
 
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
   .la-left-side{
     .el-input__inner{
       height: 30px;

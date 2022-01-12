@@ -5,7 +5,7 @@
       <div slot="title" class="dialog-header">
         保存条件
       </div>
-      <SavedPop @closeSavedPop="closeSavedPop" vuex_name="Ywhc1"></SavedPop>
+      <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="Ywhc1"></SavedPop>
     </el-dialog>
 
     <!-- 高级搜索弹出框 -->
@@ -105,9 +105,16 @@
   import SavedPop from '@/components/common/saved-pop.vue'
   import Optioned from '@/components/common/options.vue'
   import Normal from '@/components/common/normal.vue'
+  import LeftInput from '@/components/inputs/left-input.vue'
+  import LeftAutoInput from '@/components/inputs/left-auto-input.vue'
+  import LeftDateRange from '@/components/inputs/left-date-range.vue'
+  import LeftDateRangeYear from '@/components/inputs/left-date-range-year.vue'
+  import LeftDateRangeMonth from '@/components/inputs/left-date-range-month.vue'
+  import LeftCascaderSelect from '@/components/inputs/left-cascader-select.vue'
+  import LeftSelect from '@/components/inputs/left-select.vue'
   import Main from '@/components/layouts/main.vue'
-  import Nav from '../components/nav.vue'
-  import List from './list.vue'
+  import Nav from '../components/nav'
+  import List from './list'
   import { mapState } from 'vuex'
 
   export default{
@@ -205,7 +212,7 @@
 
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
   .el-dialog {
     border-radius: 20px!important;
   }

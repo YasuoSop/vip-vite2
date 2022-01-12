@@ -103,6 +103,8 @@
           <i class="el-icon-question cl-green"></i>
         </el-tooltip>
       </div>
+      <!-- 热点筛选条件 -->
+      <HotFilter vuex_name="DrugReport" route1="list" route2="analy"></HotFilter>
       <!-- 条件筛选（普通/高级搜索之后的二次筛选） -->
       <Filters vuex_name="DrugReport"></Filters>
       <!-- 保存的条件 -->
@@ -262,14 +264,15 @@
   </Main>
 </template>
 <script>
-import Saved from "@/components/common/saved.vue";
-import SavedPop from "@/components/common/saved-pop.vue";
-import Normal from "@/components/common/normal.vue";
-import Filters from "@/components/common/filters-config.vue";
-import Optioned from "@/components/common/options.vue";
-import Advanced from "@/components/common/advanced.vue";
-import Main from "@/components/layouts/main.vue";
-import List from "./list.vue";
+import Saved from "@/components/common/saved.vue"
+import SavedPop from "@/components/common/saved-pop.vue"
+import Normal from "@/components/common/normal.vue"
+import Filters from "@/components/common/filters-config.vue"
+import HotFilter from '@/components/common/hot-filter.vue'
+import Optioned from "@/components/common/options.vue"
+import Advanced from "@/components/common/advanced.vue"
+import Main from "@/components/layouts/main.vue"
+import List from "./list";
 import { mapState } from "vuex";
 
 export default {
@@ -278,6 +281,7 @@ export default {
     Saved,
     SavedPop,
     Filters,
+    HotFilter,
     Normal,
     Optioned,
     Main,
@@ -492,7 +496,7 @@ export default {
 };
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .special-search {
   padding: 10px 14px 10px 10px;
   font-size: 14px;

@@ -232,11 +232,11 @@
 </template>
 
 <script>
-import List from "@/components/layouts/list.vue";
-import Export from "@/components/common/export.vue";
+import List from "@/components/layouts/list.vue"
+import Export from "@/components/common/export.vue"
 import { mapState } from "vuex";
 import tablehead from "@/config/tablehead";
-import listCheck from "@/components/common/list-check.vue";
+import listCheck from "@/components/common/list-check.vue"
 import commonMixins from "@/mixins/common.js";
 import setTableHMixins from "@/mixins/setTableH.js";
 const defaultFiled = tablehead.qxss.Detailqxss;
@@ -376,8 +376,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-// @import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+// @import "~@/assets/less/app.less";
 
 .la-list {
   .item_top {

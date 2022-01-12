@@ -92,7 +92,8 @@ export default {
         });
       });
       let myChart = Echarts.init(
-        document.getElementById("table-bar")
+        document.getElementById("table-bar"),
+        "yaozh_theme"
       );
       myChart.setOption({
         color: [
@@ -272,7 +273,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .table-ul {
   // margin-top: 30px;
 }

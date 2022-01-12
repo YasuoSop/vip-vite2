@@ -5,13 +5,13 @@
     <transition name="el-fade-in-linear">
       <div v-if="showPromtNotice" class="prompt-notice">
         <div class="prompt-content">
-          <img src="@/assets/imgs/notice_icon.png" />
+          <img src="~@/assets/imgs/notice_icon.png" />
           <div class="text-container">
             <marquee v-if="(noticeMsgStr.length - (61 * noticeMsg.length - 1)) > 70" onmouseover="this.stop()" onmouseout="this.start()" v-html="noticeMsgStr">
             </marquee>
             <div v-else v-html="noticeMsgStr"></div>
           </div>
-          <img @click="closeNotice" class="close_notice_icon" src="@/assets/imgs/notice_close.png" />
+          <img @click="closeNotice" class="close_notice_icon" src="~@/assets/imgs/notice_close.png" />
         </div>
       </div>
     </transition>
@@ -21,7 +21,7 @@
       <div class="help_nav">
         <div class="help_header">
           <router-link class="logo" to="/introduce">
-            <img src="@/assets/imgs/intro_logo.png">
+            <img src="~@/assets/imgs/intro_logo.png">
           </router-link>
           <nav class="nav_right">
             <router-link tag="a" class="right-nav-item" to="/introduce" exact>首页</router-link>
@@ -69,7 +69,7 @@
               </el-collapse>
             </div>
             <div class="hand-data">
-              <img src="@/assets/imgs/scan_help_leftside_1.gif" />
+              <img src="~@/assets/imgs/scan_help_leftside_1.gif" />
             </div>
           </div>
           <!-- 右侧列表内容部分 -->
@@ -120,7 +120,7 @@
 <script>
 import LoadingGif from '@/components/common/globalCom/loading-gif.vue'
 import cList from "@/components/layouts/list.vue"
-import List from './list.vue'
+import List from './list'
 import Footer1 from '@/components/layouts/footer1.vue'
 // import helpleft from './help-left'
 import { mapState } from 'vuex'
@@ -191,7 +191,7 @@ export default{
       }
       window.Axios({
         method: 'get',
-        url: '/api/help/list.vue',
+        url: '/api/help/list',
         params: other ? _.assign(search_obj, other) : search_obj
       }).then(res => {
         if (res.data) {
@@ -425,7 +425,7 @@ export default{
 }
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .help-cl-blue {
   color: @PrimaryColor!important;
   &::before {
@@ -576,7 +576,7 @@ export default{
     .help_top{
       width:100%;
       height: 350px;
-      background: url(@/assets/imgs/help_content.jpg) no-repeat center 0;
+      background: url(~@/assets/imgs/help_content.jpg) no-repeat center 0;
       .help_content{
         width: 622px;
         height: 245px;

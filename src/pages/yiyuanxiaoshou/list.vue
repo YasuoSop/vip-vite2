@@ -33,10 +33,10 @@
 </template>
 
 <script>
-import ListOne from './lists/list-one.vue'
-import ListTwo from './lists/list-two.vue'
-import ListThree from './lists/list-three.vue'
-import ListFour from './lists/list-four.vue'
+import ListOne from './lists/list-one'
+import ListTwo from './lists/list-two'
+import ListThree from './lists/list-three'
+import ListFour from './lists/list-four'
 import { mapState } from 'vuex'
 
 export default{
@@ -54,7 +54,7 @@ export default{
   /* watch: {
     $route:{
       handler() {
-        if(this.$route.path==='/yyxs/list.vue'){
+        if(this.$route.path==='/yyxs/list'){
           //智能分析重新搜索清空列表数据tab无法自动复位
           let tabname= this.activeTabName
           Store.commit('Yyxs/tabname','')
@@ -107,7 +107,7 @@ export default{
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 .la-list{
   background-color: #fff;

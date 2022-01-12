@@ -7,7 +7,7 @@
       <div slot="title" class="dialog-header">
         保存条件
       </div>
-      <SavedPop @closeSavedPop="closeSavedPop" vuex_name="Yaopinzhongbiao"></SavedPop>
+      <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="Yaopinzhongbiao"></SavedPop>
     </el-dialog>
 
     <!-- 高级搜索弹出框 -->
@@ -100,13 +100,13 @@
       <section class="sec2">
         <div class="la-body-tab">
           <div class="market_nav">
-            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/yaopinzhongbiao/list.vue' ||  $route.path == '/yaopinzhongbiao/analy'}">
+            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/yaopinzhongbiao/list' ||  $route.path == '/yaopinzhongbiao/analy'}">
               <span class="nav">
                 <!-- <i class="iconfont pr5" style="font-size:20px;">&#xe638;</i> -->
                 药品中标数据库</span>
             </a>
             <!-- dailiangcaigou -->
-            <a @click.prevent="navRouteTo(2)" class="nav_one" :class="{'router-link-active': $route.path == '/dailiangcaigou/list.vue'}" >
+            <a @click.prevent="navRouteTo(2)" class="nav_one" :class="{'router-link-active': $route.path == '/dailiangcaigou/list'}" >
               <span class="nav">
                 <!-- <i class="iconfont pr5" style="font-size:20px;">&#xe643;</i> -->
               国家药品集中带量采购</span>
@@ -158,7 +158,7 @@
   import IWave from '@/components/common/icon-wave.vue'
 
   // 用于按药品名称浏览 & 按企业名称浏览 & 智能分析 的定量分析
-  import GhAnaly from './components/gh-analy.vue'
+  import GhAnaly from './components/gh-analy'
 
   export default{
     components: {
@@ -313,12 +313,12 @@
     methods: {
       navRouteTo (index) {
         if (index == 1) {
-          this.$router.push({ path: '/yaopinzhongbiao/list.vue'})
+          this.$router.push({ path: '/yaopinzhongbiao/list'})
         } else if (index == 2) {
           window.ga("send","event", "tab", "click", "dailiangcaigou_analy");
           window._paq.push(['trackEvent', 'tab',"click", "dailiangcaigou_analy", ])
 
-          this.$router.push({ path: '/dailiangcaigou/list.vue'})
+          this.$router.push({ path: '/dailiangcaigou/list'})
           // Store.dispatch("Yaopinzhongbiao/getKshRes")
         }
       },
@@ -340,7 +340,7 @@
       },
       showAnaly () {
         switch (this.$route.path) {
-          case '/yaopinzhongbiao/list.vue':
+          case '/yaopinzhongbiao/list':
             if (this.tabname == 'getnamelist') {
               Store.commit('Yaopinzhongbiao/ypfx', this.res2.reduce((total, curr) => {
                 return total.push(curr.guifanname) && total;
@@ -1929,7 +1929,7 @@
         $(".dialog .chart").width(screen_width - 440);
         // let list = $(".dialog .chart")
         // Array.prototype.forEach.call(list, (item) => {
-        //   Echarts.init(item).resize()
+        //   Echarts.init(item, 'yaozh_theme').resize()
         // });
         this.echartsResize($(".dialog .chart"))
       }
@@ -1945,8 +1945,8 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
   .ypzb {
     .el-dialog {
       border-radius: 20px!important;

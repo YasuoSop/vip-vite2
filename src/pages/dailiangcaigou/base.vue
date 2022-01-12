@@ -5,7 +5,7 @@
       <div slot="title" class="dialog-header">
         保存条件
       </div>
-      <SavedPop @closeSavedPop="closeSavedPop" vuex_name="Dailiangcaigou"></SavedPop>
+      <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="Dailiangcaigou"></SavedPop>
     </el-dialog>
 
     <!-- 高级搜索弹出框 -->
@@ -99,11 +99,11 @@
       <section class="sec2">
         <div class="la-body-tab">
           <div class="market_nav">
-            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/yaopinzhongbiao/list.vue' ||  $route.path == '/yaopinzhongbiao/analy'}">
+            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/yaopinzhongbiao/list' ||  $route.path == '/yaopinzhongbiao/analy'}">
               <span class="nav"><!-- <i class="iconfont pr5" style="font-size:20px;">&#xe638;</i> -->药品中标数据库</span>
             </a>
             <!-- dailiangcaigou -->
-            <a @click.prevent="navRouteTo(2)" class="nav_one" :class="{'router-link-active': $route.path == '/dailiangcaigou/list.vue'}" >
+            <a @click.prevent="navRouteTo(2)" class="nav_one" :class="{'router-link-active': $route.path == '/dailiangcaigou/list'}" >
               <span class="nav"><!-- <i class="iconfont pr5" style="font-size:20px;">&#xe643;</i> -->国家药品集中带量采购</span>
             </a>
           </div>
@@ -194,12 +194,12 @@
     methods: {
       navRouteTo (index) {
         if (index == 1) {
-          this.$router.push({ path: '/yaopinzhongbiao/list.vue'})
+          this.$router.push({ path: '/yaopinzhongbiao/list'})
         } else if (index == 2) {
           window.ga("send","event", "tab", "click", "dailiangcaigou_analy");
           window._paq.push(['trackEvent', 'tab',"click", "dailiangcaigou_analy", ])
 
-          this.$router.push({ path: '/dailiangcaigou/list.vue'})
+          this.$router.push({ path: '/dailiangcaigou/list'})
           // Store.dispatch("Yaopinzhongbiao/getKshRes")
         }
       },
@@ -265,7 +265,7 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
   .el-dialog {
     border-radius: 20px!important;
   }

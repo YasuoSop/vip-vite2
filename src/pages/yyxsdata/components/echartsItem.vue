@@ -33,13 +33,13 @@
           title="柱状图"
           v-if="edata.type.indexOf('bar') > -1 && edata.curType != 'bar'"
           @click="changeEcharts('bar')"
-          ><img src="@/assets/imgs/bar.png"
+          ><img src="~@/assets/imgs/bar.png"
         /></span>
         <span
           title="饼图"
           v-if="edata.type.indexOf('pie') > -1 && edata.curType != 'pie'"
           @click="changeEcharts('pie')"
-          ><img src="@/assets/imgs/pie.png"
+          ><img src="~@/assets/imgs/pie.png"
         /></span>
         <span
           title="表格"
@@ -89,9 +89,9 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
 import MEcharts from "../../yiyuanxiaoshou/components/echarts.vue";
-import Select from "@/components/inputs/select.vue";
+import Select from "@/components/inputs/select.vue"
 import { mapState } from "vuex";
 export default {
   props: {
@@ -496,9 +496,7 @@ export default {
           color: "transparent",
           symbolSize: 1,
           yAxisIndex: 0,
-          emphasis: {
-            scale: false,
-          },
+          hoverAnimation: false,
           itemStyle: {
             color: "transparent",
             opacity: 1,
@@ -742,7 +740,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .echart-item {
   position: relative;
   margin-top: 15px;

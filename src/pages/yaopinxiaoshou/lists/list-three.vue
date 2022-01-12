@@ -3,7 +3,7 @@
     <List :loading="listLoading" :nodata="res3 && !res3.length">
       <div class="actions">
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Yaopinxiaoshou" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Yaopinxiaoshou" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"
@@ -109,8 +109,8 @@
             <div v-if="item.prop === 'atc_count'">
               {{ scope.row.atc_count }}
             </div>
-            <div v-if="item.prop === 'qiyefenxi'" class="extensible-td" @click="getFullScreen(scope.row.company)">
-              <a href="javascript:void(0);" class="cl-blue">企业分析</a>
+            <div v-if="item.prop === 'qiyefenxi'">
+              <a href="javascript:void(0);" class="cl-blue" @click="getFullScreen(scope.row.company)">企业分析</a>
             </div>
             </div>
           </template>
@@ -144,7 +144,7 @@
   import listCheck from "@/components/common/list-check.vue"
   import commonMixins from '@/mixins/common.js'
   import setTableHMixins from '@/mixins/setTableH.js'
-  import selectNuit from '../selectNuit.vue'
+  import selectNuit from '../selectNuit'
   const defaultFiled = tablehead.yaopinxiaoshou.qy
   const expandFiled = tablehead.yaopinxiaoshou.qyExpand
   export default{
@@ -440,7 +440,7 @@
 </script>
 
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   .la-qy{
     min-height: 100px;
     .no-data-msg {
@@ -463,7 +463,7 @@
       td{
         &.active{
           color: @PrimaryColor;
-          background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
+          background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
           border: none;
         }
       }
@@ -476,7 +476,7 @@
       }
       &.active{
         color: @PrimaryColor;
-        background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
+        background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
         border: none;
       }
     }

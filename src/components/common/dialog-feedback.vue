@@ -259,8 +259,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
 /deep/.ql-image {
   position: relative;
   &::before {

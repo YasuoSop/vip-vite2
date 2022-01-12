@@ -3,7 +3,7 @@
     <List :loading="listLoading" :nodata="res2 && !res2.length">
       <div class="actions">
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Fdadrugnew" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Fdadrugnew" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"
@@ -415,6 +415,7 @@
       },
       // 获取展开列表的数据
       getExpandRes (drugsname,groupname,num,str,scope) {
+        console.log(drugsname,groupname,num,str,scope)
         window.ga("send", "event", "tab", "click", this.allBase.dbename+"_nameGroup_"+groupname)
         window._paq.push(['trackEvent', 'tab', 'click', this.allBase.dbename+"_nameGroup_"+groupname,])
 
@@ -512,7 +513,7 @@
 </script>
 
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
 
   .la-ypmc{
 
@@ -531,7 +532,7 @@
         &.active{
           color: @PrimaryColor;
           font-weight: 600;
-          background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 10px bottom #f5f8fb!important;
+          background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 10px bottom #f5f8fb!important;
         }
       }
     }
@@ -544,7 +545,7 @@
       &.active{
         color: @PrimaryColor;
         font-weight: 600;
-        background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 10px bottom;
+        background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 10px bottom;
       }
     }
 

@@ -6,7 +6,7 @@
       <div class="detail_nav">
         <div class="help_header">
           <router-link class="logo" to="/home">
-            <img src="@/assets/imgs/home-logo.png">
+            <img src="~@/assets/imgs/home-logo.png">
           </router-link>
           <!-- <ul class="nav_right">
             <li class="nav_item">首页</li>
@@ -89,7 +89,7 @@
 </template>
 <script>
 import LoadingGif from '@/components/common/globalCom/loading-gif.vue'
-import List from '../list.vue'
+import List from '../list'
 import Footer1 from '@/components/layouts/footer1.vue'
 import { mapState } from 'vuex'
 export default{
@@ -260,7 +260,7 @@ export default{
 } 
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .la-content{
   width:100%;
 .fullscreen-loading{

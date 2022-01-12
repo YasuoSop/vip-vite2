@@ -5,7 +5,7 @@
             <div slot="title" class="dialog-header">
                 保存条件
             </div>
-            <SavedPop @closeSavedPop="closeSavedPop" vuex_name="Tourongzi"></SavedPop>
+            <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="Tourongzi"></SavedPop>
         </el-dialog>
         <!-- 左边部分 -->
         <div slot="left">
@@ -80,7 +80,7 @@
             <section class="sec2">
                 <!-- <div class="la-body-tab">
                     <div class="market_nav">
-                        <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/tourongzi/list.vue'}">
+                        <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/tourongzi/list'}">
                             <span class="nav"><i class="iconfont pr5" style="font-size:20px;">&#xe627;</i>事件列表</span>
                         </a>
                         <a @click.prevent="navRouteTo(2)" class="nav_one" :class="{'router-link-active': $route.path == '/tourongzi/analy', 'abandon-click-method': nopms.ksh}">
@@ -168,7 +168,7 @@
         methods:{
             navRouteTo (index) {
                 if (index == 1) {
-                this.$router.push({ path: '/tourongzi/list.vue'})
+                this.$router.push({ path: '/tourongzi/list'})
                 } else if (index == 2 && !this.nopms.ksh) {
                 window.ga("send","event", "tab", "click", "tourongzi_analy");
                 window._paq.push(['trackEvent', 'tab', 'click',"tourongzi_analy", ])
@@ -223,8 +223,8 @@
 </script>
 
 <style lang="less">
-    @import "@/assets/less/app.less";
-   @import "@/assets/less/var.less";
+    @import "~@/assets/less/app.less";
+   @import "~@/assets/less/var.less";
    .el-dialog {
     border-radius: 20px!important;
   }

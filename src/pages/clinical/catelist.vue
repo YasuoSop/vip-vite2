@@ -107,7 +107,7 @@
   import { mapState } from 'vuex'
   import commonMixins from '@/mixins/common.js'
   import setTableHMixins from '@/mixins/setTableH.js'
-  import stateMap from './components/stateMap.vue'
+  import stateMap from './components/stateMap'
 
   export default{
     components: {
@@ -349,8 +349,8 @@
   }
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
-@import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/app.less";
   .cate-search{
     display: flex;
     justify-content: space-between;

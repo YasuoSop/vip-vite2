@@ -43,6 +43,13 @@ import Fdadrugnew from './fdadrugnew'
 import Clinical from './clinical'
 import Dailiangcaigou from './dailiangcaigou'
 import Faers from './faers'
+import TrzRongzi from './trz/rongzi'
+import TrzBinggou from './trz/binggou'
+import TrzJigou from './trz/jigou'
+import TrzQiye from './trz/qiye'
+import TrzNews from './trz/news'
+import TrzKuajing from './trz/kuajing'
+import Globalapproval from './globalapproval'
 
 Vue.use(func)
 
@@ -89,5 +96,12 @@ export default {
   Fdadrugnew,
   Clinical,
   Dailiangcaigou,
-  Faers
+  Faers,
+  TrzRongzi,
+  TrzBinggou,
+  TrzJigou,
+  TrzQiye,
+  TrzNews,
+  TrzKuajing,
+  Globalapproval
 }

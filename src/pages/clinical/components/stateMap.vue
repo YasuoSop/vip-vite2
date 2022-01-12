@@ -389,7 +389,7 @@
         this.seriesData = seriesData
 
         Echarts.registerMap(this.mapJsonName, mapdata)
-        this.myChart = Echarts.init(statemapId)
+        this.myChart = Echarts.init(statemapId, 'yaozh_theme')
         this.myChart.setOption({
           toolbox: {
             top: 50,
@@ -509,8 +509,8 @@
   }
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/app.less";
 .map-table{
   width: 30%;
   padding: 70px 70px 0 0;

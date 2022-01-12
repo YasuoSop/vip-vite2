@@ -4,7 +4,7 @@
     <LoadingGif :loadFlag="isLoading" v-if="isLoading"></LoadingGif>
     <!-- 加载完成显示部分 -->
     <div class="detail-list" v-else>
-      <div class="detail-header">
+      <div class="detail-header header-fixed">
         <div class="header-left">
           <div class="left-top">
             <span class="top-id" :title="data.target">{{ data.target }}</span>
@@ -17,18 +17,20 @@
           </div>
         </div>
       </div>
-      <div class="main">
+      <div class="main" style="padding-top: 50px;">
         <slide-section :title="'基本信息'" class="the-part">
           <div class="tb-wrap">
             <table class="tb-t">
               <tr>
                 <td>靶点简称</td>
-                <td>
+                <td colspan="3">
                   <span>{{ data.genename ? data.genename : "/" }}</span>
                 </td>
+              </tr>
+              <tr>
                 <td>靶点别称</td>
-                <td>
-                  <div class="td-line2">
+                <td colspan="3">
+                  <div>
                     {{ data.alias ? data.alias : "/" }}
                   </div>
                 </td>
@@ -222,12 +224,12 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import LaFooter from "@/components/layouts/footer.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
-import China from "./components/china.vue";
-import Global from "./components/global.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import LaFooter from "@/components/layouts/footer.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
+import China from "./components/china";
+import Global from "./components/global";
 import detailScrollMixins from "@/mixins/detailScroll.js";
 import { mapState } from "vuex";
 
@@ -427,8 +429,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 .part1 {
   .nav-switch {

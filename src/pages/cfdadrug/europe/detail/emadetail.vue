@@ -4,17 +4,19 @@
     <LoadingGif :loadFlag="isLoading" v-if="isLoading"></LoadingGif>
     <!-- 加载完成显示部分 -->
     <div class="detail-list" v-else>
-      <div class="detail-header">
+      <div class="detail-header header-fixed">
         <div class="header-left">
           <div class="left-top">
-            <span class=" top-id" :title="data.List.name">{{
-              data.List.name
-            }}</span>
+            <span class="top-id" :title="data.List.name">
+              {{
+                data.List.name
+              }}
+            </span>
             <span class="id-green">{{ data.Source }}</span>
           </div>
         </div>
       </div>
-      <div class="main">
+      <div class="main" style="padding-top: 50px">
         <slide-section :title="'基本信息'">
           <div class="tb-wrap">
             <table class="tb-t">
@@ -46,21 +48,36 @@
                 <td>靶点全称</td>
                 <td>
                   <span :style="wordBreak" class="t-line5">
-                    <router-link
-                      tag="a"
-                      :to="'/targetdatas/' + value"
-                      target="_blank"
+                    <div
                       v-for="(value, key, index) in data.List.targets"
                       v-if="value != ''"
                       :key="index"
-                      style="display: flex;width: 95%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color: #4877e8;"
-                      >{{ key }}</router-link
+                      style="
+                          word-break: break-all;
+                          margin-right: 15px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                        "
                     >
+                      <router-link
+                        tag="a"
+                        :to="'/targetdatas/' + value"
+                        target="_blank"
+                        :title="key"
+                        class="link-a"
+                      >{{ key }}</router-link>
+                    </div>
                     <span
                       v-else
-                      style="display: flex;width: 95%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"
-                      >{{ key }}</span
-                    >
+                      style="
+                          word-break: break-all;
+                          margin-right: 15px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                        "
+                    >{{ key }}</span>
                   </span>
                 </td>
               </tr>
@@ -68,21 +85,36 @@
                 <td>靶点简称</td>
                 <td>
                   <span :style="wordBreak" class="t-line5">
-                    <router-link
-                      tag="a"
-                      :to="'/targetdatas/' + value"
-                      target="_blank"
+                    <div
                       v-for="(value, key, index) in data.List.targets_abbr"
                       v-if="value != ''"
                       :key="index"
-                      style="display: flex;width: 95%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color: #4877e8;"
-                      >{{ key }}</router-link
+                      style="
+                          word-break: break-all;
+                          margin-right: 15px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                        "
                     >
+                      <router-link
+                        tag="a"
+                        :to="'/targetdatas/' + value"
+                        target="_blank"
+                        :title="key"
+                        class="link-a"
+                      >{{ key }}</router-link>
+                    </div>
                     <span
                       v-else
-                      style="display: flex;width: 95%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"
-                      >{{ key }}</span
-                    >
+                      style="
+                          word-break: break-all;
+                          margin-right: 15px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;
+                        "
+                    >{{ key }}</span>
                   </span>
                 </td>
               </tr>
@@ -134,10 +166,7 @@
                     effect="light"
                     placement="right"
                   >
-                    <div
-                      slot="content"
-                      v-html="helpDesc.incidentalConditions"
-                    ></div>
+                    <div slot="content" v-html="helpDesc.incidentalConditions"></div>
                     <i class="el-icon-question cl-green"></i>
                   </el-tooltip>
                 </td>
@@ -173,9 +202,10 @@
                     style="color:#4877e8;"
                     target="_blank"
                     v-if="data.List.url !== ''"
-                    >查看
-                    (公众评估报告、授权细节、产品规格/剂型、标签、历史评估信息)</a
                   >
+                    查看
+                    (公众评估报告、授权细节、产品规格/剂型、标签、历史评估信息)
+                  </a>
                 </td>
               </tr>
             </table>
@@ -184,11 +214,7 @@
         <!-- 扩展信息开始 -->
         <slide-section :title="'扩展信息'" v-if="hasExtend">
           <div class="extend-list">
-            <ExtendButton
-              v-for="(item, index) in extendList"
-              :key="index"
-              :item="item"
-            ></ExtendButton>
+            <ExtendButton v-for="(item, index) in extendList" :key="index" :item="item"></ExtendButton>
           </div>
         </slide-section>
       </div>
@@ -198,11 +224,11 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import LaFooter from "@/components/layouts/footer.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import LaFooter from "@/components/layouts/footer.vue"
 import { mapState } from "vuex";
-import ExtendButton from "@/components/common/extend-button.vue";
+import ExtendButton from "@/components/common/extend-button.vue"
 import detailScrollMixins from "@/mixins/detailScroll.js";
 export default {
   components: {
@@ -289,13 +315,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 .t-line5 {
-  display: block;
-  max-height: 110px;
-  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
 }
 /deep/.slide-section {
   .tb-t,
@@ -336,6 +361,13 @@ export default {
         }
       }
     }
+  }
+}
+.link-a {
+  color: #4877e8;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="slide-lan">
-    <div class="header">
+    <div class="header" v-if="title">
       <div class="lc">{{title}}</div>
     </div>
     <div class="content">
@@ -19,24 +19,23 @@ export default {
   props: {
     title: {
       type: String,
-      default: '基本信息'
     },
   }
 }
 </script>
 
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
 
   // middle
   .slide-lan {
-    width: 99.3%;
+    width: 100%;
     background-color: #fff;
     .content {
-      width: 90%;
       background: #fff;
       padding: 30px 65px;
-      border-bottom: 2px solid #dfe5f1;
+      border-bottom: 1px solid #DFE5F1;
+      margin-right: 20px;
     }
     .header {
       background-color: #fff;
@@ -61,7 +60,8 @@ export default {
         top: 8px;
         width: 4px;
         height: 14px;
-        background-color: #333;
+        border-radius: 2px;
+        background-color: #868EA3;
       }
     }
   }

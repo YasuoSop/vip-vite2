@@ -4,7 +4,7 @@
     <LoadingGif :loadFlag="isLoading" v-if="isLoading"></LoadingGif>
     <!-- 加载完成显示部分 -->
     <div class="detail-list" v-else>
-      <div class="detail-header">
+      <div class="detail-header header-fixed">
         <div class="header-left">
           <div class="left-top">
             <span class="top-id" :title="data.title">{{ data.title }}</span>
@@ -14,7 +14,7 @@
       <div class="main">
         <div
           class="left-nav"
-          :style="{ top: (showPromtNotice ? 118 : 88) + 'px' }"
+          :style="{ top: (showPromtNotice ? 128 : 98) + 'px' }"
         >
           <div class="nav-list nav-event" @click="handleNavClick">
             <a class="nav-item active">基本信息</a>
@@ -26,7 +26,15 @@
             <a class="nav-item" v-if="test_info">试验信息</a>
             <a class="nav-item" v-if="recruitment_info">招募信息</a>
             <a class="nav-item" v-if="man_info">管理信息</a>
-            <a class="nav-item" v-if="(test_info.resultsurl) || (test_info.related_literature && test_info.related_literature.length)">临床结果/文献</a>
+            <a
+              class="nav-item"
+              v-if="
+                test_info.resultsurl ||
+                  (test_info.related_literature &&
+                    test_info.related_literature.length)
+              "
+              >临床结果/文献</a
+            >
             <a class="nav-item" v-if="extendList && extendList.length"
               >扩展信息</a
             >
@@ -72,13 +80,16 @@
                   <td>
                     <span>{{ data.sponsors }}</span>
                   </td>
-                  <td>申办者类型
+                  <td>
+                    申办者类型
                     <el-tooltip
                       class="item tooltips-position"
                       effect="light"
                       placement="right"
                     >
-                      <div slot="content">仅包含ClinicalTrials.gov美国的数据</div>
+                      <div slot="content">
+                        仅包含ClinicalTrials.gov美国的数据
+                      </div>
                       <i class="el-icon-question cl-green"></i>
                     </el-tooltip>
                   </td>
@@ -115,26 +126,32 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>疾病领域
+                  <td>
+                    疾病领域
                     <el-tooltip
                       class="item tooltips-position"
                       effect="light"
                       placement="right"
                     >
-                      <div slot="content">仅包含ClinicalTrials.gov美国的数据</div>
+                      <div slot="content">
+                        仅包含ClinicalTrials.gov美国的数据
+                      </div>
                       <i class="el-icon-question cl-green"></i>
                     </el-tooltip>
                   </td>
                   <td>
                     <span>{{ data.conditions1_guifan }}</span>
                   </td>
-                  <td>干预药物类别
+                  <td>
+                    干预药物类别
                     <el-tooltip
                       class="item tooltips-position"
                       effect="light"
                       placement="right"
                     >
-                      <div slot="content">仅包含ClinicalTrials.gov美国的数据</div>
+                      <div slot="content">
+                        仅包含ClinicalTrials.gov美国的数据
+                      </div>
                       <i class="el-icon-question cl-green"></i>
                     </el-tooltip>
                   </td>
@@ -645,9 +662,13 @@
             :title="'临床结果/文献'"
             ref="ScrollDom_6"
             class="the-part"
-            v-if="(test_info.resultsurl) || (test_info.related_literature && test_info.related_literature.length)"
+            v-if="
+              test_info.resultsurl ||
+                (test_info.related_literature &&
+                  test_info.related_literature.length)
+            "
           >
-           <template v-if="test_info.resultsurl">
+            <template v-if="test_info.resultsurl">
               <div class="detail-title" style="margin-bottom: 20px">
                 <span class="in">官网结果:</span>
                 <span
@@ -722,10 +743,10 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import LaFooter from "@/components/layouts/footer.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import LaFooter from "@/components/layouts/footer.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
 import { mapState } from "vuex";
 import detailScrollMixins from "@/mixins/detailScroll.js";
 
@@ -774,21 +795,11 @@ export default {
   watch: {
     showPromtNotice(val) {
       if (val) {
-        setTimeout(() => {
-          if ($(".left-nav").css("top"))
-            $(".left-nav").css(
-              "top",
-              parseInt(
-                $(".left-nav")
-                  .css("top")
-                  .replace("px", "")
-              ) + "px"
-            );
-        }, 600);
+        if ($(".left-nav").css("top")) {
+          $(".left-nav").css("top", "128px");
+        }
       } else {
-        setTimeout(() => {
-          if ($(".left-nav").css("top")) $(".left-nav").css("top", "88px");
-        }, 600);
+        if ($(".left-nav").css("top")) $(".left-nav").css("top", "98px");
       }
     }
   },
@@ -901,11 +912,11 @@ export default {
     handleScroll() {
       let top = $(".main").offset().top,
         leftNav = $(".left-nav");
-      if (top <= 50) {
-        leftNav.css("top", (this.showPromtNotice ? 88 : 58) + "px");
-      } else {
-        leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
-      }
+      // if (top <= 50) {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 98) + "px");
+      // } else {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
+      // }
     }
   },
   created() {
@@ -936,8 +947,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 @FontsizeSmall: 13px;
 @FontsizeSmallBold: bold;

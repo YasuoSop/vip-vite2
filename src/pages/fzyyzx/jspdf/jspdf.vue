@@ -64,11 +64,11 @@
           </div>
           <div class="fl-right">
             <div class="fl-left code-box">
-              <img src="@/assets/imgs/yzx/app_code.png">
+              <img src="~@/assets/imgs/yzx/app_code.png">
               <span>扫码下载APP</span>
             </div>
             <div class="fl-left code-box">
-              <img src="@/assets/imgs/yzx/gzh_code.png">
+              <img src="~@/assets/imgs/yzx/gzh_code.png">
               <span>扫码关注公众号</span>
             </div>
           </div>
@@ -110,11 +110,11 @@
           </div>
           <div class="fl-right">
             <div class="fl-left code-box">
-              <img src="@/assets/imgs/yzx/app_code.png">
+              <img src="~@/assets/imgs/yzx/app_code.png">
               <span>扫码下载APP</span>
             </div>
             <div class="fl-left code-box">
-              <img src="@/assets/imgs/yzx/gzh_code.png">
+              <img src="~@/assets/imgs/yzx/gzh_code.png">
               <span>扫码关注公众号</span>
             </div>
           </div>
@@ -444,7 +444,7 @@ export default{
     drawLineQs () {
       let dataZoom_start
       let dom = this.$refs.echarts_qs_pdf
-      this.echarts_qs = Echarts.init(dom)
+      this.echarts_qs = Echarts.init(dom, 'yaozh_theme')
       this.echarts_qs.setOption({
         xAxis: {
           type: 'category',
@@ -504,7 +504,7 @@ export default{
     //申报剂型echarts
     drawPieJx () {
       let dom = this.$refs.echarts_jx_pdf
-      this.echarts_jx = Echarts.init(dom)
+      this.echarts_jx = Echarts.init(dom, 'yaozh_theme')
       this.echarts_jx.setOption({
         series : [
             {
@@ -556,7 +556,7 @@ export default{
     //排行榜echarts
     drawBarPh (id,title,ydata,data,index){
       let dom = document.getElementById(id)
-      let echarts = Echarts.init(dom)
+      let echarts = Echarts.init(dom, 'yaozh_theme')
       echarts.setOption({
         grid:{
           show: false,
@@ -630,8 +630,8 @@ export default{
 }
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/app.less";
 .fl-left{
   float: left
 }
@@ -654,7 +654,7 @@ export default{
 .pdf-box-item{
   position: relative;
   height: 1279px;
-  background: url("@/assets/imgs/yzx/pdf_bg.png") no-repeat;
+  background: url("~@/assets/imgs/yzx/pdf_bg.png") no-repeat;
   background-size: 900px;
   background-position-y: bottom;
   top: 0;
@@ -691,7 +691,7 @@ export default{
   width: 190px;
   height: 33px;
   margin-top: 10px;
-  background: url("@/assets/imgs/yzx/pdf_ym.png");
+  background: url("~@/assets/imgs/yzx/pdf_ym.png");
 }
 .header-right{
   font-size: 13px;

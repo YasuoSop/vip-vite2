@@ -2,9 +2,11 @@
   <div class="la-list">
     <List :loading="listLoading" :nodata="res1 && !res1.length">
       <div class="actions">
-        <span class="action-btn"
-          :class="{'abandon-click-method': nopms && nopms.ksh}"
-          @click="sendGa">
+        <span
+          class="action-btn"
+          :class="{ 'abandon-click-method': nopms && nopms.ksh }"
+          @click="sendGa"
+        >
           <span class="icon iconfont">&#xe643;</span>
           智能分析
         </span>
@@ -13,7 +15,7 @@
           :defaultFiled="defaultFiled"
           vuex_name="Linchuangshiyan"
           :showArray="tableHead"
-          @changeTableHeader="(list) => changeTableHeader(this, list)"
+          @changeTableHeader="list => changeTableHeader(this, list)"
         />
         <!-- 导出 -->
         <Export
@@ -57,7 +59,10 @@
             <span>
               <NewProjectGuide
                 postion="列表"
-                :newPosition="{ top: -5, right: getPositonRight(item.order,item.statement) }"
+                :newPosition="{
+                  top: -5,
+                  right: getPositonRight(item.order, item.statement)
+                }"
                 :onlyKey="item['new_id']"
                 display="inline"
                 compoentsName="字段"
@@ -73,7 +78,10 @@
               placement="right"
             >
               <div slot="content" v-html="item.statement"></div>
-              <i class="el-icon-question cl-green" style="margin-left: 4px;line-height: 28px;"></i>
+              <i
+                class="el-icon-question cl-green"
+                style="margin-left: 4px;line-height: 28px;"
+              ></i>
             </el-tooltip>
           </template>
           <template slot-scope="scope">
@@ -105,7 +113,9 @@
               </div>
 
               <div v-else>
-                <span v-if="vueCheckListPms('Linchuangshiyan', item.label)">{{ scope.row[item.prop] }}</span>
+                <span v-if="vueCheckListPms('Linchuangshiyan', item.label)">{{
+                  scope.row[item.prop]
+                }}</span>
                 <span v-else class="abandon-click-method">暂无权限</span>
               </div>
             </div>
@@ -133,10 +143,10 @@
   </div>
 </template>
 <script>
-import TooltipBD from "@/components/common/globalCom/target-tooltip.vue";
-import List from "@/components/layouts/list.vue";
-import Export from "@/components/common/export.vue";
-import listCheck from "@/components/common/list-check.vue";
+import TooltipBD from "@/components/common/globalCom/target-tooltip.vue"
+import List from "@/components/layouts/list.vue"
+import Export from "@/components/common/export.vue"
+import listCheck from "@/components/common/list-check.vue"
 import { mapState } from "vuex";
 import tablehead from "@/config/tablehead";
 import commonMixins from "@/mixins/common.js";
@@ -148,7 +158,7 @@ export default {
     TooltipBD,
     List,
     Export,
-    listCheck,
+    listCheck
   },
   mixins: [commonMixins, setTableHMixins],
   data() {
@@ -161,37 +171,42 @@ export default {
       checkallShow: [],
       show_table: true,
       helpDesc: {
-        setList: "源于NMPA",
+        setList: "源于NMPA"
       },
       changeStyle: "",
       tableHeight:
-        document.documentElement.clientHeight - 48 - 60 - 60 - 50 - 88,
+        document.documentElement.clientHeight - 48 - 60 - 60 - 50 - 88
     };
   },
   computed: {
     //同时获取多个属性
     ...mapState({
-      allBase: (state) => state.Linchuangshiyan.allBase,
-      tableconf: (state) => state.Linchuangshiyan.tableconf,
-      res1: (state) =>
+      allBase: state => state.Linchuangshiyan.allBase,
+      tableconf: state => state.Linchuangshiyan.tableconf,
+      res1: state =>
         _.keys(state.Linchuangshiyan.res1).length
           ? state.Linchuangshiyan.res1.res
           : [],
-      errorcode: (state) => state.Linchuangshiyan.error,
-      listLoading: (state) => state.Linchuangshiyan.listLoading,
-      putong: (state) => state.Linchuangshiyan.putong,
-      gaoji: (state) => state.Linchuangshiyan.gaoji,
-      shaixuan: (state) => state.Linchuangshiyan.shaixuan,
-      extendCount: (state) => state.Linchuangshiyan.extendCount,
-      param: (state) => state.Linchuangshiyan.slh_param, // 附加参数(存于vuex内)
-      nopms: (state) => state.Linchuangshiyan.nopms,
-      order: (state) => state.Linchuangshiyan.order,
-    }),
+      errorcode: state => state.Linchuangshiyan.error,
+      listLoading: state => state.Linchuangshiyan.listLoading,
+      putong: state => state.Linchuangshiyan.putong,
+      gaoji: state => state.Linchuangshiyan.gaoji,
+      shaixuan: state => state.Linchuangshiyan.shaixuan,
+      extendCount: state => state.Linchuangshiyan.extendCount,
+      param: state => state.Linchuangshiyan.slh_param, // 附加参数(存于vuex内)
+      nopms: state => state.Linchuangshiyan.nopms,
+      order: state => state.Linchuangshiyan.order
+    })
   },
   mounted() {
     this.registerEven();
   },
   activated() {
+    let tempTableconf = _.cloneDeep(this.tableconf),
+      actionName = `${this.vuex_name[0].toUpperCase() +
+        this.vuex_name.substr(1)}/tableconf`; // 第一个字母转大写
+    this.$store.commit(actionName, []);
+    this.$store.commit(actionName, tempTableconf);
     this.registerEven();
   },
   watch: {
@@ -201,7 +216,7 @@ export default {
           this.registerEven();
         });
       },
-      immediate: true,
+      immediate: true
     },
     tableHead: {
       handler() {
@@ -209,10 +224,10 @@ export default {
           this.registerEven();
         });
       },
-      immediate: true,
+      immediate: true
     },
     tableconf(n) {
-      n.forEach((item) => {
+      n.forEach(item => {
         item.checked = item.hidden === undefined;
         item.prop = item.field;
       });
@@ -220,27 +235,32 @@ export default {
       this.defaultFiled = this.tableheaderCombain(n, n);
       this.exportDefaultFiled = this.defaultFiled;
       this.init();
-    },
+    }
   },
   methods: {
     // 动态计算new标签的right间距(order为排序标签，statement为提示问号)
     getPositonRight(order, statement) {
       if (order && !statement) {
-        return -42
+        return -42;
       } else if (!order && statement) {
-        return -40
+        return -40;
       } else if (order && statement) {
-        return -58
+        return -58;
       } else {
-        return -25
+        return -25;
       }
     },
     // 跳转到智能分析
     sendGa() {
       if (this.nopms && !this.nopms.ksh) {
-        window.ga("send","event", "tab", "click", "linchuangshiyan_analy")
-        window._paq.push(['trackEvent', 'tab', 'click',"linchuangshiyan_analy"])
-        this.$router.push({ path: '/linchuangshiyan/analy'})
+        window.ga("send", "event", "tab", "click", "linchuangshiyan_analy");
+        window._paq.push([
+          "trackEvent",
+          "tab",
+          "click",
+          "linchuangshiyan_analy"
+        ]);
+        this.$router.push({ path: "/linchuangshiyan/analy" });
       }
     },
 
@@ -271,19 +291,19 @@ export default {
       } else {
         $(".out-of-page").show();
       }
-    },
+    }
   },
   created() {
     // this.init()
   },
   updated() {
     this.vueTogglePmsTooltip();
-  },
+  }
 };
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
-@import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/app.less";
 
 .el-table {
   .cell {

@@ -154,7 +154,7 @@
   }
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .la-cascader{
   padding: 0 14px 0 10px;
   .el-cascader{

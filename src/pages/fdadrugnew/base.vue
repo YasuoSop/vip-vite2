@@ -5,7 +5,7 @@
       <div slot="title" class="dialog-header">
         保存条件
       </div>
-      <SavedPop @closeSavedPop="closeSavedPop" vuex_name="Fdadrugnew"></SavedPop>
+      <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="Fdadrugnew"></SavedPop>
     </el-dialog>
 
     <!-- 高级搜索弹出框 -->
@@ -101,7 +101,7 @@
       <section class="sec2 newsec2">
         <!-- <div class="la-body-tab">
           <div class="market_nav">
-            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/fdadrugnew/list.vue'}">
+            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/fdadrugnew/list'}">
               <span class="nav"><i class="iconfont pr5" style="font-size:20px;">&#xe62d;</i>上市数据</span>
             </a>
             <a @click.prevent="navRouteTo(2)" class="nav_one" :class="{'router-link-active': $route.path == '/fdadrugnew/analy', 'abandon-click-method': nopms.ksh}">
@@ -247,7 +247,7 @@
       },
       navRouteTo (index) {
         if (index == 1) {
-          this.$router.push({ path: '/fdadrugnew/list.vue'})
+          this.$router.push({ path: '/fdadrugnew/list'})
         } else if (index == 2 && !this.nopms.ksh) {
           this.$router.push({ path: '/fdadrugnew/analy'})
           window.ga("send","event", "tab", "click", "fdadrugnew_analy")
@@ -276,8 +276,8 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
   .el-dialog {
     border-radius: 20px!important;
   }

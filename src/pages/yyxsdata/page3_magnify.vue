@@ -55,6 +55,8 @@
           :index="i"
           :year="clickYear"
           :nopmState="nopmState"
+          :atc="atcSel.model"
+          :categ="categSel.model"
           @drawBarLine="
             i =>
               drawBarLine(
@@ -75,10 +77,10 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
 import EchartsItemMagnify from "./components/echartsItemMagnify.vue";
-import CascaderSelect from "@/components/inputs/cascader-select.vue";
-import Select from "@/components/inputs/select.vue";
+import CascaderSelect from "@/components/inputs/cascader-select.vue"
+import Select from "@/components/inputs/select.vue"
 import { mapState } from "vuex";
 export default {
   props: {
@@ -218,7 +220,7 @@ export default {
           type: ["pie"],
           curType: "pie",
           title: "",
-          barType: 'x',
+          barType: "x",
           nameKey: "key",
           sKey: "doc_count",
           show: true,
@@ -335,7 +337,7 @@ export default {
       });
       //公共参数
       let commonParam = {
-        atc: this.atcSel._model || null,
+        atc: this.atcSel.model || null,
         categ: this.categSel.model || null,
         year: this.yearSel.model || null
       };
@@ -437,7 +439,6 @@ export default {
               comdata,
               eitem.sKey
             );
-            console.log(eitem.barType);
             this.$refs.echartsItem[i]["drawBar" + eitem.barType](
               comdata,
               eitem.nameKey,
@@ -460,10 +461,10 @@ export default {
           });
         });
         this.titleAtc = obj.label;
-        this.atcSel._model = val;
+        this.atcSel.model = val;
       } else {
         this.titleAtc = "";
-        this.atcSel._model = "";
+        this.atcSel.model = "";
       }
     },
     //获取环比数据
@@ -866,7 +867,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .page-wrap {
   background: #fff;
   box-shadow: 0 0 5px #c4d3f8;
@@ -886,5 +887,9 @@ export default {
 }
 .top-btn {
   border-radius: 4px !important;
+}
+/deep/.el-select-dropdown__item {
+  width: 300px;
+  display: block;
 }
 </style>

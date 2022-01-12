@@ -4,7 +4,7 @@
     <LoadingGif :loadFlag="isLoading" v-if="isLoading"></LoadingGif>
     <!-- 加载完成显示部分 -->
     <div class="detail-list" v-else>
-      <div class="detail-header">
+      <div class="detail-header header-fixed">
         <div class="header-left">
           <div class="left-top">
             <span class=" top-id" :title="headData.trade_name">{{
@@ -18,7 +18,7 @@
       <div class="main">
         <div
           class="left-nav"
-          :style="{ top: (showPromtNotice ? 118 : 88) + 'px' }"
+          :style="{ top: (showPromtNotice ? 128 : 98) + 'px' }"
         >
           <div class="nav-list nav-event" @click="handleNavClick">
             <a class="nav-item active" v-if="hasPartOne">基本信息</a>
@@ -187,7 +187,11 @@
                     </div>
                     <div v-if="item.prop === 'patent_no'">
                       <a
-                        :href="`https://patent.yaozh.com/list?words=KWS=US${scope.row.patent_no.split('*')[0]}&sourceType=all&ga_source=vip&ga_name=fdaproducts`"
+                        :href="
+                          `https://patent.yaozh.com/list?words=KWS=US${
+                            scope.row.patent_no.split('*')[0]
+                          }&sourceType=all&ga_source=vip&ga_name=fdaproducts`
+                        "
                         target="_blank"
                         class="cl-blue"
                       >
@@ -311,10 +315,10 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
-import LaFooter from "@/components/layouts/footer.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
+import LaFooter from "@/components/layouts/footer.vue"
 import tablehead from "@/config/tablehead";
 import detailScrollMixins from "@/mixins/detailScroll.js";
 import { mapState } from "vuex";
@@ -366,23 +370,13 @@ export default {
     })
   },
   watch: {
-    showPromtNotice(val) {
+   showPromtNotice(val) {
       if (val) {
-        setTimeout(() => {
-          if ($(".left-nav").css("top"))
-            $(".left-nav").css(
-              "top",
-              parseInt(
-                $(".left-nav")
-                  .css("top")
-                  .replace("px", "")
-              ) + "px"
-            );
-        }, 600);
+        if ($(".left-nav").css("top")) {
+          $(".left-nav").css("top", "128px");
+        }
       } else {
-        setTimeout(() => {
-          if ($(".left-nav").css("top")) $(".left-nav").css("top", "88px");
-        }, 600);
+        if ($(".left-nav").css("top")) $(".left-nav").css("top", "98px");
       }
     }
   },
@@ -390,11 +384,11 @@ export default {
     handleScroll() {
       let top = $(".main").offset().top,
         leftNav = $(".left-nav");
-      if (top <= 50) {
-        leftNav.css("top", (this.showPromtNotice ? 88 : 58) + "px");
-      } else {
-        leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
-      }
+      // if (top <= 50) {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 98) + "px");
+      // } else {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
+      // }
     },
     detailClickToPopup(option, type) {
       this.detail_popup = [];
@@ -576,8 +570,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 .wrapper {
   .detail-list {

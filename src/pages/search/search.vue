@@ -56,11 +56,11 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import ReportForDrug from "./components/report-for-drug.vue";
-import ReportForCompany from "./components/report-for-company.vue";
-import DataNav from "./components/data-nav.vue";
-import LaFooter from "@/components/layouts/footer.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import ReportForDrug from "./components/report-for-drug";
+import ReportForCompany from "./components/report-for-company";
+import DataNav from "./components/data-nav";
+import LaFooter from "@/components/layouts/footer.vue"
 import { mapState } from "vuex";
 export default {
   components: {
@@ -195,6 +195,7 @@ export default {
               this.comprehensive === "company"
                 ? data.is_company
                 : data.is_report;
+            console.log(this.hasModule, Number(this.hasModule));
             if (Number(this.hasModule))
               this.getDetailModule(
                 params,
@@ -248,7 +249,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .wrapper {
   box-sizing: border-box;
   min-height: 100%;

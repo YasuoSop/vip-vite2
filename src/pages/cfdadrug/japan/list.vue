@@ -293,8 +293,8 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-// @import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+// @import "~@/assets/less/app.less";
 
 .la-list {
   .item_top {

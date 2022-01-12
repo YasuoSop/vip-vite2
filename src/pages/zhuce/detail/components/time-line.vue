@@ -189,7 +189,7 @@
 
 <script>
 import Vue from "vue";
-import TimeNode from "./time-node.vue";
+import TimeNode from "./time-node";
 
 export default {
   components: {
@@ -803,7 +803,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 .time-line {
   padding: 20px 0 20px 60px;

@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ExtendButton from "@/components/common/extend-button.vue";
+import ExtendButton from "@/components/common/extend-button.vue"
 export default {
   components: {
     ExtendButton,
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 @import "../css/com.less";
 
 .extend-list {

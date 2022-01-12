@@ -7,7 +7,7 @@
     ></LoadingGif>
     <!-- 加载完成显示部分 -->
     <div class="detail-list" v-else>
-      <div class="detail-header">
+      <div class="detail-header header-fixed">
         <img src="/static/imgs/general/drug-icon.png" class="drug-icon" />
         <div class="header-left">
           <div style="margin-left: 10px">
@@ -15,15 +15,16 @@
               <span
                 class="top-id"
                 :title="base_info.name ? base_info.name : base_info.englishname"
+                >{{
+                  base_info.name ? base_info.name : base_info.englishname
+                }}</span
               >
-                {{ base_info.name ? base_info.name : base_info.englishname }}
-              </span>
               <div class="left-bottom" v-if="base_info.name">
-                <span class="bottom-name fontw">
-                  {{ base_info.englishname }}
-                </span>
+                <span class="bottom-name fontw">{{
+                  base_info.englishname
+                }}</span>
               </div>
-              <span v-if="base_info.zgss" class="icon-head">
+              <span v-if="base_info.chinamarked == 1" class="icon-head">
                 <i class="iconfont">&#xe66d;</i>&nbsp;中国上市&nbsp;
                 <i class="iconfont icon-dui">&#xe634;</i>
               </span>
@@ -48,18 +49,29 @@
               @click="ywbgLink(base_info.is_newdrug)"
               v-if="base_info.is_newdrug"
             >
-              <img src="@/assets/imgs/ywbg2.png" />
+              <img src="~@/assets/imgs/ywbg2.png" />
               <span>新药进展</span>
             </div>-->
-            <div class="ywbg-btn" @click="getPDF">
-              <img width="20px" src="@/assets/imgs/yzx/pdf_i.png" />
+            <!-- v-if="isDev" -->
+            <div
+              class="ywbg-btn"
+              v-loading="!cate_loaded"
+              element-loading-spinner="el-icon-loading"
+              @click="cate_loaded && getPDF(true)"
+            >
+              <img width="20px" src="~@/assets/imgs/yzx/pdf_i.png" />
               <span>生成报告</span>
             </div>
+            <!-- 旧的导出注释  -->
+            <!-- <div class="ywbg-btn" @click="getPDF()">
+              <img width="20px" src="~@/assets/imgs/yzx/pdf_i.png" />
+              <span>生成报告</span>
+            </div>-->
           </div>
         </div>
       </div>
 
-      <div class="main">
+      <div class="main" style="padding-top: 50px;">
         <div class="detail-type1">
           <div class="mian-inf">
             <div class="main-p1-container">
@@ -67,11 +79,13 @@
                 <ul class="basic-info">
                   <li>
                     <label>药物别名</label>
-                    <span class="overflow" :title="base_info.ename">
-                      {{ base_info.ename || "/" }}
-                    </span>
+                    <span
+                      style="word-break: break-all;"
+                      :title="base_info.ename"
+                      >{{ base_info.ename || "/" }}</span
+                    >
                   </li>
-                  <li>
+                  <li style="width: 100%;">
                     <label>药物类型</label>
                     <span>{{ base_info.leixing2 || "/" }}</span>
                   </li>
@@ -134,19 +148,22 @@
                 </ul>
               </div>
               <div class="drug-img">
-                <img
-                  v-if="base_info.structpicture"
-                  :src="base_info.structpicture"
-                  @error="picLoadError"
-                />
-                <img v-else src="/static/imgs/general/no-drug-img.jpg" />
+                <slide-lan>
+                  <img
+                    v-if="base_info.structpicture"
+                    @click="() => $Img(base_info.structpicture)"
+                    :src="base_info.structpicture"
+                    @error="picLoadError"
+                  />
+                  <img v-else src="/static/imgs/general/no-drug-img.jpg" />
+                </slide-lan>
               </div>
             </div>
             <div class="main-p2" v-if="base_info.yaowugaishu">
               <div class="summary">
                 <h4>药物概述</h4>
                 <div
-                  class="summary-info t-line3"
+                  class="summary-info t-line6"
                   v-html="base_info.yaowugaishu"
                 ></div>
               </div>
@@ -169,9 +186,9 @@
                 v-if="
                   (index =
                     'apijbxx' &&
-                    (Object.keys(base_info.api).length > 0 ||
-                      base_info.api != '' ||
-                      (base_info.cas != '' && base_info.cas != null)))
+                    Object.values(base_info.api).every(
+                      item => item != '' && item != null
+                    ))
                 "
                 v-bind:class="[
                   active_catalogue == 'apijbxx' ? 'active' : '',
@@ -323,9 +340,9 @@
                 <DetailAPIJbxx
                   v-if="
                     active_catalogue == 'apijbxx' &&
-                      (Object.keys(base_info.api).length > 0 ||
-                        base_info.api != '' ||
-                        (base_info.cas != '' && base_info.cas != null))
+                      Object.values(base_info.api).every(
+                        item => item != '' && item != null
+                      )
                   "
                   :res="base_info"
                   :extendList="extendList"
@@ -421,8 +438,8 @@
     <!-- PDF生成图片测试 -->
     <!-- <div v-for="(item, index) in imgs" :key="index">
       <img :src="item" />
-    </div> -->
-    <pdf-report
+    </div>-->
+    <!-- <pdf-report
       :isloading.sync="isloading"
       :jspdf.sync="jspdf"
       v-if="jspdf"
@@ -436,7 +453,26 @@
       :cnListRes="cnListRes"
       :usListRes="usListRes"
       :allListRes="allListRes"
-    />
+    />-->
+
+    <!-- v-if="isDev" -->
+    <template>
+      <pdf-report-new
+        :isloading.sync="isloading"
+        :jspdf.sync="jspdfNew"
+        v-if="jspdfNew"
+        :extendList="extendList"
+        :isPinn="isPinn"
+        :ylbm="ylbm"
+        @modalHandler="modalHandler"
+        :infoData="base_info"
+        :moreData="pdfData"
+        :catalogues="catalogues"
+        :cnListRes="cnListRes"
+        :usListRes="usListRes"
+        :allListRes="allListRes"
+      />
+    </template>
 
     <!-- PDF下载提示框 -->
     <el-dialog
@@ -456,25 +492,28 @@
   </div>
 </template>
 <script>
-import DetailAPIJbxx from "./apijbxx.vue";
-import DetailJzgj from "./jzgj.vue";
-import DetailJbxx from "./jbxx.vue";
-import DetailZhuce from "./zhuce.vue";
-import DetailClinical from "./clinical.vue";
-import DetailSspz from "./sspz.vue";
-import DetailYpxs from "./ypxs.vue";
-import DetailYaopinzhongbiao from "./yaopinzhongbiao.vue";
-import DetailBiaozhun from "./biaozhun.vue";
-import DetailPatent from "./patent.vue";
-import DetailInstruct from "./instruct.vue";
-import DetailPinn from "./pinndetail.vue";
+import DetailAPIJbxx from "./apijbxx";
+import DetailJzgj from "./jzgj";
+import DetailJbxx from "./jbxx";
+import DetailZhuce from "./zhuce";
+import DetailClinical from "./clinical";
+import DetailSspz from "./sspz";
+import DetailYpxs from "./ypxs";
+import DetailYaopinzhongbiao from "./yaopinzhongbiao";
+import DetailBiaozhun from "./biaozhun";
+import DetailPatent from "./patent";
+import DetailInstruct from "./instruct";
+import DetailPinn from "./pinndetail";
 import { mapState } from "vuex";
-import pdfReport from "../pdfReport/pdfReport.vue";
+import pdfReport from "../pdfReport/pdfReport";
+import pdfReportNew from "../pdfReport/pdfReportNew";
 import detailScrollMixins from "@/mixins/detailScroll.js";
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import SlideLan from "@/components/common/slide-lan.vue"
 
 export default {
   components: {
+    SlideLan,
     DetailAPIJbxx,
     DetailJzgj,
     DetailJbxx,
@@ -488,14 +527,18 @@ export default {
     DetailPatent,
     DetailPinn,
     pdfReport,
+    pdfReportNew,
     LoadingGif
   },
   mixins: [detailScrollMixins],
   data() {
     return {
+      cate_loaded: false,
+      isDev: /dev|local/.test(location.hostname), // 是否为开发环境
       pdfURL: "",
       showModal: false,
       jspdf: false,
+      jspdfNew: false,
       loading: true,
       isloading: false,
       jzgj1: [],
@@ -573,7 +616,7 @@ export default {
         return false;
       }
     },
-    getPDF() {
+    getPDF(isNew) {
       if (this.isIE()) {
         this.$Message.error("该功能只适用非IE内核浏览器，请更换浏览器");
         return false;
@@ -758,7 +801,12 @@ export default {
           setTimeout(() => {
             Store.commit("DrugReport/pdfHandlerStatus", true);
           }, 1000);
-          this.jspdf = true;
+          // 这里 进行判断， isNew == true 使用新版导出
+          if (isNew) {
+            this.jspdfNew = true;
+          } else {
+            this.jspdf = true;
+          }
         })
         .catch(err => {
           this.$Message.error("下载失败，请稍后再试");
@@ -867,6 +915,7 @@ export default {
           }
         })
         .then(res => {
+          this.cate_loaded = true;
           if (res.data.code == 200 && res.data.data) {
             this.catalogues = res.data.data;
           }
@@ -1006,9 +1055,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/app.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/detailCom.less";
 .wrapper {
   min-height: 100vh;
   /deep/.left-bottom {
@@ -1017,6 +1066,9 @@ export default {
   /deep/.bottom-name {
     height: 13px !important;
     line-height: 13px !important;
+  }
+  /deep/.el-loading-spinner {
+    margin-top: -14px;
   }
   .left-top {
     align-items: center;
@@ -1066,7 +1118,7 @@ export default {
             line-height: 28px;
             border-radius: 6px;
             cursor: pointer;
-
+            position: relative;
             span {
               margin-left: 8px;
             }
@@ -1231,11 +1283,17 @@ export default {
           text-align: center;
           border-radius: 4px;
           position: relative;
+          cursor: pointer;
           img {
             width: auto;
             max-width: 500px;
             height: 140px;
           }
+        }
+        .slide-lan /deep/.content {
+          padding: 0;
+          width: 100%;
+          border: none;
         }
       }
       .main-p2 {
@@ -1303,8 +1361,8 @@ export default {
   margin-left: 0 !important;
 }
 
-.t-line3 {
-  max-height: 72px;
+.t-line6 {
+  max-height: 150px;
   overflow-y: auto;
 }
 

@@ -5,6 +5,8 @@
       <router-link to="/usercenter/take/dynamic" class="nav-lan nav-lan-active">订阅动态&nbsp;&nbsp;></router-link>
       <router-link to="/usercenter/take/condition" class="nav-lan">订阅条件</router-link>
       <router-link to="/usercenter/take/new" class="nav-lan">新增订阅</router-link>
+      <div style="margin-top:20px; padding: 0 20px;font-weight: 400;">关注药智数据服务号 <p style="color: #868EA3;">随时随地掌握最新动态</p></div>
+      <img width="96" height="96" style="margin:10px 0 0 18px;" src="../../../../../static/imgs/wechart/code.png" alt="">
     </div>
     <!--  -->
     <div class="right-view">
@@ -33,6 +35,8 @@
               'zbgg': item.head_title === '中标公告',
               'xtgg': item.head_title === '系统公告',
               'fkhf': item.head_title === '反馈回复',
+              'binggou': item.head_title === '并购事件',
+              'rongzi': item.head_title === '融资事件',
             }">{{item.head_title}}</div>
             <div class="content">
               <!-- 按受理号订阅 && 受理号变化 -->
@@ -46,10 +50,21 @@
                 <span class="topic"><span v-if="item.type_title">#</span>{{item.type_title}}</span>
               </router-link>
               <!-- 非按受理号订阅 -->
-              <router-link v-if="item.field != 'shoulihao'" :to="{path: '/usercenter/take/dynamic/other/' + item.id, query:{title: item.title}}" class="main">
+              <router-link v-if="item.field != 'shoulihao' && (item.dbename !=='binggou' && item.dbename !=='tourongzi')" :to="{path: '/usercenter/take/dynamic/other/' + item.id, query:{title: item.title}}" class="main">
                 {{item.title}}
                 <span class="topic"><span v-if="item.type_title">#</span>{{item.type_title}}</span>
               </router-link>
+
+              <!-- 并购事件 -->
+              <router-link v-if="item.dbename === 'binggou'" :to="{path: '/usercenter/take/dynamic/trzMsg/' + item.id, query:{dbename: item.dbename}}" class="main">
+                您订阅的并购事件新增加<span class="count">{{item.count}}</span>件
+              </router-link>
+
+              <!-- 融资事件 -->
+              <router-link v-if="item.dbename === 'tourongzi'" :to="{path: '/usercenter/take/dynamic/trzMsg/' + item.id, query:{dbename: item.dbename}}" class="main">
+                您订阅的投融资事件新增加<span class="count">{{item.count}}</span>件
+              </router-link>
+
               <!-- 点击标记为已读 -->
               <i class="handle-read el-icon-circle-check cl-green" @click="changeToReaded(item.type_title, item.id)"></i>
             </div>
@@ -70,8 +85,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -168,7 +183,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .mc {
   .right-view {
     .all-none {
@@ -241,6 +256,14 @@ export default {
             &.fkhf { // 反馈回复
               background: @McTypeOrange;
             }
+
+            &.binggou { // 并购事件
+              background: #F3AC00;
+            }
+
+            &.rongzi {
+              background: #2556C0;
+            }
           }
           .content {
             display: inline-block;
@@ -248,6 +271,9 @@ export default {
             background: url("/static/imgs/usercenter/unread.jpg") 0px 17px no-repeat;
             .topic {
               color: @PrimaryColor;
+            }
+            .count {
+              color: #F4A622;
             }
             .handle-read {
               font-size: 16px;
@@ -271,7 +297,8 @@ export default {
               .main {
                 color: @McTypeGray;
               }
-              .topic {
+              .topic,
+              .count {
                 color: @McTypeGray;
               }
             }

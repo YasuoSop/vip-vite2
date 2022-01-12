@@ -128,7 +128,7 @@
   }
 }
 .yzx-title-icon{
-  background: url("@/assets/imgs/yzx/title_icon.png");
+  background: url("~@/assets/imgs/yzx/title_icon.png");
 }
 .pjdt-title-icon{
   width: 18px;

@@ -89,7 +89,7 @@
                           <td>{{fzk.casn}}</td>
                           <td v-html="vueFormulationsFormatter(fzk.fzs)"></td>
                           <td>
-                            <a :href="'https://www.chemblink.com/moreProducts/more' + fzk.casn + '.htm'" class="cl-blue" target="_blank" v-if="fzk.casn">详情</a>
+                            <a :href="fzk.xq" class="cl-blue" target="_blank" v-if="fzk.xq">详情</a>
                             <span v-else style="color: #aaa; cursor: not-allowed">详情</span>
                           </td>
                         </tr>
@@ -210,8 +210,8 @@
 </script>
 
 <style lang="less" scoped>
-  @import "@/assets/less/var.less";
-  @import "@/assets/less/detailCom.less";
+  @import "~@/assets/less/var.less";
+  @import "~@/assets/less/detailCom.less";
 .wrapper {
   position: relative;
   .img-jiegoushi {

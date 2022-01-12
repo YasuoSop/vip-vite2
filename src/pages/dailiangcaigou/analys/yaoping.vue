@@ -20,7 +20,7 @@
               v-model="inputName"
               :fetch-suggestions="querySearch"
               :placeholder="inputName"
-                :popper-append-to-body="false"
+              :popper-append-to-body="false"
               :trigger-on-focus="false"
               @select="handleSelect"
             ></el-autocomplete>
@@ -232,11 +232,10 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import Select from "@/components/inputs/select.vue";
-import SlideSection from "@/components/common/slide-section.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import Select from "@/components/inputs/select.vue"
+import SlideSection from "@/components/common/slide-section.vue"
 import { mapState } from "vuex";
-
 import Axios from "axios";
 
 export default {
@@ -258,7 +257,7 @@ export default {
   },
   data() {
     return {
-      flag: false,  // 是否点击批次或企业切换过，默认为false
+      flag: false, // 是否点击批次或企业切换过，默认为false
       showInputName: "", // 展示的药品名称
       curQiYe: "", // 当前选中的企业
       qiYeList: [], // 批次下拉数组
@@ -300,7 +299,7 @@ export default {
         xianjia: [],
         jiangfu: []
       },
-      eType: 'map',
+      eType: "map",
       mapList: [], // 首年约定采购量分析地图数组
       shouNianChart: null, // 首年约定采购量分析图表对象
       qiYeZhongXuanChart: null, // 企业中选价格分析图表对象
@@ -325,7 +324,9 @@ export default {
     guiGeChange(val) {
       this.isloading = true;
       this.curGuiGe = val;
-      Echarts.getInstanceByDom(document.getElementById("shouNianYueDing")).clear();
+      Echarts.getInstanceByDom(
+        document.getElementById("shouNianYueDing")
+      ).clear();
       this.getBasicShouNianYueDing();
       this.qiYeZhongXuan();
       this.getQiyeZhongxuanJiage();
@@ -336,7 +337,9 @@ export default {
       this.flag = true;
       this.isloading = true;
       this.curPici = currentVal;
-      Echarts.getInstanceByDom(document.getElementById("shouNianYueDing")).clear();
+      Echarts.getInstanceByDom(
+        document.getElementById("shouNianYueDing")
+      ).clear();
       console.log(this.curPici);
       this.getshouNianYueDing();
       this.isloading = false;
@@ -345,7 +348,9 @@ export default {
       this.flag = true;
       this.isloading = true;
       this.curQiYe = currentVal;
-      Echarts.getInstanceByDom(document.getElementById("shouNianYueDing")).clear();
+      Echarts.getInstanceByDom(
+        document.getElementById("shouNianYueDing")
+      ).clear();
       this.getshouNianYueDing();
       this.isloading = false;
     },
@@ -535,11 +540,13 @@ export default {
     qiYeZhongXuan() {
       if (this.qiYeZhongXuanChart == null) {
         this.qiYeZhongXuanChart = Echarts.init(
-          document.getElementById("qiYeZhongXuan")
+          document.getElementById("qiYeZhongXuan"),
+          "yaozh_theme"
         );
       } else {
         this.qiYeZhongXuanChart = Echarts.getInstanceByDom(
-          document.getElementById("qiYeZhongXuan")
+          document.getElementById("qiYeZhongXuan"),
+          "yaozh_theme"
         );
       }
       this.qiYeZhongXuanChart.setOption({
@@ -714,8 +721,10 @@ export default {
     },
     // 首年约定采购量分析切换
     handleToggle(dom, type, data) {
+      console.log(data);
       let container = Echarts.getInstanceByDom(
-          document.getElementById(dom)
+          document.getElementById(dom),
+          "yaozh_theme"
         ),
         option = {},
         xAxis_data = [],
@@ -730,7 +739,7 @@ export default {
 
       if (container) {
         container.clear(); // 存在的话先清空上一次的图表，释放内存
-        container = Echarts.init(document.getElementById(dom));
+        container = Echarts.init(document.getElementById(dom), "yaozh_theme");
       }
 
       option = {
@@ -833,12 +842,12 @@ export default {
         // 饼图
         pie: {
           legend: {
-            type: 'scroll',
-            bottom: 'bottom',
-            data: xAxis_data,
+            type: "scroll",
+            bottom: "bottom",
+            data: xAxis_data
           },
           toolbox: {
-            right: '20',
+            right: "20",
             feature: {
               saveAsImage: {
                 title: "保存",
@@ -881,7 +890,7 @@ export default {
                   formatter: "{b}{d}%"
                 }
               },
-              data: data,
+              data: data
             }
           ]
         },
@@ -932,7 +941,7 @@ export default {
           series: [
             {
               type: "map",
-              map: "china",
+              mapType: "china",
               label: {
                 normal: {
                   show: false
@@ -961,11 +970,13 @@ export default {
       maxVal = maxVal ? maxVal : 0;
       if (this.shouNianChart == null) {
         this.shouNianChart = Echarts.init(
-          document.getElementById("shouNianYueDing")
+          document.getElementById("shouNianYueDing"),
+          "yaozh_theme"
         );
       } else {
         this.shouNianChart = Echarts.getInstanceByDom(
-          document.getElementById("shouNianYueDing")
+          document.getElementById("shouNianYueDing"),
+          "yaozh_theme"
         );
       }
       if (_that.flag) {
@@ -1017,7 +1028,7 @@ export default {
           series: [
             {
               type: "map",
-              map: "china",
+              mapType: "china",
               label: {
                 normal: {
                   show: false
@@ -1087,7 +1098,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 @FontsizeSmall: 13px;
 @FontsizeSmallBold: bold;

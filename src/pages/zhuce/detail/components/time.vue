@@ -1,5 +1,46 @@
 <template>
-  <div class="time-node">
+  <div class="time-node" id="timeNode" ref="timeNode">
+    <LoadingGif
+      :className="'list-in-loading'"
+      :classNameImg="'little-size-loading'"
+      :loadFlag="isLoading"
+      v-if="isLoading"
+    ></LoadingGif>
+    <div class="time-info" v-if="isExportTimeImg">
+      <div class="box1">
+        <span class="info-slh">{{ info.shoulihao }}注册时光轴</span>
+      </div>
+      <div class="box2">
+        <span v-if="info.name" class="info-content"
+          >药品名称：<span>{{ info.name }}</span></span
+        >
+        <span v-if="info.qiyemingcheng" class="info-content"
+          >NMPA企业名称：<span>{{ info.qiyemingcheng }}</span></span
+        >
+        <span v-if="info.guifanqiyemingcheng" class="info-content"
+          >CDE企业名称：<span>{{ info.guifanqiyemingcheng }}</span></span
+        >
+      </div>
+      <div class="box3">
+        <div class="info-content">
+          时间：<span>{{ getTime() }}</span>
+        </div>
+        <div class="info-content" style="margin-right: 0;">
+          来源：<span>药智数据企业版</span>
+        </div>
+      </div>
+    </div>
+    <el-button
+      v-if="isLoading === false && isExportTimeImg === false"
+      class="time-export"
+      type="primary"
+      size="mini"
+      round
+      @click="
+        exportImg('timeNode', `${info.shoulihao}注册时光轴-药智数据企业版`)
+      "
+      >生成图片</el-button
+    >
     <div
       class="node"
       :class="{
@@ -11,7 +52,7 @@
           (item.drupMenu.label == '完成技术审评' &&
             !item.drupMenu.date &&
             !item.drupMenu.is_lamp) ||
-          (item.drupMenu.label == '开始技术审评' && !item.drupMenu.is_lamp),
+          (item.drupMenu.label == '开始技术审评' && !item.drupMenu.is_lamp)
       }"
       :id="item.drupMenu.id ? `node${item.drupMenu.id}` : `node${index}`"
       v-for="(item, index) in timeData"
@@ -40,7 +81,7 @@
         class="dot"
         :class="{
           'big-dot': item.drupMenu.node_type === 'parent',
-          'little-dot': item.drupMenu.node_type !== 'parent',
+          'little-dot': item.drupMenu.node_type !== 'parent'
         }"
       >
         <div class="line"></div>
@@ -56,32 +97,35 @@
                 'part-name-url':
                   (item.drupMenu.label === '通知临床实验数据现场核查' ||
                     item.drupMenu.label === '纳入自查核查品种') &&
-                  item.drupMenu.append.url,
+                  item.drupMenu.append && item.drupMenu.append.url
               }"
               :title="
                 item.drupMenu.label === '通知临床实验数据现场核查' ||
                 item.drupMenu.label === '纳入自查核查品种'
-                  ? item.drupMenu.append.laiyuan
+                  ? (item.drupMenu.append && item.drupMenu.append.laiyuan)
                   : ''
               "
             >
               {{ item.drupMenu.label }}
               <!-- 纳入优先审评品种 -->
               <span
-                style="margin-left: 10px; font-weight: bold"
+                style="margin-left:10px;font-weight: bold;"
                 v-if="
                   item.drupMenu.label === '纳入优先审评品种' &&
-                  item.drupMenu.append.remarks
+                    item.drupMenu.append &&
+                    item.drupMenu.append.remarks
                 "
               >
-                纳入理由：{{ item.drupMenu.append.remarks }}
+                纳入理由：{{
+                  item.drupMenu.append && item.drupMenu.append.remarks
+                }}
               </span>
               <!-- 通知临床实验数据现场核查 、纳入自查核查品种-->
               <span
                 v-if="
                   (item.drupMenu.label === '通知临床实验数据现场核查' ||
                     item.drupMenu.label === '纳入自查核查品种') &&
-                  item.drupMenu.append.url
+                   (item.drupMenu.append && item.drupMenu.append.url)
                 "
                 @click="jumpUrl(item.drupMenu.append.url)"
                 class="iconfont iconfont-link-btn"
@@ -95,21 +139,14 @@
                 :append-to-body="true"
                 v-if="
                   item.drupMenu.label === '通知临床实验数据现场核查' &&
-                  Object.keys(item.drupMenu.append.xianchanghecha).length > 0
+                    Object.keys(item.drupMenu.append.xianchanghecha).length > 0
                 "
               >
                 <div class="detail-content">
                   <div>
-                    <span class="title">受理号</span>
+                    <span class="title">申报单位</span>
                     <span class="info">{{
-                      item.drupMenu.append.xianchanghecha.shoulihao
-                    }}</span>
-                  </div>
-
-                  <div>
-                    <span class="title">药品名称</span>
-                    <span class="info">{{
-                      item.drupMenu.append.xianchanghecha.name
+                      item.drupMenu.append.xianchanghecha.shenbaodanwei
                     }}</span>
                   </div>
 
@@ -131,13 +168,6 @@
                     <span class="title">主要研究者</span>
                     <span class="info">{{
                       item.drupMenu.append.xianchanghecha.zhuyaoyanjiuzhe
-                    }}</span>
-                  </div>
-
-                  <div>
-                    <span class="title">申报单位</span>
-                    <span class="info">{{
-                      item.drupMenu.append.xianchanghecha.shenbaodanwei
                     }}</span>
                   </div>
 
@@ -202,19 +232,27 @@
                 >
               </el-popover>
 
-              <!-- 拟纳入优先审评品种 、 拟纳入突破性治疗品种 -->
+              <!-- 拟纳入优先审评品种公示 、 拟纳入突破性治疗品种公示 -->
               <span
-                style="margin-left: 10px; font-weight: bold"
+                style="margin-left:10px;font-weight: bold;"
                 v-if="
-                  (item.drupMenu.label === '拟纳入优先审评品种' ||
-                    item.drupMenu.label === '拟纳入突破性治疗品种') &&
-                  Object.keys(item.drupMenu.append.beizhu).length > 0
+                  (item.drupMenu.label === '拟纳入优先审评品种公示' ||
+                    item.drupMenu.label === '拟纳入突破性治疗品种公示') &&
+                    item.drupMenu.append &&
+                    Object.keys(item.drupMenu.append.beizhu).length > 0
                 "
                 >({{ item.drupMenu.append.beizhu.date }}
-                {{ item.drupMenu.append.beizhu.remarks }})</span
+                {{
+                  item.drupMenu.append.beizhu &&
+                    item.drupMenu.append.beizhu.remarks
+                }})</span
               >
             </div>
-            <div class="part-more" v-if="item.drupMenu.infoLabel">
+            <div
+              class="part-more"
+              v-if="item.drupMenu.infoLabel"
+              ref="partMore"
+            >
               <div class="more-line"></div>
 
               <!-- 图标的区别：新，补 -->
@@ -244,16 +282,16 @@
                   <span
                     v-if="
                       typeof item.drupMenu.xuhao === 'string' ||
-                      typeof item.drupMenu.xuhao === 'number'
+                        typeof item.drupMenu.xuhao === 'number'
                     "
                     >{{ item.drupMenu.gongshileibie }}</span
                   >
                   <span
                     v-else-if="
                       !item.drupMenu.xuhao ||
-                      item.drupMenu.xuhao == '[]' ||
-                      item.drupMenu.xuhao == '' ||
-                      item.drupMenu.xuhao.length < 1
+                        item.drupMenu.xuhao == '[]' ||
+                        item.drupMenu.xuhao == '' ||
+                        item.drupMenu.xuhao.length < 1
                     "
                     >{{ item.drupMenu.gongshileibie }}</span
                   >
@@ -282,19 +320,20 @@
                   <span
                     v-if="
                       !item.drupMenu.xuhao ||
-                      item.drupMenu.xuhao == '[]' ||
-                      item.drupMenu.xuhao == '' ||
-                      item.drupMenu.xuhao.length < 1
+                        item.drupMenu.xuhao == '[]' ||
+                        item.drupMenu.xuhao == '' ||
+                        item.drupMenu.xuhao.length < 1
                     "
                   ></span>
                   <span v-else>
                     <span
                       v-if="
-                        typeof item.drupMenu.xuhao === 'string' ||
-                        typeof item.drupMenu.xuhao === 'number'
+                        (typeof item.drupMenu.xuhao === 'string' ||
+                          typeof item.drupMenu.xuhao === 'number') &&
+                          item.drupMenu.xuhao
                       "
                       >序号/排队号：{{ item.drupMenu.xuhao
-                      }}<span v-if="item.drupMenu.pdh" style="color: #f77d56"
+                      }}<span v-if="item.drupMenu.pdh" style="color:#f77d56"
                         >/{{ item.drupMenu.pdh }}</span
                       ></span
                     >
@@ -303,8 +342,11 @@
                         v-for="(txt, index) in item.drupMenu.xuhao"
                         :key="index"
                         class="txt"
-                        >序号/排队号：{{ txt.xuhao }}
-                        <span v-if="txt.pdh" style="color: #f77d56"
+                      >
+                        <span v-if="txt.xuhao"
+                          >序号/排队号：{{ txt.xuhao }}</span
+                        >
+                        <span v-if="txt.pdh" style="color:#f77d56"
                           >/{{ txt.pdh }}</span
                         ></span
                       >
@@ -315,19 +357,20 @@
                   <span
                     v-if="
                       !item.drupMenu.xuhao ||
-                      item.drupMenu.xuhao == '[]' ||
-                      item.drupMenu.xuhao == '' ||
-                      item.drupMenu.xuhao.length < 1
+                        item.drupMenu.xuhao == '[]' ||
+                        item.drupMenu.xuhao == '' ||
+                        item.drupMenu.xuhao.length < 1
                     "
                   ></span>
                   <span v-else>
                     <span
                       v-if="
-                        typeof item.drupMenu.xuhao === 'string' ||
-                        typeof item.drupMenu.xuhao === 'number'
+                        (typeof item.drupMenu.xuhao === 'string' ||
+                          typeof item.drupMenu.xuhao === 'number') &&
+                          item.drupMenu.xuhao
                       "
                       >序号/排队号：{{ item.drupMenu.xuhao
-                      }}<span v-if="item.drupMenu.pdh" style="color: #f77d56"
+                      }}<span v-if="item.drupMenu.pdh" style="color:#f77d56"
                         >/{{ item.drupMenu.pdh }}</span
                       ></span
                     >
@@ -336,8 +379,11 @@
                         v-for="(txt, index) in item.drupMenu.xuhao"
                         :key="index"
                         class="txt"
-                        >序号/排队号：{{ txt.xuhao }}
-                        <span v-if="txt.pdh" style="color: #f77d56"
+                      >
+                        <span v-if="txt.xuhao"
+                          >序号/排队号：{{ txt.xuhao }}</span
+                        >
+                        <span v-if="txt.pdh" style="color:#f77d56"
                           >/{{ txt.pdh }}</span
                         ></span
                       >
@@ -388,7 +434,7 @@
                         !txt.zaishenpin &&
                         !txt.wanchengshenpin,
                       three2: txt.zaishenpin && !txt.wanchengshenpin,
-                      three3: txt.wanchengshenpin,
+                      three3: txt.wanchengshenpin
                     }"
                   >
                     <div class="step step1" v-if="txt.daishenpin">
@@ -457,7 +503,7 @@
                     :class="{
                       two0: Object.keys(txt).length === 0,
                       two1: txt.zaishenpin && !txt.wanchengshenpin,
-                      two2: txt.wanchengshenpin,
+                      two2: txt.wanchengshenpin
                     }"
                   >
                     <div class="step step1" v-if="txt.zaishenpin">
@@ -516,7 +562,7 @@
             class="three-part"
             v-if="
               item.drupMenu.label === 'NMPA 邮寄日期' &&
-              item.drupMenu.append.length > 0
+                item.drupMenu.append.length > 0
             "
           >
             <div v-for="(txt, i) in item.drupMenu.append" :key="i">
@@ -534,7 +580,7 @@
         v-if="
           (item.drupMenu.label.indexOf('新报') !== -1 ||
             item.drupMenu.label.indexOf('补充') !== -1) &&
-          Object.keys(item.drupMenu.change).length > 0
+            Object.keys(item.drupMenu.change).length > 0
         "
       >
         <!-- 花括号ui -->
@@ -555,31 +601,56 @@
 
     <!-- 时光轴结论 -->
     <div v-if="Object.keys(jielunObj).length > 0" class="node-jielun">
-      <span>{{ jielunObj.append.jielun }}</span>
-      <span v-if="jielunObj.append.pizhunwenhao"
-        >(批准文号：<a
+      <img src="../../../../../static/imgs/timeline/node-jielun.png" alt="" />
+      <span class="pzh">{{ jielunObj.append.jielun }}</span>
+      <span v-if="jielunObj.append.pizhunwenhao">
+        (批准文号：
+        <!-- jielunObj.append.tp = 1 国产 否则进口 -->
+        <a
           class="pzh"
-          @click="
-            linkTo(`/cfdadrug`, {
-              pizhunwenhao: `${jielunObj.append.pizhunwenhao}`,
-            })
+          v-if="jielunObj.append.id"
+          :href="
+            jielunObj.append.tp == 1
+              ? `/cfdadrug/detail/${jielunObj.append.id}?pizhunwenhao=${jielunObj.append.pizhunwenhao}`
+              : `/cfdadrug/jkdetail/${jielunObj.append.id}?pizhunwenhao=${jielunObj.append.pizhunwenhao}`
           "
+          target="_blank"
           >{{ jielunObj.append.pizhunwenhao }}</a
-        >)</span
-      >
+        >
+        <span v-else>{{ jielunObj.append.pizhunwenhao }}</span
+        >)
+      </span>
     </div>
+
+    <!-- <exportTimeImg :info="info" ref="exportTimeImg"></exportTimeImg> -->
   </div>
 </template>
 
 <script>
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import html2canvas from "html2canvas";
+import { createLogger } from "vuex";
 export default {
+  props: {
+    info: {
+      type: Object,
+      default: {
+        return: {}
+      }
+    }
+  },
   data() {
     return {
+      isLoading: true,
       timeData: [],
       nodeColor: "blue",
       activeDate: "", // 记录当前点击的是哪个时光轴节点
       jielunObj: {}, // 结论
+      isExportTimeImg: false // 控制导出图片的顶部信息是否显示
     };
+  },
+  components: {
+    LoadingGif
   },
   watch: {},
 
@@ -590,7 +661,7 @@ export default {
   mounted() {
     let _this = this;
     // this.getHeight()
-    window.onresize = function () {
+    window.onresize = function() {
       _this.getHeight();
     };
   },
@@ -604,10 +675,11 @@ export default {
           url: "/api/zhuce/timeline",
           params: {
             id: this.$route.params.id,
-            accesstoken: GETCOOKIEFUN("accesstoken"),
-          },
+            accesstoken: GETCOOKIEFUN("accesstoken")
+          }
         })
-        .then((res) => {
+        .then(res => {
+          this.isLoading = false;
           if (res.data.code === 200 && res.data.data) {
             this.timeData = res.data.data;
             // 判断数组最后一项是不是结论，如果是提出来单独渲染
@@ -679,7 +751,7 @@ export default {
                   `#${refArr[i].parentNode.id.replace(/Start/, "End")}`
                 ).offset().top -
                 $(refArr[i].parentNode).offset().top -
-                36,
+                36
             });
           }
         }
@@ -688,16 +760,35 @@ export default {
         let heightArr = [];
         let nodeNum = $(".node").length;
 
-        $(".node").each(function () {
+        $(".node").each(function() {
           heightArr.push($(this).height());
         });
-        $(".dot .line").each(function (index) {
+        $(".dot .line").each(function(index) {
           if (index === nodeNum - 1) {
             $(this).css({ height: 0 });
           } else {
             $(this).css({ height: heightArr[index] });
           }
         });
+
+        let refPart = this.$refs["partMore"];
+        if (refPart && refPart.length > 0) {
+          // 遍历所有的refs实例
+          for (let i = 0; i < refPart.length; i++) {
+            // 给所有的.part-more节点(partMore)设置margin-left
+            console.log(
+              $(refPart[i])
+                .prev()
+                .width()
+            );
+            $(refPart[i]).css({
+              "margin-left":
+                $(refPart[i])
+                  .prev()
+                  .width() + 5
+            });
+          }
+        }
       });
     },
 
@@ -713,20 +804,80 @@ export default {
       window.open(url);
     },
 
-    // 结论批准文号跳转到中国上市
-    linkTo(path, query) {
-      const { href } = this.$router.resolve({
-        path,
-        query,
-      });
-      window.open(href, "_blank");
+    // 返回当前时间
+    getTime() {
+      let date = new Date();
+      let y = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+      let h = `${date.getHours()}:${
+        date.getMinutes() > 10 ? date.getMinutes() : "0" + date.getMinutes()
+      }`;
+      return y + " " + h;
     },
-  },
+
+    exportImg(divText, imgText) {
+      if (this.isIE()) {
+        this.$Message.error("该功能只适用非IE内核浏览器，请更换浏览器");
+        return false;
+      }
+      this.$emit("changeLoading", true);
+      this.isExportTimeImg = true;
+      window.ga(
+        "send",
+        "event",
+        "button",
+        "click",
+        `vip_zhuce_${this.info.shoulihao}_sgztp`
+      );
+      window._paq.push([
+        "trackEvent",
+        "button",
+        "click",
+        `vip_zhuce_${this.info.shoulihao}_sgztp`
+      ]);
+      this.$nextTick(() => {
+        setTimeout(() => {
+          let canvasID = this.$refs[divText];
+          let that = this;
+          let a = document.createElement("a");
+          html2canvas(canvasID).then(canvas => {
+            let dom = document.body.appendChild(canvas);
+            dom.style.display = "none";
+            a.style.display = "none";
+            document.body.removeChild(dom);
+            let blob = that.dataURLToBlob(dom.toDataURL("image/png"));
+            a.setAttribute("href", URL.createObjectURL(blob));
+            //这块是保存图片操作  可以设置保存的图片的信息
+            a.setAttribute("download", imgText + ".png");
+            a.setAttribute("target", "_blank");
+            document.body.appendChild(a);
+            a.click();
+            URL.revokeObjectURL(blob);
+            document.body.removeChild(a);
+            this.isExportTimeImg = false;
+            that.$emit("changeLoading", false);
+          });
+        }, 500);
+      });
+    },
+
+    //图片格式转换方法
+    dataURLToBlob(dataurl) {
+      let arr = dataurl.split(",");
+      let mime = arr[0].match(/:(.*?);/)[1];
+      let bstr = atob(arr[1]);
+      let n = bstr.length;
+      let u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new Blob([u8arr], { type: mime });
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .detail-content {
   > div {
     display: flex;
@@ -746,6 +897,68 @@ export default {
 }
 .time-node {
   padding: 20px 0 20px 60px;
+  position: relative;
+
+  .time-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-right: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #dfe5f1;
+    margin-bottom: 20px;
+    align-items: baseline;
+
+    .box1 {
+      width: 260px;
+
+      span {
+        margin-right: 0;
+      }
+    }
+
+    .box2 {
+      flex: 1;
+      margin-right: 40px;
+    }
+
+    .box3 {
+      width: 160px;
+
+      div {
+        margin-right: 0;
+      }
+    }
+
+    .info-slh {
+      font-size: 18px;
+      font-weight: 600;
+      color: #545b6d;
+      margin-right: 30px;
+    }
+
+    .info-content {
+      font-size: 14px;
+      color: #868ea3;
+      margin-right: 30px;
+      span {
+        color: #545b6d;
+      }
+    }
+  }
+
+  .time-export {
+    display: inline-block;
+    padding: 6px 0px;
+    width: 80px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+    z-index: 10;
+  }
 
   .dot-bule {
     background: @TimeMainBlue !important;
@@ -766,14 +979,16 @@ export default {
   }
 
   .node-jielun {
-    padding-left: 301px;
     margin-top: 20px;
+    margin-left: 301px;
+    padding-top: 15px;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 15px;
+    // border-top: 1px dashed @TimeMainGray;
 
     .pzh {
       color: #4877e8;
-      text-decoration: underline;
+      margin-right: 10px;
     }
   }
 
@@ -784,7 +999,7 @@ export default {
 
     .node-newest {
       position: absolute;
-      left: 1340px;
+      left: 1400px;
       top: 36px;
       > div {
         height: 100%;
@@ -847,7 +1062,7 @@ export default {
     }
 
     .node-left {
-      width: 240px;
+      width: 250px;
       height: 36px;
       display: flex;
       justify-content: flex-end;
@@ -1236,12 +1451,14 @@ export default {
         .first-part {
           font-size: 13px;
           line-height: 36px;
-          display: flex;
-          justify-content: flex-start;
+          // display: flex;
+          // justify-content: flex-start;
           position: relative;
           .part-name {
             z-index: 10;
             // background: #fff;
+            display: inline-block;
+            color: #545b6d;
           }
           .part-name-url {
             color: #4877e8;
@@ -1251,16 +1468,16 @@ export default {
             }
           }
           .part-more {
-            position: absolute;
+            position: relative;
             display: flex !important;
             justify-content: flex-start;
             left: 0;
-            top: 0;
+            top: -38px;
             .more-line {
               white-space: nowrap;
               z-index: 1;
               color: @BorderColor;
-              padding-left: 450px;
+              padding-left: 250px;
               height: 0px;
               margin-top: 18px;
               border-top: 1px dashed @BorderColor;
@@ -1352,7 +1569,7 @@ export default {
           justify-content: flex-start;
           flex-wrap: nowrap;
           .part-left {
-            width: 480px;
+            width: 490px;
             margin: 20px;
             .major {
               .major-name {
@@ -1363,7 +1580,7 @@ export default {
                 display: flex;
                 justify-content: flex-start;
                 flex-wrap: nowrap;
-                width: 480px;
+                width: 490px;
                 height: 20px;
                 margin-top: 8px;
                 margin-bottom: 12px;
@@ -1399,13 +1616,14 @@ export default {
                   white-space: nowrap;
                   overflow: hidden;
                   position: absolute;
-                  left: 330px;
-                  width: 150px;
+                  left: 338px;
+                  width: 160px;
                 }
               }
               .three0 {
-                background: url(/static/imgs/timeline/three_steps_0.jpg) 0 0
+                background: url(/static/imgs/timeline/three_steps_0.jpg)
                   no-repeat;
+                background-size: cover;
                 .step {
                   color: @TimeFontGray;
                 }
@@ -1413,6 +1631,7 @@ export default {
               .three1 {
                 background: url(/static/imgs/timeline/three_steps_1.jpg) 0 0
                   no-repeat;
+                background-size: cover;
                 .step1 {
                   color: #fff;
                 }
@@ -1426,6 +1645,7 @@ export default {
               .three2 {
                 background: url(/static/imgs/timeline/three_steps_2.jpg) 0 0
                   no-repeat;
+                background-size: cover;
                 .step1 {
                   color: #fff;
                 }
@@ -1439,6 +1659,7 @@ export default {
               .three3 {
                 background: url(/static/imgs/timeline/three_steps_3.jpg) 0 0
                   no-repeat;
+                background-size: cover;
                 .step {
                   color: #fff;
                 }
@@ -1577,6 +1798,12 @@ export default {
     }
   }
   @media screen and(max-width: 1800px) {
+    .time-node {
+      .time-info {
+        margin-right: 20px;
+      }
+    }
+
     .little-node {
       .node-right {
         .content {
@@ -1585,7 +1812,8 @@ export default {
             justify-content: flex-start;
             .part-more {
               position: relative;
-              margin-left: 10px;
+              margin-left: 10px !important;
+              top: 0;
               .more-line {
                 display: none;
               }
@@ -1604,7 +1832,7 @@ export default {
 
     .node {
       .node-newest {
-        left: 860px;
+        left: 940px;
       }
     }
   }
@@ -1614,6 +1842,12 @@ export default {
         max-width: 500px;
       }
     }
+  }
+}
+
+@media screen and(max-width: 1800px) {
+  .time-node {
+    padding-left: 20px;
   }
 }
 </style>

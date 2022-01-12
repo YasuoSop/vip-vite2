@@ -267,7 +267,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 .ul1 {
   display: flex;
@@ -326,25 +326,25 @@ export default {
       width: 11px;
     }
     span.bg7 {
-      background: url(@/assets/imgs/targets/shi7.png) no-repeat center center;
+      background: url(~@/assets/imgs/targets/shi7.png) no-repeat center center;
     }
     span.bg6 {
-      background: url(@/assets/imgs/targets/shi6.png) no-repeat center center;
+      background: url(~@/assets/imgs/targets/shi6.png) no-repeat center center;
     }
     span.bg5 {
-      background: url(@/assets/imgs/targets/shi5.png) no-repeat center center;
+      background: url(~@/assets/imgs/targets/shi5.png) no-repeat center center;
     }
     span.bg4 {
-      background: url(@/assets/imgs/targets/shi4.png) no-repeat center center;
+      background: url(~@/assets/imgs/targets/shi4.png) no-repeat center center;
     }
     span.bg3 {
-      background: url(@/assets/imgs/targets/shi3.png) no-repeat center center;
+      background: url(~@/assets/imgs/targets/shi3.png) no-repeat center center;
     }
     span.bg2 {
-      background: url(@/assets/imgs/targets/shi2.png) no-repeat center center;
+      background: url(~@/assets/imgs/targets/shi2.png) no-repeat center center;
     }
     span.bg1 {
-      background: url(@/assets/imgs/targets/shi1.png) no-repeat center center;
+      background: url(~@/assets/imgs/targets/shi1.png) no-repeat center center;
     }
     .block-l {
       border-top-left-radius: 20px;
@@ -471,7 +471,7 @@ export default {
     span {
       height: 14px;
       width: 11px;
-      background: url(@/assets/imgs/targets/shi0.png) no-repeat center center;
+      background: url(~@/assets/imgs/targets/shi0.png) no-repeat center center;
     }
     .block1 {
       position: relative;
@@ -511,6 +511,6 @@ export default {
   left: -22px;
   height: 22px;
   width: 54px;
-  background: url(@/assets/imgs/targets/ben.png) no-repeat center center;
+  background: url(~@/assets/imgs/targets/ben.png) no-repeat center center;
 }
 </style>

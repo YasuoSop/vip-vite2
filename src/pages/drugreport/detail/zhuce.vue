@@ -129,10 +129,10 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import pdfTable from "../pdfReport/table.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import pdfTable from "../pdfReport/table";
 import tablehead from "@/config/tablehead";
-import DetailKzxx from "./kzxx.vue";
+import DetailKzxx from "./kzxx";
 const tableFiled = tablehead.drugreport.zhuce;
 export default {
   components: {
@@ -350,7 +350,8 @@ export default {
     drawSqlxBar() {
       var _that = this;
       Echarts.init(
-        document.getElementById(this.echartsIDbar)
+        document.getElementById(this.echartsIDbar),
+        "yaozh_theme"
       ).setOption({
         title: {
           text: "申请类型",
@@ -406,7 +407,8 @@ export default {
       let initData = Boolean(this.initData);
       var _that = this;
       this.spjl_pie.echarts = Echarts.init(
-        document.getElementById(this.echartsIDpie)
+        document.getElementById(this.echartsIDpie),
+        "yaozh_theme"
       );
       this.spjl_pie.echarts.setOption({
         title: {
@@ -510,7 +512,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 @import "../css/com.less";
 
 .charts {

@@ -83,7 +83,7 @@
 
 <script>
   import LoadingGif from '@/components/common/globalCom/loading-gif.vue'
-  import DialogFeedback from '@/components/common/dialog-feedback.vue';
+  import DialogFeedback from '@/components/common/dialog-feedback.vue'
   import { mapState } from 'vuex'
 export default {
   components: {
@@ -197,7 +197,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 .la-list {
   .not-loading {

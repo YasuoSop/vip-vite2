@@ -404,7 +404,7 @@
 </script>
 
 <style lang="less" scoped>
-  @import "@/assets/less/var.less";
-  @import "@/assets/less/detailCom.less";
+  @import "~@/assets/less/var.less";
+  @import "~@/assets/less/detailCom.less";
 
 </style>

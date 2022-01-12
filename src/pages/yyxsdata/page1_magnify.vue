@@ -119,10 +119,10 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
 import Total from "./components/total.vue";
 import EchartsItemMagnify from "./components/echartsItemMagnify.vue";
-import Select from "@/components/inputs/select.vue";
+import Select from "@/components/inputs/select.vue"
 import { mapState } from "vuex";
 import Axios from "axios";
 
@@ -289,8 +289,8 @@ export default {
       ],
       titleList: [
         "销售额时间分析（年统计）",
-        "销售额企业分析（TOP10）",
         "销售额剂型分析（TOP10）",
+        "销售额企业分析（TOP10）",
         "销售额品种分析（TOP10）",
         "销售额规格分析（TOP10）"
         // , '销售额省份分析（TOP10）'
@@ -404,6 +404,10 @@ export default {
         { url: "dljtpz", params: { name: this.nameModel } }, //具体品种
         { url: "dlyptj", params: commonParam } //总计
       ];
+      let guifanqiye = "";
+      if (this.guifanqiye.length > 0) {
+        guifanqiye = this.guifanqiye.join(",");
+      }
       //销售趋势的api
       let xsqsUrlList = [
         {
@@ -412,13 +416,16 @@ export default {
             name: this.screenModel || null,
             year: this.yearSel.model || null,
             type: this.nameSel.type,
-            guifanqiyestr: {
-              guifanqiye: this.guifanqiye
-            }
+            guifanqiyestr: guifanqiye
           }
         }, //销售趋势列表
-        { url: "dlypxsqs" } //销售趋势
+        {
+          url: "dlypxsqs"
+        } //销售趋势
       ];
+      if (guifanqiye != "") {
+        xsqsUrlList[0].params.guifanqiyestr = guifanqiye;
+      }
       // 处于放大测试版
       if (this.getUrlParam("type_id") == 2) {
         commonParam.is_magnify = 1;
@@ -426,17 +433,18 @@ export default {
           apiUrlList[0].params.is_magnify = 1;
         }
         xsqsUrlList[0].params.is_magnify = 1;
-        xsqsUrlList[1].params = this.keywordStatistics(
-          {
-            name: this.screenModel || null,
-            type: this.nameSel.type,
-            guifanqiyestr: {
-              guifanqiye: this.guifanqiye
-            },
-            is_magnify: 1
-          },
-          { name: "药品名称", guifanqiyestr: "企业名称" }
-        );
+        let xsqsUrlListParam = {
+          name: this.screenModel || null,
+          type: this.nameSel.type,
+          is_magnify: 1
+        };
+        if (guifanqiye != "") {
+          xsqsUrlListParam.guifanqiye = guifanqiye;
+        }
+        xsqsUrlList[1].params = this.keywordStatistics(xsqsUrlListParam, {
+          name: "药品名称",
+          guifanqiyestr: "企业名称"
+        });
         xsqsUrlList[1].params.is_magnify = 1;
         xsqsUrlList[1].params.year = this.yearSel.model || null;
       }
@@ -604,18 +612,21 @@ export default {
       eitem.title = `${this.titleYearStr}年-${this.screenModel ||
         this.nameModel}${qTitle}${title}`;
       this.qyTitle = `${this.titleYearStr}年-${this.screenModel ||
-        this.nameModel}${
-        this.guifanqiye ? `-${this.guifanqiye[0]}等` : ""
-      }`;
+        this.nameModel}${this.guifanqiye ? `-${this.guifanqiye[0]}等` : ""}`;
+
+      let guifanqiye = "";
+      if (this.guifanqiye.length > 0) {
+        guifanqiye = this.guifanqiye.join(",");
+      }
       let params = {
         year: this.yearSel.model || null,
         name: this.screenModel || null,
-        guifanqiyestr: {
-          guifanqiye: this.guifanqiye
-        },
         type: this.nameSel.type || null,
         is_magnify: 1
       };
+      if (guifanqiye != "") {
+        params.guifanqiyestr = guifanqiye;
+      }
       Axios.all([
         Store.dispatch("Yyxs/getApi", {
           url: "dlypxsqs",
@@ -669,7 +680,7 @@ export default {
         this.nameSel.model
       }&${yearStr}type=${
         this.nameSel.type
-      }&outdata_column=guifanname=药品名称,guifanqiye=企业名称,${headYearStr}tablename=${
+      }&outdata_column=guifanname=药品名称,guifanqiyestr=企业名称,${headYearStr}tablename=${
         this.screenModel
       }销售数据&accesstoken=${token}&time=${new Date().getTime()}`;
       this.downloadFile(url + "&is_magnify=1");
@@ -742,7 +753,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .page-wrap {
   background: #fff;
   box-shadow: 0 0 5px #c4d3f8;
@@ -826,5 +837,10 @@ export default {
   background: #97a2bf;
   border: none;
   color: #fff !important;
+}
+
+/deep/.el-select-dropdown__item {
+  width: 300px;
+  display: block;
 }
 </style>

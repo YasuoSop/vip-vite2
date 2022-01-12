@@ -89,7 +89,7 @@
                           <td>{{fzk.casn}}</td>
                           <td v-html="vueFormulationsFormatter(fzk.fzs)"></td>
                           <td>
-                            <a :href="'https://www.chemblink.com/moreProducts/more' + fzk.casn + '.htm'" class="cl-blue" target="_blank" v-if="fzk.casn">详情</a>
+                            <a :href="fzk.xq" class="cl-blue" target="_blank" v-if="fzk.xq">详情</a>
                             <span v-else style="color: #aaa; cursor: not-allowed">详情</span>
                           </td>
                         </tr>
@@ -165,7 +165,7 @@
               this.hasPartTwo = true
             }
           }
-          
+
         }).catch((err) => {
           console.log(err)
         }).then(this.removeLoading)
@@ -204,10 +204,10 @@
 </script>
 
 <style lang="less" scoped>
-  @import "@/assets/less/var.less";
-  @import "@/assets/less/detailCom.less";
+  @import "~@/assets/less/var.less";
+  @import "~@/assets/less/detailCom.less";
 .wrapper {
-  
+
   .img-jiegoushi {
     max-width: 300px;
   }
@@ -221,9 +221,9 @@
     word-break: break-word;
   }
   .detail-list {
-    
+
     .main {
-      
+
       .el-tabs {
         width: 100%;
       }
@@ -274,7 +274,7 @@
           }
         }
       }
-      
+
     }
   }
 }

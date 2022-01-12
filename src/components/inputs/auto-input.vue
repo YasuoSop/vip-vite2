@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import inputPopover from "@/components/inputs/input-popover.vue";
+import inputPopover from "@/components/inputs/input-popover.vue"
 const defaultItem = {
   name: "",
   type: "text",
@@ -129,6 +129,11 @@ export default {
   methods: {
     //获取提示词
     querySearchAsync(queryString, callback) {
+      // 限制2个级以上的字符在做搜索提示
+      if (queryString.length<2) {
+        callback([]);
+        return
+      }
       var list = [];
       var param = Qs.parse(
         this.initItem.name + "=" + queryString.slice(0, this.inpMaxLen)

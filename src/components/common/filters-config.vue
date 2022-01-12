@@ -5,7 +5,7 @@
         class="filter item"
         :class="{
           'abandon-click-method': nopms && nopms.tjsx,
-          'is-disabled': nopms && nopms.tjsx
+          'is-disabled': nopms && nopms.tjsx,
         }"
       >
         <span class="item-title">条件筛选</span>
@@ -40,7 +40,7 @@
                     slot="title"
                     v-else-if="
                       getFiltersCname(key) == '附带条件批准' &&
-                        vuex_name == 'Epyp'
+                      vuex_name == 'Epyp'
                     "
                   >
                     {{ getFiltersCname(key) }}
@@ -95,7 +95,7 @@
                     slot="title"
                     v-else-if="
                       getFiltersCname(key) == '等效性代码' &&
-                        vuex_name == 'FdaDrug'
+                      vuex_name == 'FdaDrug'
                     "
                   >
                     {{ getFiltersCname(key) }}
@@ -108,7 +108,7 @@
                     slot="title"
                     v-else-if="
                       getFiltersCname(key) == '参比药物' &&
-                        vuex_name == 'FdaDrug'
+                      vuex_name == 'FdaDrug'
                     "
                   >
                     {{ getFiltersCname(key) }}
@@ -121,7 +121,7 @@
                     <NewProjectGuide
                       :onlyKey="filters[key]['new_id']"
                       :newPosition="{
-                        right: filters[key].statement ? -40 : -26
+                        right: filters[key].statement ? -40 : -26,
                       }"
                       display="inline"
                       compoentsName="筛选功能"
@@ -146,7 +146,15 @@
                     </el-tooltip>
                   </template>
                   <!--增加树形控件，实现多级条件筛选 (注册数据库的优先审评品yxsp种为多级下拉、不良反应数据库的occr_country为多级下拉、中国上市的dailiangcaigou1为多级下拉)-->
-                  <div v-if="key === 'yxsply' || key === 'occr_country' || (vuex_name==='CfdaDrug' && key==='dailiangcaigou1')" style="position: relative">
+                  <div
+                    v-if="
+                      key === 'yxsply' ||
+                      key === 'occr_country' ||
+                      key === 'zhuangtai' ||
+                      (vuex_name === 'CfdaDrug' && key === 'dailiangcaigou1')
+                    "
+                    style="position: relative"
+                  >
                     <div v-show="searchLoading" class="trees-loading">
                       <span class="turn"></span>
                     </div>
@@ -169,7 +177,7 @@
                         :default-checked-keys="checked[key]"
                         :default-expanded-keys="defaultExpanded"
                         :filter-node-method="filterNode"
-                        @check="(data, checkTree) => checkGA(key, data, index)"
+                        @check="(data, checkTree) => checkGA(key, data, index,checkTree)"
                         @node-expand="nodeExpand"
                         @node-collapse="nodeCollapse"
                         @check-change="
@@ -183,7 +191,9 @@
                             )
                         "
                         :ref="'tree' + index"
-                        :check-strictly=" key !== 'occr_country' && key !== 'dailiangcaigou1'"
+                        :check-strictly="
+                          key !== 'occr_country' && key !== 'dailiangcaigou1'
+                        "
                       >
                         <span
                           class="custom-tree-node"
@@ -201,7 +211,7 @@
                     注意虽fun.js条件筛选公用方法getSearchParams接口拆分，但值合并为条件筛选一级查询条件，故此没有额外添加组件，方便取值赋值
                     多级不方便实现更多展示所以添加了高度，带滚动条展示，并在下面更多处添加了判断key!=='syzbm'
                     -->
-                  <div v-else-if="key === 'syzbm'" style="position: relative">
+                  <!-- <div v-else-if="key === 'syzbm'" style="position: relative">
                     <div v-show="searchLoading" class="trees-loading">
                       <span class="turn"></span>
                     </div>
@@ -247,9 +257,9 @@
                         </span>
                       </el-tree>
                     </div>
-                  </div>
+                  </div> -->
                   <div
-                    v-else-if="key === 'leixingbm'"
+                    v-else-if="key === 'leixingbm' || key === 'syzbm'"
                     style="position: relative"
                   >
                     <div v-show="searchLoading" class="trees-loading">
@@ -272,7 +282,7 @@
                         :default-checked-keys="checked[key]"
                         :default-expanded-keys="defaultExpanded2"
                         :filter-node-method="filterNode2"
-                        @check="(data, checkTree) => checkGA2(key, data, index)"
+                        @check="(data, checkTree) => checkGA2( data,checkTree, key,index)"
                         @node-expand="nodeExpand2"
                         @node-collapse="nodeCollapse2"
                         @check-change="
@@ -286,7 +296,10 @@
                             )
                         "
                         :ref="'tree2' + index"
-                        check-strictly
+                        :check-strictly="
+                          key !== 'leixingbm' &&
+                          key !== 'syzbm'
+                        "
                       >
                         <span
                           class="custom-tree-node"
@@ -298,14 +311,27 @@
                       </el-tree>
                     </div>
                   </div>
-                  <el-checkbox-group v-model="checked[key]" v-else>
+
+                  <div
+                    v-else-if="vuex_name === 'Globalapproval' && key === 'source'"
+                  >
+                    <div v-for="(item, idx) in filters[key]" :key="item.value">
+                      <VCheckBox
+                        :value="item.checked"
+                        @change="checkedChange($event, idx, item, filters, key)"
+                      >
+                        <span>{{ item.label }}</span>
+                        <span class="num">({{ item.doc_count }})</span>
+                      </VCheckBox>
+                    </div>
+                  </div>
+                  <el-checkbox-group v-model="checked[key]" v-else :class="{'yaowuhuaxiang': key === 'yaowuhuaxiang'}">
                     <el-checkbox
                       v-for="(type, index) in filters[key]"
                       :label="type.key"
                       :key="index"
                       @change="checkGA(key, type)"
                     >
-                      <!-- <span v-if="type.key !== type.label">[{{type.key}}]</span> -->
                       <span>{{ type.label }}</span>
                       <span class="num">({{ type.doc_count }})</span>
                     </el-checkbox>
@@ -314,10 +340,14 @@
                     <a
                       v-if="
                         filters[key].length > filter_default_len &&
-                          key !== 'yxsply' &&
-                          key !== 'leixingbm' &&
-                          key !== 'dailiangcaigou1' &&
-                          key !== 'occr_country'
+                        key !== 'yxsply' &&
+                        key !== 'leixingbm' &&
+                        key !== 'zhuangtai' &&
+                        key !== 'dailiangcaigou1' &&
+                        key !== 'occr_country' &&
+                        key !== 'yaowuhuaxiang' &&
+                        key !== 'source' &&
+                        key !== 'syzbm'
                       "
                       class="show-more pr20"
                       href="javascript:;"
@@ -347,33 +377,35 @@
 
 <script>
 import { mapState } from "vuex";
+import VCheckBox from "@/pages/globalapproval/scatter-graph/components/Checkbox";
 //筛选条件默认显示数 修改此值 需要修改对应的css值
-const FILTER_DEFAULT_SHOW_LENGTH = 5;
+const FILTER_DEFAULT_SHOW_LENGTH = 6;
 export default {
+  components: { VCheckBox },
   props: {
     vuex_name: {
       // 必须！
       type: String,
-      default: ""
+      default: "",
     },
     dbname: {
       // 没有定量分析不要绑定此属性！（可参考药品销售数据库示例，截止9月30日，暂时只有药品销售/药品中标/生物制品这三个数据库有定量分析）
       type: String,
-      default: ""
+      default: "",
     },
     route1: {
       // 同route2，route3，含有可视化分析才绑定这三个属性（比如注册有list/analy/qb，而其他大多数只有两个属性，route3不绑定）
       type: String,
-      default: ""
+      default: "",
     },
     route2: {
       type: String,
-      default: ""
+      default: "",
     },
     route3: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   data() {
     return {
@@ -395,9 +427,10 @@ export default {
           "简称RLD，是指在我国批准上市，用于仿制药注册申请的参照药品。通常是具有完整规范的安全性和有效性研究数据的药品。",
         dengxiao:
           "目的是能够让使用者快速了解收录的药品是否治疗等效及是否采用了生物等效性试验确定治疗等效。",
-        epypTips: "此功能只针对于筛选HMA批准上市的相关数据。"
+        epypTips: "此功能只针对于筛选HMA批准上市的相关数据。",
       },
-      filterKeys: []
+      filterKeys: [],
+      sourceValue: 0,
     };
   },
   computed: {
@@ -420,13 +453,20 @@ export default {
     groups() {
       return Store.state[this.vuex_name].groups;
     },
+    filtersSource() {
+      return Store.state["Globalapproval"].filtersSource;
+    },
     nopms() {
       return Store.state[this.vuex_name].nopms;
     },
     keys() {
+      this.filters1.forEach((item2) => {
+        item2.sort = Number(item2.sort);
+      })
       let arr = _.orderBy(this.filters1, ["sort"], ["desc"]),
         keys = [];
-      arr.forEach(item => {
+      console.log(arr)
+      arr.forEach((item) => {
         keys.push(item.field);
       });
       return Store.state[this.vuex_name].filtersList || keys;
@@ -444,15 +484,23 @@ export default {
     },
     searchLoading() {
       return Store.state.searchLoading;
-    }
+    },
   },
   methods: {
     handlerTreeData(key) {},
     checkChange(data, checkTree, checkTreeChild, index, key) {
+      if (key === 'zhuangtai') {
+        let nodes = this.$refs["tree" + index][0].getCheckedNodes();
+        Store.commit(this.vuex_name + "/shaixuanNodes",nodes)
+        // console.log(nodes);
+      }
+
       this.checked[key] = this.$refs["tree" + index][0].getCheckedKeys();
+      console.log(data);
     },
     checkChange2(data, checkTree, checkTreeChild, index, key) {
-      this.checked[key] = this.$refs["tree2" + index][0].getCheckedKeys();
+
+      // this.checked[key] = this.$refs["tree2" + index][0].getCheckedKeys();
     },
     filterChange(index) {
       this.$refs["tree" + index][0].filter(this.filterText);
@@ -493,8 +541,31 @@ export default {
       }
       for (const [key, val] of Object.entries(this.filters)) {
         // console.log(this.filters1, this.filters);
-        this.filters1.forEach(item2 => {
+        this.filters1.forEach((item2) => {
           item2.sort = Number(item2.sort);
+          // 特殊处理全球上市国家与地区条件筛选
+          if (
+            this.vuex_name === "Globalapproval" &&
+            key === "source" &&
+            item2.field === "source"
+          ) {
+            this.filters[key] = this.filters[key].map((v) => ({
+              label: v.label,
+              key: v.key,
+              doc_count: v.doc_count,
+              checked: 0,
+            }));
+            if (this.storeState.filtersSource.length > 0) {
+              this.filters[key].forEach((val,index) => {
+                this.storeState.filtersSource.forEach((item) => {
+                  if (val.label === item.label) {
+                    this.filters[key][index].checked = item.checked
+                  }
+                });
+              });
+            }
+          }
+
           if (key === item2.field && item2.statement) {
             this.filters[key].statement = item2.statement;
             this.filters[key].sort = item2.sort;
@@ -532,6 +603,9 @@ export default {
     },
     searchFilter() {
       Store.commit(this.vuex_name + "/groups", this.checked);
+      if (this.vuex_name === "Globalapproval") {
+        Store.commit(this.vuex_name + "/filtersSource", this.filters["source"]);
+      }
       if (this.route) {
         if (this.route == this.route1) {
           Store.dispatch(this.vuex_name + "/nomalSearch");
@@ -560,7 +634,28 @@ export default {
       }
       checkbox_group.className = className.join(" ");
     },
-    checkGA(key, data, index) {
+
+    checkedChange(e, index, item, filters, key) {
+      console.log(e, index, item, filters, key);
+      this.defaultExpanded = [];
+      window.ga(
+        "send",
+        "event",
+        "option",
+        "click",
+        this.vuex_name + "_filter_condition_" + key + "_" + item.label
+      );
+      window._paq.push([
+        "trackEvent",
+        "option",
+        "click",
+        this.vuex_name + "_filter_condition_" + key + "_" + item.label,
+      ]);
+      this.$set(this.filters[key], index, { ...item, checked: e });
+    },
+
+    checkGA(key, data, index, checkTree) {
+      // console.log(checkTree);
       this.defaultExpanded = [];
       window.ga(
         "send",
@@ -573,9 +668,10 @@ export default {
         "trackEvent",
         "option",
         "click",
-        this.vuex_name + "_filter_condition_" + key + "_" + data.label
+        this.vuex_name + "_filter_condition_" + key + "_" + data.label,
       ]);
       let shaixuan = this.storeState.match_shaixuan_values;
+
       shaixuan[key] = shaixuan[key] ? shaixuan[key] : {};
       shaixuan[key][data.key] = data.label;
       Store.commit(
@@ -583,7 +679,34 @@ export default {
         _.assign({}, this.storeState.match_shaixuan_values, shaixuan)
       );
     },
-    checkGA2(key, data, index) {
+    checkGA2(data,checkTree, key, index) {
+      console.log(data,checkTree, key, index)
+      /**
+       * 获取树结构已选节点：如果是父节点下子节点全选则只获取父节点。如果父节点下的子节点未全选则只获取对应勾选的子节点。采用递归获取所需要的节点
+       * @param {*} store === this.$refs.tree.store
+       * @returns
+       */
+      let store = this.$refs["tree2" + index][0].store
+      const checkedNodes = [];
+      const traverse = function (node) {
+        const childNodes = node.root ? node.root.childNodes : node.childNodes;
+        childNodes.forEach((child) => {
+          // child.checked表示子孙节点被选中了，checked状态的节点不需要继续递归。
+          if (child.checked) {
+            checkedNodes.push(child.data);
+          }
+          // child.indeterminate 表示该节点的子孙节点部分被选中。如果是indeterminate的节点，需要继续递归这个过程
+          if (child.indeterminate) {
+            traverse(child);
+          }
+        });
+      };
+      traverse(store);
+      this.checked[key] = []
+      checkedNodes.forEach((item)=> {
+        this.checked[key].push(item.key)
+      })
+      console.log(checkedNodes, this.checked);
       this.defaultExpanded2 = [];
       window.ga(
         "send",
@@ -596,12 +719,13 @@ export default {
         "trackEvent",
         "option",
         "click",
-        this.vuex_name + "_filter_condition_" + key + "_" + data.label
+        this.vuex_name + "_filter_condition_" + key + "_" + data.label,
       ]);
 
       let shaixuan = this.storeState.match_shaixuan_values;
       shaixuan[key] = shaixuan[key] ? shaixuan[key] : {};
       shaixuan[key][data.key] = data.label;
+      console.log(shaixuan);
       Store.commit(
         this.vuex_name + "/match_shaixuan_values",
         _.assign({}, this.storeState.match_shaixuan_values, shaixuan)
@@ -611,7 +735,7 @@ export default {
       let start = document.querySelector(".trees").scrollLeft;
       let end = a.level > 1 ? a.level * 18 + 6 : 24;
 
-      this._easeout(start, end, 2, function(value) {
+      this._easeout(start, end, 2, function (value) {
         document.querySelector(".trees").scrollLeft = value;
       });
     },
@@ -619,7 +743,7 @@ export default {
       let start = document.querySelector(".trees").scrollLeft;
       let end = a.level > 1 ? a.level * 18 + 6 : 24;
 
-      this._easeout(start, end, 2, function(value) {
+      this._easeout(start, end, 2, function (value) {
         document.querySelector(".trees").scrollLeft = value;
       });
     },
@@ -627,7 +751,7 @@ export default {
       let start = document.querySelector(".trees").scrollLeft;
       let end = (a.level > 1 ? a.level * 18 + 6 : 24) - (a.level > 1 ? 18 : 24);
 
-      this._easeout(start, end, 2, function(value) {
+      this._easeout(start, end, 2, function (value) {
         document.querySelector(".trees").scrollLeft = value;
       });
     },
@@ -635,7 +759,7 @@ export default {
       let start = document.querySelector(".trees").scrollLeft;
       let end = (a.level > 1 ? a.level * 18 + 6 : 24) - (a.level > 1 ? 18 : 24);
 
-      this._easeout(start, end, 2, function(value) {
+      this._easeout(start, end, 2, function (value) {
         document.querySelector(".trees").scrollLeft = value;
       });
     },
@@ -647,7 +771,7 @@ export default {
       end = end || 0;
       rate = rate || 2;
 
-      var step = function() {
+      var step = function () {
         start = start + (end - start) / rate;
         if (Math.abs(start - _end) < 1) {
           callback(end, true);
@@ -657,41 +781,51 @@ export default {
         requestAnimationFrame(step);
       };
       step();
-    }
+    },
   },
   watch: {
     filters: {
       handler() {
         this.init();
       },
-      immediate: true
+      immediate: true,
     },
     groups() {
       this.filterText = "";
       this.filterText2 = "";
       this.init();
     },
+    filtersSource() {
+      this.init();
+    },
     searchLoading(val) {
       if (!val) {
-        this.defaultExpanded = this.checked["yxsp"];
+        this.defaultExpanded = this.checked["yxsply"];
+        this.defaultExpanded = this.checked["zhuangtai"];
         this.defaultExpanded = this.checked["occr_country"];
         this.defaultExpanded = this.checked["dailiangcaigou1"];
         this.defaultExpanded2 = this.checked["leixingbm"];
+        this.defaultExpanded2 = this.checked["syzbm"];
       }
-    }
+    },
   },
   updated() {
     this.vueTogglePmsTooltip();
-  }
+  },
+  mounted() {
+    if (this.vuex_name === "Globalapproval") {
+      this.activeNames = ["yaowuhuaxiang", "source"];
+    }
+  },
 };
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .turn {
   height: 20px;
   width: 20px;
-  background: url("@/assets/imgs/icon-loading.png") center center no-repeat;
+  background: url("~@/assets/imgs/icon-loading.png") center center no-repeat;
   animation: turn 1.5s linear infinite;
 }
 @keyframes turn {
@@ -724,14 +858,22 @@ export default {
     font-size: @FontSizeSmall;
   }
 
+  .all-group {
+    max-height: none !important;
+  }
+
   .el-collapse-item {
     padding: 0px 14px 0 10px;
     .el-checkbox-group {
-      max-height: 24 * 5px; /*5是与FILTER_DEFAULT_SHOW_LENGTH的值保持一致*/
+      max-height: 21 * 6px; /*5是与FILTER_DEFAULT_SHOW_LENGTH的值保持一致*/
       overflow-y: hidden;
       &.all-group {
         max-height: none;
       }
+    }
+
+    .el-checkbox-group.yaowuhuaxiang {
+      max-height: none;
     }
 
     &:last-child {
@@ -743,7 +885,7 @@ export default {
     /deep/.el-collapse-item__header {
       height: 30px;
       line-height: 30px;
-      border-bottom: 1px dashed #DFE5F1;
+      border-bottom: 1px dashed #dfe5f1;
       margin-bottom: 1px;
       color: #333;
       font-size: @FontSizeSmall;

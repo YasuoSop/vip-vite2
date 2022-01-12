@@ -1,14 +1,18 @@
 <template>
   <div class="mc">
     <div class="left-nav">
-      <router-link to="/usercenter/account" class="nav-main-lan">账号管理&nbsp;&nbsp;&nbsp;&nbsp;></router-link>
+      <router-link to="/usercenter/account" class="nav-main-lan"
+        >账号管理&nbsp;&nbsp;&nbsp;&nbsp;></router-link
+      >
     </div>
     <!--  -->
     <div class="right-view">
       <!-- PART:账号信息 -->
       <div class="section">
         <div class="head">
-          <div class="title"><i class="iconfont">&#xe757;</i><span>账号信息</span></div>
+          <div class="title">
+            <i class="iconfont">&#xe757;</i><span>账号信息</span>
+          </div>
         </div>
         <div class="sec-view">
           <!-- 用户名 -->
@@ -19,7 +23,7 @@
               </div>
             </el-col>
             <el-col :span="8">
-              <div class="right">{{data.username}}</div>
+              <div class="right">{{ data.username }}</div>
             </el-col>
           </el-row>
           <!-- 密码 （修改密码） -->
@@ -29,13 +33,18 @@
                 <span class="left-title">密码：</span>
               </div>
             </el-col>
-            <el-col :span="5">
+            <el-col :span="8">
               <div class="right">
                 <span>********</span>
               </div>
             </el-col>
             <el-col :span="3" class="ta-right">
-              <a class="cl-blue" href="https://www.yaozh.com/member/uppwd/" target="_blank">修改密码</a>
+              <a
+                class="cl-blue"
+                href="https://www.yaozh.com/member/uppwd/"
+                target="_blank"
+                >修改密码</a
+              >
               <span class="iconfont iconfont-link-btn">&#xe617;</span>
             </el-col>
           </el-row>
@@ -47,13 +56,27 @@
                 <span class="left-title"> 安全验证：</span>
               </div>
             </el-col>
-            <el-col :span="5">
+            <el-col :span="8">
               <div class="right">
-                <span>邮箱：&nbsp;&nbsp;&nbsp;{{data.email}}</span>
+                <div
+                  style="
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                  "
+                  :title="data.email"
+                >
+                  邮箱：&nbsp;&nbsp;&nbsp;{{ data.email }}
+                </div>
               </div>
             </el-col>
             <el-col :span="3" class="ta-right">
-              <a class="cl-blue" href="https://www.yaozh.com/member/bdemailp/?s=x" target="_blank">修改邮箱</a>
+              <a
+                class="cl-blue"
+                href="https://www.yaozh.com/member/bdemailp/?s=x"
+                target="_blank"
+                >修改邮箱</a
+              >
               <span class="iconfont iconfont-link-btn">&#xe617;</span>
             </el-col>
           </el-row>
@@ -62,13 +85,18 @@
             <el-col :span="7">
               <div class="left">&nbsp;</div>
             </el-col>
-            <el-col :span="5">
+            <el-col :span="8">
               <div class="right">
-                <span>手机：&nbsp;&nbsp;&nbsp;{{data.mobile}}</span>
+                <span>手机：&nbsp;&nbsp;&nbsp;{{ data.mobile }}</span>
               </div>
             </el-col>
             <el-col :span="3" class="ta-right">
-              <a class="cl-blue" href="https://www.yaozh.com/member/bdphone/?s=x" target="_blank">立即绑定</a>
+              <a
+                class="cl-blue"
+                href="https://www.yaozh.com/member/bdphone/?s=x"
+                target="_blank"
+                >立即绑定</a
+              >
               <span class="iconfont iconfont-link-btn">&#xe617;</span>
             </el-col>
           </el-row>
@@ -80,7 +108,7 @@
               </div>
             </el-col>
             <el-col :span="8">
-              <div class="right">{{data.grade_name}}</div>
+              <div class="right">{{ data.grade_name }}</div>
             </el-col>
           </el-row>
           <!-- 会员期限 -->
@@ -91,7 +119,9 @@
               </div>
             </el-col>
             <el-col :span="8">
-              <div class="right">{{ data.starttime }}&nbsp;至&nbsp;{{ data.endtime }}</div>
+              <div class="right">
+                {{ data.starttime }}&nbsp;至&nbsp;{{ data.endtime }}
+              </div>
             </el-col>
           </el-row>
           <!-- 企业名称 - 可修改 -->
@@ -103,7 +133,11 @@
             </el-col>
             <el-col :span="8">
               <div class="right">
-                <input type="text" class="acount-input" v-model="inputs.model_qymc" />
+                <input
+                  type="text"
+                  class="acount-input"
+                  v-model="inputs.model_qymc"
+                />
               </div>
             </el-col>
           </el-row>
@@ -116,7 +150,11 @@
             </el-col>
             <el-col :span="8">
               <div class="right">
-                <input type="text" class="acount-input" v-model="inputs.model_bm" />
+                <input
+                  type="text"
+                  class="acount-input"
+                  v-model="inputs.model_bm"
+                />
               </div>
             </el-col>
           </el-row>
@@ -129,7 +167,11 @@
             </el-col>
             <el-col :span="8">
               <div class="right">
-                <input type="text" class="acount-input" v-model="inputs.model_lxr" />
+                <input
+                  type="text"
+                  class="acount-input"
+                  v-model="inputs.model_lxr"
+                />
               </div>
             </el-col>
           </el-row>
@@ -142,7 +184,11 @@
             </el-col>
             <el-col :span="8">
               <div class="right">
-                <input type="text" class="acount-input" v-model="inputs.model_lxdh" />
+                <input
+                  type="text"
+                  class="acount-input"
+                  v-model="inputs.model_lxdh"
+                />
               </div>
             </el-col>
           </el-row>
@@ -155,12 +201,23 @@
             </el-col>
             <el-col :span="8">
               <div class="right">
-                <input type="text" class="acount-input" v-model="inputs.model_lxdz" />
+                <input
+                  type="text"
+                  class="acount-input"
+                  v-model="inputs.model_lxdz"
+                />
               </div>
             </el-col>
           </el-row>
           <!-- 提交更改 -->
-          <el-button type="primary" round size="medium" class="tj-btn" @click="submitChange">提交</el-button>
+          <el-button
+            type="primary"
+            round
+            size="medium"
+            class="tj-btn"
+            @click="submitChange"
+            >提交</el-button
+          >
         </div>
       </div>
     </div>
@@ -168,68 +225,69 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
-  data () {
-    return {
-      
-    }
+  data() {
+    return {};
   },
   computed: {
     ...mapState({
-      uid: state => state.UserCenter.uid,
-      data: state => state.UserCenter.accountData,
-      inputs: state => state.UserCenter.accountInputs,
-    })
+      uid: (state) => state.UserCenter.uid,
+      data: (state) => state.UserCenter.accountData,
+      inputs: (state) => state.UserCenter.accountInputs,
+    }),
   },
-  created () {
+  created() {
     setTimeout(() => {
-      const hashLocation= sessionStorage.getItem("hashLocation");//缓存中获取当前页面的路由名称
+      const hashLocation = sessionStorage.getItem("hashLocation"); //缓存中获取当前页面的路由名称
       // 注意, 这里使用全路径匹配,在hash模式中,因为地址会携带#,所以页面报告中的url需要重新覆盖一下, 将#去除
-      window._paq.push(['setCustomUrl', "https://" + hashLocation]);//覆盖页面报告的url，可以自定义页面url，加上本页面路由
-      window._paq.push(['trackPageView', '账号管理']);//页面名称,可以自定义页面名称
-      window._paq.push(['setDocumentTitle', '账号管理'])
+      window._paq.push(["setCustomUrl", "https://" + hashLocation]); //覆盖页面报告的url，可以自定义页面url，加上本页面路由
+      window._paq.push(["trackPageView", "账号管理"]); //页面名称,可以自定义页面名称
+      window._paq.push(["setDocumentTitle", "账号管理"]);
     }, 1000);
   },
   methods: {
-    async submitChange () {
-      await window.Axios({
-        method: 'post',
-        url: '/api/usercenter/usersave',
-        params: {
-          accesstoken: this.vueGetCookie("accesstoken"),
-          comname: this.inputs.model_qymc,
-          department: this.inputs.model_bm,
-          truename: this.inputs.model_lxr,
-          comtel: this.inputs.model_lxdh,
-          address: this.inputs.model_lxdz,
-        }
-      }).then((res) => {
-        if (res.data.code === 200) {
-          this.$message({
-            message: '修改成功!',
-            type: 'success'
-          })
-        } else {
-          this.$message({
-            message: '提交失败!',
-            type: 'error'
-          })
-        }
-      }).catch((err) => {
-        console.log(err)
-      })
+    async submitChange() {
+      await window
+        .Axios({
+          method: "post",
+          url: "/api/usercenter/usersave",
+          params: {
+            accesstoken: this.vueGetCookie("accesstoken"),
+            comname: this.inputs.model_qymc,
+            department: this.inputs.model_bm,
+            truename: this.inputs.model_lxr,
+            comtel: this.inputs.model_lxdh,
+            address: this.inputs.model_lxdz,
+          },
+        })
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.$message({
+              message: "修改成功!",
+              type: "success",
+            });
+          } else {
+            this.$message({
+              message: "提交失败!",
+              type: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-      Store.dispatch("UserCenter/handleAccountAxios")
-    }
+      Store.dispatch("UserCenter/handleAccountAxios");
+    },
   },
-}
+};
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
 .ta-right {
   text-align: right;
   a {
@@ -251,7 +309,7 @@ export default {
         .one-row {
           margin-top: 16px;
           margin-bottom: 16px;
-          height: 30px;
+          // height: 30px;
           line-height: 30px;
           .left {
             text-align: right;

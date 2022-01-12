@@ -70,7 +70,7 @@ export default{
   },
   methods: {
     drawEcharts(option){
-      this.echart = Echarts.init(this.$refs.echart);
+      this.echart = Echarts.init(this.$refs.echart, 'yaozh_theme');
       this.echart.setOption(option);
     },
     clear(){
@@ -84,7 +84,7 @@ export default{
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .echart{
   height: 400px;
 }

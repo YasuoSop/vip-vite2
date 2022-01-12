@@ -72,7 +72,7 @@ export default {
       if (this.structuralsType) {
         src = base;
       } else {
-        src = this.itemFather.uri + base;
+        src = (this.itemFather.uri ? this.itemFather.uri : "") + base;
       }
       return src || "undefined";
     },
@@ -85,8 +85,10 @@ export default {
           this.$route.path === "/structural/"
         ) {
           return this.imgSrcHxs;
-        } else if (this.itemFather.special_img == '1') {
-          return this.itemFather.uri + this.imgSrcNeed;
+        } else if (this.itemFather.special_img == "1") {
+          return (
+            (this.itemFather.uri ? this.itemFather.uri : "") + this.imgSrcNeed
+          );
         } else {
           return this.imgSrcNeed;
         }
@@ -115,18 +117,25 @@ export default {
       let $img = $(e);
       $img.addClass("magnify-img").attr({ title: "" });
       if (this.kaifaType == "单独开发") {
-        $("#maginfy-outimg").attr({ src: this.imgSrckaifaType });
+        $("#maginfy-outimg").attr({
+          src: this.imgSrckaifaType ? this.imgSrckaifaType : ""
+        });
       } else if (
         this.$route.path === "/structural" ||
         this.$route.path === "/structural/"
       ) {
-        $("#maginfy-outimg").attr({ src: this.imgSrcHxs });
-      } else if (this.itemFather.special_img == '1') {
         $("#maginfy-outimg").attr({
-          src: this.itemFather.uri + this.imgSrcNeed
+          src: this.imgSrcHxs ? this.imgSrcHxs : ""
+        });
+      } else if (this.itemFather.special_img == "1") {
+        $("#maginfy-outimg").attr({
+          src:
+            (this.itemFather.uri ? this.itemFather.uri : "") + this.imgSrcNeed
         });
       } else {
-        $("#maginfy-outimg").attr({ src: this.imgSrcNeed });
+        $("#maginfy-outimg").attr({
+          src: this.imgSrcNeed ? this.imgSrcNeed : ""
+        });
       }
       $("#maginfy-img-wap")
         .removeClass("dn")

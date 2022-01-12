@@ -338,7 +338,7 @@ import { mapState } from 'vuex'
   }
 </script>
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   // @HomeSearchInputBoxShadow: 0px 0px 3px 0px rgba(196, 211, 248, 0.6862745098039216);
   @HomeSearchInputBoxShadow: 0px 0px 2px 0px #35384a;
   // @HomeSearchInputBoxShadowHover: 0px 0px 6px 1px rgba(196, 211, 248, 0.6862745098039216);

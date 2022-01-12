@@ -10,7 +10,7 @@
     <div id="pdf-part1">
       <div class="pdf-header">
         <div class="pdf-header-logo">
-          <img class="logo" src="@/assets/imgs/login-sign.jpg" />
+          <img class="logo" src="~@/assets/imgs/login-sign.jpg" />
           <div class="middle-logo m-logo">
             <div class="logo-zh">药智数据企业版</div>
             <div class="logo-url">vip.yaozh.com</div>
@@ -291,11 +291,11 @@
         </div>
         <div class="fl-right">
           <div class="fl-left code-box">
-            <img src="@/assets/imgs/yzx/app_code.png" />
+            <img src="~@/assets/imgs/yzx/app_code.png" />
             <span>扫码下载APP</span>
           </div>
           <div class="fl-left code-box">
-            <img src="@/assets/imgs/yzx/gzh_code.png" />
+            <img src="~@/assets/imgs/yzx/gzh_code.png" />
             <span>扫码关注公众号</span>
           </div>
         </div>
@@ -304,21 +304,21 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
 import jspdf from "@/mixins/jspdf.js";
-import DetailAPIJbxx from "../detail/apijbxx.vue";
-import DetailJzgj from "../detail/jzgj.vue";
-import DetailPinn from "../detail/pinndetail.vue";
-import DetailJbxx from "../detail/jbxx.vue";
-import DetailZhuce from "../detail/zhuce.vue";
-import DetailClinical from "../detail/clinical.vue";
-import DetailSspz from "../detail/sspz.vue";
-import DetailBiaozhun from "../detail/biaozhun.vue";
-import DetailYpxs from "../detail/ypxs.vue";
-import DetailYaopinzhongbiao from "../detail/yaopinzhongbiao.vue";
-import DetailPatent from "../detail/patent.vue";
-import DetailInstruct from "../detail/instruct.vue";
-import DetailKzxx from "../detail/kzxx.vue";
+import DetailAPIJbxx from "../detail/apijbxx";
+import DetailJzgj from "../detail/jzgj";
+import DetailPinn from "../detail/pinndetail";
+import DetailJbxx from "../detail/jbxx";
+import DetailZhuce from "../detail/zhuce";
+import DetailClinical from "../detail/clinical";
+import DetailSspz from "../detail/sspz";
+import DetailBiaozhun from "../detail/biaozhun";
+import DetailYpxs from "../detail/ypxs";
+import DetailYaopinzhongbiao from "../detail/yaopinzhongbiao";
+import DetailPatent from "../detail/patent";
+import DetailInstruct from "../detail/instruct";
+import DetailKzxx from "../detail/kzxx";
 import { mapGetters, mapState } from "vuex";
 import Axios from "axios";
 import qs from "qs";
@@ -665,8 +665,8 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 @import "../css/com.less";
 @textColor: #545b6d;
 .center() {
@@ -742,7 +742,7 @@ export default {
       height: 3px;
       display: inline-block;
       vertical-align: middle;
-      background: url(@/assets/imgs/pdf/dashed.png);
+      background: url(~@/assets/imgs/pdf/dashed.png);
     }
   }
 }

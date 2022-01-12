@@ -140,8 +140,7 @@ export default {
           let data = res.data.data
           this.data = data
           this.ifShow= true
-
-          Store.dispatch("UserCenter/handleXxtzAxios", this.param)
+          // Store.dispatch("UserCenter/handleXxtzAxios", this.param)
           Store.dispatch("UserCenter/handleHeaderMsgAxios", {page: 1, pageSize: 5})
         }
       }).catch((err) => {
@@ -197,7 +196,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .mc {
   .right-view {
     .detail {

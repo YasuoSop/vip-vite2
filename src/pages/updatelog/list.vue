@@ -5,13 +5,13 @@
     <transition name="el-fade-in-linear">
       <div v-if="showPromtNotice" class="prompt-notice">
         <div class="prompt-content">
-          <img src="@/assets/imgs/notice_icon.png" />
+          <img src="~@/assets/imgs/notice_icon.png" />
           <div class="text-container">
             <marquee v-if="(noticeMsgStr.length - (61 * noticeMsg.length - 1)) > 70" onmouseover="this.stop()" onmouseout="this.start()" v-html="noticeMsgStr">
             </marquee>
             <div v-else v-html="noticeMsgStr"></div>
           </div>
-          <img @click="closeNotice" class="close_notice_icon" src="@/assets/imgs/notice_close.png" />
+          <img @click="closeNotice" class="close_notice_icon" src="~@/assets/imgs/notice_close.png" />
         </div>
       </div>
     </transition>
@@ -21,8 +21,8 @@
       <div class="updatelog_nav">
         <div class="updatelog_header">
           <router-link class="logo" to="/introduce">
-            <!-- <img src="@/assets/imgs/home-logo.png"> -->
-            <img src="@/assets/imgs/intro_logo.png">
+            <!-- <img src="~@/assets/imgs/home-logo.png"> -->
+            <img src="~@/assets/imgs/intro_logo.png">
 
           </router-link>
           <nav class="nav_right">
@@ -65,7 +65,7 @@
             </div>
           </div>
           <div class="yaozh-down">
-            <img src="@/assets/imgs/scan_updatelog_leftside_1.gif" />
+            <img src="~@/assets/imgs/scan_updatelog_leftside_1.gif" />
           </div>
         </div>
       </div>
@@ -340,7 +340,7 @@ export default{
 } 
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .updatelog-cl-blue {
   color: @PrimaryColor!important;
   &::before {
@@ -470,7 +470,7 @@ export default{
     .updatelog_top{
       width:100%;
       height: 490px;
-      background: url(@/assets/imgs/updatelog-top.jpg) no-repeat center top;
+      background: url(~@/assets/imgs/updatelog-top.jpg) no-repeat center top;
     }
     .updatelog_container{
       width: 100%;   
@@ -493,7 +493,7 @@ export default{
           font-size: 25px;
           color: @PrimaryColor;
           text-align: right;
-          background: url(@/assets/imgs/updatelog-timeline.jpg) no-repeat right 10px;
+          background: url(~@/assets/imgs/updatelog-timeline.jpg) no-repeat right 10px;
         }
         .list-title{
           font-size: 18px;
@@ -505,7 +505,7 @@ export default{
           }
           .version{
             padding: 0px 30px 0px 90px;
-            background: url(@/assets/imgs/updatelog-timeline.jpg) no-repeat 7px -75px;
+            background: url(~@/assets/imgs/updatelog-timeline.jpg) no-repeat 7px -75px;
           }
           .el-icon-caret-top:before {
             content: "\e60b"; }

@@ -137,7 +137,7 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .item {
   padding-bottom: 10px;
 }

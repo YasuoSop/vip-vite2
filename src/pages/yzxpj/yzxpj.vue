@@ -185,9 +185,9 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import FullScreen from "@/components/common/full-screen.vue";
-import Select from "@/components/inputs/select.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import FullScreen from "@/components/common/full-screen.vue"
+import Select from "@/components/inputs/select.vue"
 import { mapState } from "vuex";
 
 export default {

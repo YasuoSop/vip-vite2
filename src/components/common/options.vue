@@ -1,5 +1,5 @@
 <template>
-  <div class="la-optioned clearfix" :class="{'option-min-height':minHeight, 'option-show': Object.keys(storeState.putong).length || (storeState.gaoji && storeState.gaoji.words) || (storeState.fourth && storeState.fourth.fourth_condition) || (storeState.hot && storeState.hot.hot_condition) || (storeState.shaixuan && storeState.shaixuan.filter_condition)}">
+  <div class="la-optioned clearfix" :class="{'option-min-height':minHeight, 'option-show': Object.keys(storeState.putong).length || (storeState.gaoji && storeState.gaoji.words) || (storeState.fourth && storeState.fourth.fourth_condition) || (storeState.hot && storeState.hot.hot_condition) || (storeState.shaixuan && storeState.shaixuan.filter_condition) || (storeState.filtersSource && storeState.filtersSource.filter(item=> item.checked!==0).length>0)}">
     <!-- 保存条件 - 输入名称 弹出框 -->
     <el-dialog class="dialog-saved" :visible.sync="savedPopVisible" :append-to-body="true">
       <div slot="title" class="dialog-header">
@@ -9,7 +9,7 @@
     </el-dialog>
     <!-- 已选条件：普通搜索/高级搜索 合并显示 -->
     <div class="optioned main" style="padding: 0;"
-    v-if="Object.keys(storeState.putong).length || (storeState.gaoji && storeState.gaoji.words) || (storeState.fourth && storeState.fourth.fourth_condition) || (storeState.hot && storeState.hot.hot_condition) || (storeState.shaixuan && storeState.shaixuan.filter_condition)">
+    v-if="Object.keys(storeState.putong).length || (storeState.gaoji && storeState.gaoji.words) || (storeState.fourth && storeState.fourth.fourth_condition) || (storeState.hot && storeState.hot.hot_condition) || (storeState.shaixuan && storeState.shaixuan.filter_condition) || (storeState.filtersSource && storeState.filtersSource.filter(item=> item.checked!==0).length>0)">
       <!-- <span
         v-if="Object.keys(storeState.putong).length || (storeState.gaoji && storeState.gaoji.words) || (storeState.fourth && storeState.fourth.fourth_condition)"
         class="iconfont">&#xe615;</span> -->
@@ -79,10 +79,22 @@
           <span class="el-icon-close" @click="handleShaixuanCloseClick(option.name)"></span>
         </span>
       </div>
+
+      <!-- 全球上市条件筛选国家或地区特殊处理 -->
+      <div class="optioned screen"  v-if="storeState.filtersSource && storeState.filtersSource.filter(item=> item.checked!==0).length>0">
+        <span class="btn option" >
+          <span class="tj">国家或地区 :
+            <span :title="getSourceText(storeState.filtersSource.filter(item=> item.checked!==0))">
+              {{handleCutLength(getSourceText(storeState.filtersSource.filter(item=> item.checked!==0)))}}
+            </span>
+          </span>
+          <span class="el-icon-close" @click="handleSourceCloseClick"></span>
+        </span>
+      </div>
       <!-- 保存 & 清空 -->
       <div
         class="wrap-add-del"
-        v-if="Object.keys(storeState.putong).length || (storeState.gaoji && storeState.gaoji.words) || ((storeState.fourth_checked || {}) && storeState.fourth.fourth_condition) || (storeState.hot_checked && storeState.hot.hot_condition && getHot(storeState.hot.hot_condition)) || (storeState.shaixuan && storeState.shaixuan.filter_condition)"
+        v-if="Object.keys(storeState.putong).length || (storeState.gaoji && storeState.gaoji.words) || ((storeState.fourth_checked || {}) && storeState.fourth.fourth_condition) || (storeState.hot_checked && storeState.hot.hot_condition && getHot(storeState.hot.hot_condition)) || (storeState.shaixuan && storeState.shaixuan.filter_condition) || (storeState.filtersSource && storeState.filtersSource.filter(item=> item.checked!==0).length>0)"
         style="margin: 12px 0 0;">
         <span class="btn save-options" @click="()=>savedPopVisible=true"><i class="el-icon-star-off pr5"></i> 保存</span>
         <span class="btn clear-options" @click="handleAllCloseClick"><i class="el-icon-delete pr5"></i> 清空</span>
@@ -397,7 +409,8 @@
           for (let index in value_arr) {
             // 不良反应的条件筛选事件发生的国家occr_country字段需要单独判断（这个字段勾选父节点是全选子节点，所以需要单独操作）
             // 中国上市数据库条件筛选带量采购dailiangcaigou1字段需要单独判断（这个字段勾选父节点是全选子节点，所以需要单独操作）
-            if(Object.keys(this.storeState.match_shaixuan_values).length && name!=='occr_country' && name!=='dailiangcaigou1'){
+            // 全球药物条件筛选药物类型leixingbm字段需要单独判断（这个字段勾选父节点是全选子节点，所以需要单独操作）
+            if(Object.keys(this.storeState.match_shaixuan_values).length && name!=='occr_country' && name!=='dailiangcaigou1' && name!=='leixingbm' && name !=='syzbm'){
               // value_arr[index] = this.storeState.match_shaixuan_values[name][value_arr[index]]
               filters_val[index] = this.storeState.match_shaixuan_values[name][value_arr[index]]
             }else {
@@ -583,6 +596,7 @@
         _.set(this.storeState.groups, option, [])
         this.handlePutong1()
         this.handleShaixuan1()
+        Store.commit(this.vuex_name + "/shaixuanNodes", [])
         if (this.route) {
           if (this.route == this.route1) {
             Store.dispatch(this.vuex_name + '/nomalSearch')
@@ -593,6 +607,37 @@
           Store.dispatch(this.vuex_name + '/nomalSearch')
         }
       },
+
+      // 清除全球上市国家地区筛选
+      handleSourceCloseClick() {
+        this.storeState.filtersSource = []
+        this.handlePutong1()
+        this.handleShaixuan1()
+        if (this.route) {
+          if (this.route == this.route1) {
+            Store.dispatch(this.vuex_name + '/nomalSearch')
+          }else if(this.route == this.route2){
+            Store.dispatch(this.vuex_name + '/getKshRes')
+          }
+        } else {
+          Store.dispatch(this.vuex_name + '/nomalSearch')
+        }
+      },
+
+      // 获取全球上市国家
+      getSourceText(arr) {
+        let strArr = []
+        arr.map(v=> {
+          if (v.checked == 1) {
+            strArr.push(v.label)
+          } else if (v.checked == -1) {
+            strArr.push(`排除${v.label}`)
+          }
+        })
+
+        return strArr.join(',')
+      },
+
       // 点击 × 符号：清除所有热点条件
       handleHotCloseClick () {
         this.storeState.hot_checked = []
@@ -647,6 +692,11 @@
           Store.commit(this.vuex_name + "/hot_checked", [])
         }
 
+        if (this.storeState.filtersSource) {
+          this.storeState.filtersSource = []
+          Store.commit(this.vuex_name + "/filtersSource", [])
+        }
+        Store.commit(this.vuex_name + "/shaixuanNodes", [])
         Store.commit(this.vuex_name + "/queryStr", this.storeState.query)
         if (this.route) {
           if (this.route == this.route1) {
@@ -665,8 +715,8 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
 
 /* 已选条件 - 样式 start */
 .la-optioned{

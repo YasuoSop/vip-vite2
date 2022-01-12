@@ -112,7 +112,7 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 .el-scrollbar {
   height: 100%;

@@ -30,7 +30,7 @@
   import MainTop from '@/components/common/main-top.vue'
   import MainList from '@/components/common/main-list.vue'
   import Main from '@/components/layouts/main.vue'
-  import List from './list.vue'
+  import List from './list'
   import { mapState } from 'vuex'
 
   export default{

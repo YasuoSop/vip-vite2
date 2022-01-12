@@ -4,7 +4,7 @@
     <List :loading="listLoading" :nodata="res && !res.length">
       <div class="actions">
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Shengwuzhipin" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Shengwuzhipin" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"
@@ -107,8 +107,8 @@
             <div v-if="item.prop === 'xsmx'" :title="scope.row.xsmx">
               <a :href="openSaleDetail(scope)" class="cl-blue" target="_blank">销售明细</a>
             </div>
-            <div v-if="item.prop === 'qyfx'" class="extensible-td" @click="showAnaly(scope.row.qiye)">
-              <a href="javascript:void(0);" class="cl-blue">企业分析</a>
+            <div v-if="item.prop === 'qyfx'" >
+              <a href="javascript:void(0);" class="cl-blue" @click="showAnaly(scope.row.qiye)">企业分析</a>
             </div>
           </template>
         </el-table-column>
@@ -415,7 +415,7 @@
 </script>
 
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   .la-qy{
     min-height: 100px;
     .no-data-msg {
@@ -439,7 +439,7 @@
         &.active{
           color: @PrimaryColor;
           font-weight: 600;
-          background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
+          background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
           border: none;
         }
       }
@@ -453,7 +453,7 @@
       &.active{
         color: @PrimaryColor;
         font-weight: 600;
-        background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
+        background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
         border: none;
       }
     }

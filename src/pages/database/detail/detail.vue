@@ -7,12 +7,7 @@
       <div class="detail-header" v-if="the_main_title">
         <div class="header-left">
           <div class="left-top">
-            <span
-              class="top-id"
-              v-if="the_main_title"
-              :title="the_main_title"
-              >{{ the_main_title }}</span
-            >
+            <span class="top-id" v-if="the_main_title" :title="the_main_title">{{ the_main_title }}</span>
             <div class="left-bottom" v-if="the_second_title">
               <span class="bottom-name">{{ the_second_title }}</span>
             </div>
@@ -23,10 +18,7 @@
       <!-- ① 通用详情页 -->
       <div class="main">
         <!-- 基本信息 -->
-        <slide-section
-          :title="'基本信息'"
-          v-if="Object.keys(table_data).length"
-        >
+        <slide-section :title="'基本信息'" v-if="Object.keys(table_data).length">
           <div class="tb-wrap">
             <table class="tb-t">
               <tr
@@ -45,15 +37,10 @@
                     compoentsName="字段"
                     :initItem="item"
                     :showMenban="item['is_show_new']"
-                    >{{ key }}</NewProjectGuide
-                  >
+                  >{{ key }}</NewProjectGuide>
                   <!-- <NewProjectGuide :onlyKey="key+'_1604468806662'" :initItem="item" :showMenban="(index%2)==0">{{key}}</NewProjectGuide> -->
                   <!-- {{key}} -->
-                  <el-tooltip
-                    v-if="item.statement"
-                    effect="light"
-                    placement="right"
-                  >
+                  <el-tooltip v-if="item.statement" effect="light" placement="right">
                     <div slot="content" v-html="item.statement"></div>
                     <i class="el-icon-question cl-green"></i>
                   </el-tooltip>
@@ -98,12 +85,14 @@
                             )
                           }}
                         </router-link>
-                        <span v-else>{{
-                          overflowEclips(
-                            checkOne(item, detail_data),
-                            item.fieldmax
-                          )
-                        }}</span>
+                        <span v-else>
+                          {{
+                            overflowEclips(
+                              checkOne(item, detail_data),
+                              item.fieldmax
+                            )
+                          }}
+                        </span>
                       </span>
                     </tdCountCheckOut>
                     <!-- 非下载 - 超链接(特殊域名) -->
@@ -147,13 +136,14 @@
                           :title="
                             item.fieldmax ? checkOne(item, detail_data) : ''
                           "
-                          >{{
+                        >
+                          {{
                             overflowEclips(
                               checkOne(item, detail_data),
                               item.fieldmax
                             )
-                          }}</span
-                        >
+                          }}
+                        </span>
                       </span>
                     </tdCountCheckOut>
                     <!-- 非下载 - 超链接(存储字段) -->
@@ -188,7 +178,6 @@
                           :title="
                             item.fieldmax ? checkOne(item, detail_data) : ''
                           "
-                          style="display: block"
                         >
                           {{
                             overflowEclips(
@@ -383,8 +372,7 @@
                             'link-underline': item.urlstyle === '下划线',
                           }"
                           :href="item.uri"
-                          >{{ item.contentname }}</a
-                        >
+                        >{{ item.contentname }}</a>
                       </template>
                       <span
                         v-else
@@ -403,8 +391,7 @@
                             item.fieldmax
                           )
                         "
-                      >
-                      </span>
+                      ></span>
                     </tdCountCheckOut>
                     <!-- 假冒企业标志 -->
                     <TdCountCheckOut
@@ -424,10 +411,7 @@
                       ></span>
                     </TdCountCheckOut>
                     <!-- 分子式统一处理下标 -->
-                    <span
-                      v-else-if="key === '分子式'"
-                      v-html="vueFormulationsFormatter(item.value)"
-                    ></span>
+                    <span v-else-if="key === '分子式'" v-html="vueFormulationsFormatter(item.value)"></span>
                     <!-- 普通文字形式 -->
                     <tdCountCheckOut
                       v-else
@@ -463,10 +447,7 @@
 
         <!-- 其他模块(接口自定义) -->
         <!--  -->
-        <slide-section
-          :title="the_main_userChangeImg.label || ''"
-          v-if="the_main_userChange"
-        >
+        <slide-section :title="the_main_userChangeImg.label || ''" v-if="the_main_userChange">
           <div class="tb-wrap">
             <CountPage
               id="the_main_userChange"
@@ -485,11 +466,7 @@
         >
           <div class="tb-wrap">
             <el-table :data="table.data" stripe fixed>
-              <el-table-column
-                v-for="(item, index1) in table.head"
-                :key="index1"
-                :label="item"
-              >
+              <el-table-column v-for="(item, index1) in table.head" :key="index1" :label="item">
                 <template slot-scope="scope">
                   <div v-if="handleOtherTableScope(scope, item)">
                     <span>{{ handleOtherTableScopeContent(scope, item) }}</span>
@@ -510,10 +487,7 @@
               table.nodata_hide != '1')
           "
         >
-          <div
-            class="tb-wrap"
-            v-if="other_modules_table.modeltyle === '横式表格'"
-          >
+          <div class="tb-wrap" v-if="other_modules_table.modeltyle === '横式表格'">
             <el-table
               :data="table.data"
               @sort-change="(column) => sortCateChange(column, index)"
@@ -522,32 +496,30 @@
             >
               <el-table-column
                 v-for="(item, index1) in table.head"
-                :key="index1"
+                :key="Math.floor(Math.random() * 100)"
                 :prop="item.field"
                 :min-width="item.min_width ? item.min_width : 100"
                 :sortable="item.order_field ? true : false"
                 :label="item.label"
               >
-              <template :slot="1 ? 'header':''" slot-scope="scope">
-                {{item.label}}
-                <el-tooltip v-if="item.statement" class="" effect="zhuce" placement="right">
-                  <div slot="content" v-html="item.statement"></div>
-                  <i class="el-icon-question cl-green" style="margin-left: 4px;line-height: 28px;"></i>
-                </el-tooltip>
-              </template>
+                <template :slot="1 ? 'header' : ''" slot-scope="scope">
+                  {{ item.label }}
+                  <el-tooltip v-if="item.statement" class effect="zhuce" placement="right">
+                    <div slot="content" v-html="item.statement"></div>
+                    <i
+                      class="el-icon-question cl-green"
+                      style="margin-left: 4px;line-height: 28px;"
+                    ></i>
+                  </el-tooltip>
+                </template>
                 <template slot-scope="scope">
                   <a
                     v-if="item.href"
                     target="_blank"
                     :href="scope.row[item.href]"
                     class="link-blue"
-                    >{{scope.row[item.href] ? '查看': ''}}</a
-                  >
-                  <span
-                    v-else
-                    :title="scope.row[item.field]"
-                    v-html="scope.row[item.field]"
-                  ></span>
+                  >{{ scope.row[item.href] ? '查看' : '' }}</a>
+                  <span v-else :title="scope.row[item.field]" v-html="scope.row[item.field]"></span>
                 </template>
               </el-table-column>
             </el-table>
@@ -564,10 +536,7 @@
               other_modules_table_horizon.nodata_hide != '1')
           "
         >
-          <div
-            class="tb-wrap"
-            v-if="other_modules_table_horizon.modeltyle === '竖式表格'"
-          >
+          <div class="tb-wrap" v-if="other_modules_table_horizon.modeltyle === '竖式表格'">
             <table class="tb-t">
               <tr v-for="(item, index) in table.head" :key="index">
                 <td>
@@ -581,28 +550,24 @@
                     compoentsName="字段"
                     :initItem="item"
                     :showMenban="item['is_show_new']"
-                    >{{ item.label }}</NewProjectGuide
-                  >
-                  <el-tooltip
-                    v-if="item.statement"
-                    effect="light"
-                    placement="right"
-                  >
+                  >{{ item.label }}</NewProjectGuide>
+                  <el-tooltip v-if="item.statement" effect="light" placement="right">
                     <div slot="content" v-html="item.statement"></div>
                     <i class="el-icon-question cl-green"></i>
                   </el-tooltip>
                 </td>
                 <td>
-                  <span v-if="item.href == ''">{{
-                    table.data[0][item.field]
-                  }}</span>
+                  <span v-if="item.href == ''">
+                    {{
+                      table.data[0][item.field]
+                    }}
+                  </span>
                   <a
                     v-else
                     target="_blank"
                     :href="item.href"
                     class="link-blue"
-                    >{{ table.data[0][item.field] }}</a
-                  >
+                  >{{ table.data[0][item.field] }}</a>
                 </td>
               </tr>
             </table>
@@ -611,11 +576,7 @@
         <!-- 扩展信息 -->
         <slide-section :title="'扩展信息'" v-if="extendList.length">
           <div class="extend-list">
-            <ExtendButton
-              v-for="(item, index) in extendList"
-              :key="index"
-              :item="item"
-            ></ExtendButton>
+            <ExtendButton v-for="(item, index) in extendList" :key="index" :item="item"></ExtendButton>
           </div>
         </slide-section>
       </div>
@@ -625,19 +586,19 @@
       <div class="clearfix"></div>
       <div id="maginfy-img-wap" class="magnify-img dn" title="点击返回">
         <i class="el-icon-close"></i>
-        <img id="maginfy-outimg" src="" />
+        <img id="maginfy-outimg" src />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import LaFooter from "@/components/layouts/footer.vue";
-import tdCountCheckOut from "../tdCountCheckOut.vue";
-import CountPage from "./CountPage.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import LaFooter from "@/components/layouts/footer.vue"
+import tdCountCheckOut from "../tdCountCheckOut";
+import CountPage from "./CountPage";
 import detailScrollMixins from "@/mixins/detailScroll.js";
 import { mapState } from "vuex";
 
@@ -1061,7 +1022,7 @@ export default {
     );
     localStorage.setItem("domPosition", "");
   },
-  mounted() {},
+  mounted() { },
   activated() {
     //this.vueRouteToNoPms(this.nopms.xqy)
   },
@@ -1076,9 +1037,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/app.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/detailCom.less";
 
 .detail_content {
   #maginfy-img-wap {

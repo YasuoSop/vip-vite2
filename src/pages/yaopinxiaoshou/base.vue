@@ -5,7 +5,7 @@
       <div slot="title" class="dialog-header">
         保存条件
       </div>
-      <SavedPop @closeSavedPop="closeSavedPop" vuex_name="Yaopinxiaoshou"></SavedPop>
+      <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="Yaopinxiaoshou"></SavedPop>
     </el-dialog>
 
     <!-- 高级搜索弹出框 -->
@@ -97,7 +97,7 @@
       <section class="sec2">
         <!-- <div class="la-body-tab">
           <div class="market_nav">
-            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/ypxs/list.vue'}">
+            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/ypxs/list'}">
               <span class="nav"><i class="iconfont pr5" style="font-size:20px;">&#xe627;</i>销售数据</span>
             </a>
             <a @click.prevent="navRouteTo(2)" class="nav_one" :class="{'router-link-active': $route.path == '/ypxs/analy', 'abandon-click-method': nopms.ksh}">
@@ -327,7 +327,7 @@ import Advanced from "@/components/common/advanced.vue"
 import Filters from "@/components/common/filters.vue"
 import Main from "@/components/layouts/main.vue"
 import FullScreen from "@/components/common/full-screen.vue"
-import selectNuit from './selectNuit.vue'
+import selectNuit from './selectNuit'
 import { mapState } from "vuex"
 import IWave from '@/components/common/icon-wave.vue'
 import inputPopover from '@/components/inputs/input-popover.vue'
@@ -562,7 +562,7 @@ export default {
   methods: {
     navRouteTo (index) {
       if (index == 1) {
-        this.$router.push({ path: '/ypxs/list.vue'})
+        this.$router.push({ path: '/ypxs/list'})
       } else if (index == 2 && !this.nopms.ksh) {
         window.ga("send","event", "tab", "click", "ypxs_analy");
         window._paq.push(['trackEvent', 'tab',"click", 'ypxs_analy', ])
@@ -852,7 +852,7 @@ export default {
           })
         }
       })
-      this.ec_yp_xstj.echarts = Echarts.init(document.getElementById("ec-yp-xstj"));
+      this.ec_yp_xstj.echarts = Echarts.init(document.getElementById("ec-yp-xstj"), 'yaozh_theme');
       this.ec_yp_xstj.echarts.setOption({
         tooltip: {
           trigger: "axis",
@@ -961,7 +961,7 @@ export default {
       let series_data = _.map(this.ec_yp_ndfx.series_data,(item)=>{
         return this.ypxsNuitChange(this.nuityp,item)
       })
-      this.ec_yp_ndfx.echarts = Echarts.init(document.getElementById("ec-yp-ndfx"));
+      this.ec_yp_ndfx.echarts = Echarts.init(document.getElementById("ec-yp-ndfx"), 'yaozh_theme');
       this.ec_yp_ndfx.echarts.setOption({
         tooltip: {
           trigger: "axis",
@@ -1240,7 +1240,7 @@ export default {
           })
         }
       })
-      this.ec_qy_xstj.echarts = Echarts.init(document.getElementById("ec-qy-xstj"));
+      this.ec_qy_xstj.echarts = Echarts.init(document.getElementById("ec-qy-xstj"), 'yaozh_theme');
       this.ec_qy_xstj.echarts.setOption({
         tooltip: {
           position: function(pos, params, dom, rect, size) {
@@ -1355,7 +1355,7 @@ export default {
       let series_data = _.map(this.ec_qy_ndfx.series_data,(item)=>{
         return this.ypxsNuitChange(this.nuitqy,item)
       })
-      this.ec_qy_ndfx.echarts = Echarts.init(document.getElementById("ec-qy-ndfx"));
+      this.ec_qy_ndfx.echarts = Echarts.init(document.getElementById("ec-qy-ndfx"), 'yaozh_theme');
       this.ec_qy_ndfx.echarts.setOption({
         tooltip: {
           trigger: "axis",
@@ -1475,8 +1475,8 @@ export default {
 </script>
 
 <style lang="less">
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
 // slot
 .fs-page {
   .el-input__icon.el-icon-search {

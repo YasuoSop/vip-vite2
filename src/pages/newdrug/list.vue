@@ -58,24 +58,29 @@
                 :title="scope.row.name + scope.row.englishname"
               >
                 <span v-if="vueCheckListPms('Newdrug', item.label)">
-                  <router-link
-                    tag="a"
-                    :title="scope.row.name"
-                    :to="{ path: '/newdrug/' + scope.row.id }"
-                    class="no-underline cl-blue dis"
-                    target="_blank"
-                  >
-                    {{ scope.row.name }}
-                  </router-link>
-                  <router-link
+                  <div class="dis">
+                      <router-link
+                      tag="a"
+                      :title="scope.row.name"
+                      :to="{ path: '/newdrug/' + scope.row.id }"
+                      class="no-underline cl-blue"
+                      target="_blank"
+                      >
+                        {{ scope.row.name }}
+                    </router-link>
+                  </div>
+
+                  <div class="dis">
+                    <router-link
                     tag="a"
                     :title="scope.row.englishname"
                     :to="{ path: '/newdrug/' + scope.row.id }"
-                    class="no-underline cl-blue dis"
+                    class="no-underline cl-blue"
                     target="_blank"
-                  >
-                    {{ scope.row.englishname }}
-                  </router-link>
+                    >
+                      {{ scope.row.englishname }}
+                    </router-link>
+                  </div>
                 </span>
                 <span v-else class="abandon-click-method">暂无权限</span>
               </div>
@@ -251,10 +256,10 @@
   </div>
 </template>
 <script>
-import TooltipBD from "@/components/common/globalCom/target-tooltip.vue";
-import List from "@/components/layouts/list.vue";
-import Export from "@/components/common/export.vue";
-import listCheck from "@/components/common/list-check.vue";
+import TooltipBD from "@/components/common/globalCom/target-tooltip.vue"
+import List from "@/components/layouts/list.vue"
+import Export from "@/components/common/export.vue"
+import listCheck from "@/components/common/list-check.vue"
 import { mapState } from "vuex";
 import tablehead from "@/config/tablehead";
 import commonMixins from "@/mixins/common.js";
@@ -380,8 +385,8 @@ export default {
 };
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
-@import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/app.less";
 
 .el-table {
   .cell {

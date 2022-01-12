@@ -1,6 +1,6 @@
 <template>
   <div :class="['la-app', pageClass, { 'la-app-normal': showHeader }]">
-    <el-scrollbar style="height: 100%">
+    <el-scrollbar style="height: 100%;">
       <Header v-if="showHeader"></Header>
       <!-- <Menu v-if="showMenu"></Menu> -->
       <div
@@ -8,7 +8,7 @@
         :class="{
           'la-app-main-nomenu': !showMenu && showHeader,
           'la-app-main-noheader': showMenu && !showHeader,
-          'la-app-main-nomenu-noheader': !showMenu && !showHeader,
+          'la-app-main-nomenu-noheader': !showMenu && !showHeader
         }"
       >
         <!-- <transition name="main"> -->
@@ -67,9 +67,9 @@
       :style="{ top: showPromtNotice ? '30px' : 0 }"
       v-if="
         $route.path === '/home' &&
-        stepNum > -1 &&
-        stepNum < stepLists.length &&
-        guideFlagShow
+          stepNum > -1 &&
+          stepNum < stepLists.length &&
+          guideFlagShow
       "
     >
       <!-- 作为阴影遮罩bg -->
@@ -82,7 +82,7 @@
             'clearfix',
             'pr',
             stepLists[stepNum],
-            showPromtNotice ? `showPromtNoticeClass${stepNum}` : '',
+            showPromtNotice ? `showPromtNoticeClass${stepNum}` : ''
           ]"
         >
           <div class="pointer left" @click="guideLeft"></div>
@@ -100,7 +100,7 @@
         :class="[
           'move-pointer',
           stepLists[stepNum],
-          showPromtNotice ? `showPromtNoticeMovePointer${stepNum}` : '',
+          showPromtNotice ? `showPromtNoticeMovePointer${stepNum}` : ''
         ]"
       ></div>
       <!-- 用img标签在要显示导引的情况下提前加载图片 -->
@@ -172,7 +172,7 @@
         display:
           $route.path === '/introduce' || $route.path === '/login'
             ? 'block'
-            : 'none',
+            : 'none'
       }"
       @click="fix_box_udesk"
     >
@@ -194,28 +194,26 @@
 
 <script>
 import { mapState } from "vuex";
-import Header from "@/components/layouts/header.vue";
-import Menu from "@/components/layouts/menu.vue";
-import PressButton from "@/components/layouts/press-button.vue";
-import Footer from "@/components/layouts/footer.vue";
+import Header from "@/components/layouts/header.vue"
+import Menu from "@/components/layouts/menu.vue"
+import PressButton from "@/components/layouts/press-button.vue"
+import Footer from "@/components/layouts/footer.vue"
 import noLoginPages from "./config/noLoginPages";
-import RemoteLogin from "@/components/common/RemoteLogin.vue";
-import ErrorEducation from "@/components/common/ErrorEducation.vue";
+import RemoteLogin from "@/components/common/RemoteLogin.vue"
+import ErrorEducation from "@/components/common/ErrorEducation.vue"
 import sha1 from "sha1";
 import UUID from "uuid-js";
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import _ from "lodash";
-
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
 function isvueGetCookie(that) {
   let _this = that;
 
-  // _window.vueSetCookie("openPath", _this.$route.path) // 为下列第2点做铺垫
+  // _this.vueSetCookie("openPath", _this.$route.path) // 为下列第2点做铺垫
   // console.info(123)
   // 1.将所有页面添加登录状态才能进入（以后的产品介绍页、关于我们等页面不需要登录）
   // 2.当未登录状态下访问某页面，直接返回到登录页，登录成功后返回之前的页面（第2点在login.vue组件中实现）
   // 3.当登录状态下访问登录页面，直接跳转到首页
   // console.log(_this.vueGetCookie("accesstoken"))
-  noLoginPages(_this, function (flag, change, _Data) {
+  noLoginPages(_this, function(flag, change, _Data) {
     if (flag) {
       if ("introduce" == change && _Data) {
         let arr = [62, 63, 64, 65, 84, 85, 86, 68];
@@ -248,12 +246,12 @@ export default {
     Footer,
     RemoteLogin,
     ErrorEducation,
-    LoadingGif,
+    LoadingGif
   },
   provide() {
     //父组件中通过provide来提供变量，在子组件中通过inject来注入变量。
     return {
-      reload: this.reload,
+      reload: this.reload
     };
   },
   data() {
@@ -272,27 +270,27 @@ export default {
         "step4",
         "step5",
         "step6",
-        "step7",
+        "step7"
       ],
       stepNum: 0,
       showNetworkError: true,
-      onLine: navigator.onLine, // 网络状态，在线-true，离线-false
+      onLine: navigator.onLine // 网络状态，在线-true，离线-false
     };
   },
   computed: {
     ...mapState({
-      guideFlagsRenew: (state) => state.UserCenter.guideFlagsRenew,
-      questionDialog: (state) => state.UserCenter.questionDialog,
-      needGuideShow: (state) => state.UserCenter.needGuideShow,
-      username: (state) => state.UserCenter.accountData.username,
-      grade_name: (state) => state.UserCenter.accountData.grade_name,
-      accountData: (state) => state.UserCenter.accountData,
-      is_show_novice: (state) => state.UserCenter.accountData.is_show_novice,
-      showPromtNotice: (state) => state.showPromtNotice,
-      isFangDa: (state) => state.UserCenter.isFangDa,
+      guideFlagsRenew: state => state.UserCenter.guideFlagsRenew,
+      questionDialog: state => state.UserCenter.questionDialog,
+      needGuideShow: state => state.UserCenter.needGuideShow,
+      username: state => state.UserCenter.accountData.username,
+      grade_name: state => state.UserCenter.accountData.grade_name,
+      accountData: state => state.UserCenter.accountData,
+      is_show_novice: state => state.UserCenter.accountData.is_show_novice,
+      showPromtNotice: state => state.showPromtNotice,
+      isFangDa: state => state.UserCenter.isFangDa
     }),
     pageClass() {
-      var paths = this.$route.path.split("/").filter((item) => !!item);
+      var paths = this.$route.path.split("/").filter(item => !!item);
       var pcs = [];
       for (var i = 1, j = paths.length + 1; i < j; i++) {
         pcs.push(["pc"].concat(paths.slice(0, i)).join("-"));
@@ -306,7 +304,8 @@ export default {
         this.$route.path.indexOf("/help") === 0 ||
         this.$route.path.indexOf("/updatelog") === 0 ||
         this.$route.path.indexOf("/introduce") === 0 ||
-        this.$route.path.indexOf("/service") === 0
+        this.$route.path.indexOf("/service") === 0 ||
+        this.$route.path.indexOf("/trz") === 0
       ) {
         return false;
       } else {
@@ -319,7 +318,8 @@ export default {
         this.$route.path.indexOf("/help") === 0 ||
         this.$route.path.indexOf("/updatelog") === 0 ||
         this.$route.path.indexOf("/introduce") === 0 ||
-        this.$route.path.indexOf("/service") === 0
+        this.$route.path.indexOf("/service") === 0 ||
+        this.$route.path.indexOf("/trz") === 0
       ) {
         return false;
       } else {
@@ -334,7 +334,8 @@ export default {
         this.$route.path.indexOf("/help") === 0 ||
         this.$route.path.indexOf("/updatelog") === 0 ||
         this.$route.path.indexOf("/introduce") === 0 ||
-        this.$route.path.indexOf("/service") === 0
+        this.$route.path.indexOf("/service") === 0 ||
+        this.$route.path.indexOf("/trz") === 0
       ) {
         return false;
       } else {
@@ -359,7 +360,7 @@ export default {
         }
       }
       return false;
-    },
+    }
   },
   watch: {
     onLine(newVal, oldVal) {
@@ -376,12 +377,12 @@ export default {
     $route(to, from) {
       let toPath = to.path;
       let fromPath = from.path;
-      window.vueSetCookie("openPath", from.fullPath); // 为下列第2点做铺垫
+      this.vueSetCookie("openPath", from.fullPath); // 为下列第2点做铺垫
       if (toPath != fromPath) {
         isvueGetCookie(this);
       }
 
-      if (this.$refs.mainBody) this.$refs.mainBody.dialogFormVisible = false; //切换路由高级搜索框关闭
+      this.$refs.mainBody.dialogFormVisible = false; //切换路由高级搜索框关闭
 
       let locationHash = window.location.pathname;
       sessionStorage.setItem("hashLocation", locationHash);
@@ -464,7 +465,7 @@ export default {
               $(".guide .bg").css({
                 width: lightWidth + "px",
                 height: $(".msg-notice-popover").height() + 35 + 12 + 17 + "px",
-                "margin-left": "calc(100vw - " + lightWidth + "px)",
+                "margin-left": "calc(100vw - " + lightWidth + "px)"
               });
               content.css({
                 "margin-left":
@@ -474,7 +475,7 @@ export default {
                   content.width() +
                   "px - " +
                   40 +
-                  "px)",
+                  "px)"
               });
             });
             // 500ms 后显示图片
@@ -488,12 +489,12 @@ export default {
               if (wn < 130) wn = 130;
               $(".guide>.bg.step7").css({
                 width: parseInt(wn) + "px",
-                "margin-left": "calc(100vw - " + parseInt(wn) + "px" + ")",
+                "margin-left": "calc(100vw - " + parseInt(wn) + "px" + ")"
               });
               $(".guide .content").css({
                 "margin-left":
                   "calc(100vw - " + parseInt(568 + wn) + "px" + ")",
-                display: "block",
+                display: "block"
               });
             }, 500);
             break;
@@ -507,21 +508,25 @@ export default {
       }
       // 消除非当前步骤的js影响
       if (this.stepNum != 3) {
-        $(".la-header-nav .header-nav-item").eq(0).removeClass("hover");
+        $(".la-header-nav .header-nav-item")
+          .eq(0)
+          .removeClass("hover");
       }
       // 消除非当前步骤的js影响
       if (this.stepNum != 5) {
-        $(".la-header-nav .header-nav-item").eq(7).removeClass("hover");
+        $(".la-header-nav .header-nav-item")
+          .eq(7)
+          .removeClass("hover");
       }
       if (this.stepNum != 6) {
         this.$store.commit("Layouts/msgBellShow", false);
         $(".guide .bg").css({
           width: "",
           height: "",
-          "margin-left": "",
+          "margin-left": ""
         });
         $(".guide .content").css({
-          "margin-left": "",
+          "margin-left": ""
         });
       }
       // 去除js的影响，回归css
@@ -533,7 +538,7 @@ export default {
           this.qDialog = true;
         }
       },
-      immediate: true,
+      immediate: true
     },
     guideFlagsRenew: {
       handler(val) {
@@ -541,7 +546,7 @@ export default {
           this.guideRenewsFlags = true;
         }
       },
-      immediate: true,
+      immediate: true
     },
     is_show_novice: {
       handler(val) {
@@ -551,7 +556,7 @@ export default {
         } else {
           Store.dispatch("UserCenter/guideFlagsRenewA", true);
         }
-      },
+      }
       // immediate: true
     },
     needGuideShow: {
@@ -560,7 +565,7 @@ export default {
           this.guideFlagShow = true;
           this.stepNum = 0;
         }
-      },
+      }
       // immediate: true
     },
     showPromtNotice: {
@@ -568,13 +573,13 @@ export default {
         document.querySelector(".la-app-main").style.marginTop = val
           ? "30px"
           : "0px";
-      },
-    },
+      }
+    }
   },
   methods: {
     reload() {
       this.isRouterAlive = false; // 先关闭
-      this.$nextTick(function () {
+      this.$nextTick(function() {
         this.isRouterAlive = true; // 再打开
       });
     },
@@ -607,8 +612,8 @@ export default {
       window.Axios.get("/api/usercenter/editnovice", {
         params: {
           skipover,
-          step,
-        },
+          step
+        }
       });
     },
     qCloseEvent() {
@@ -623,7 +628,7 @@ export default {
         this.frontEndLog(url, {
           //强制登录日志
           // _data:_data,
-          params: JSON.parse(val),
+          params: JSON.parse(val)
         });
       } catch (error) {
         console.info(error);
@@ -638,9 +643,9 @@ export default {
         window
           .Axios({
             method: "get",
-            url: "/api/user/getTime",
+            url: "/api/user/getTime"
           })
-          .then((res) => {
+          .then(res => {
             // console.info(res);
             let data = res.data;
             if (data.code == 200) {
@@ -651,7 +656,7 @@ export default {
               reject();
             }
           })
-          .catch((err) => {
+          .catch(err => {
             reject(err);
           });
       });
@@ -662,14 +667,14 @@ export default {
           reject(false);
         }
         Axios.post("/api/synclogin/toyaozhpage", {
-          accesstoken: accesstoken,
+          accesstoken: accesstoken
         })
-          .then((res) => {
+          .then(res => {
             if (!res || (res && res.data.code !== 11045)) {
               resolve();
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.error(err);
           });
       });
@@ -681,9 +686,9 @@ export default {
         //   this.changeCookieTime('accesstoken', accesstoken);
         // })
         .then(() => {
-          window.vueSetCookie("accesstoken", accesstoken);
+          this.vueSetCookie("accesstoken", accesstoken);
         })
-        .catch((err) => {
+        .catch(err => {
           console.info(err);
         });
     },
@@ -738,7 +743,7 @@ export default {
           "trackEvent",
           "button",
           "click",
-          "vip_login_corner_fankui",
+          "vip_login_corner_fankui"
         ]);
       }
       if (/introduce/.test(location.href)) {
@@ -747,18 +752,16 @@ export default {
           "trackEvent",
           "button",
           "click",
-          "vip_pc_introduce_kefu",
+          "vip_pc_introduce_kefu"
         ]);
       }
     },
     needReborn() {
-      if (this.$route.matched[1]) {
-        let str = String(this.$route.matched[1].path);
-        if (str.indexOf("/:dbname") == 0) {
-          return true;
-        } else {
-          return false;
-        }
+      let str = String(this.$route.matched[1].path);
+      if (str.indexOf("/:dbname") == 0) {
+        return true;
+      } else {
+        return false;
       }
     },
     // 用户导引
@@ -793,14 +796,14 @@ export default {
         return route.split("/")[1];
       return route;
     },
-    updateOnlineStatus: _.throttle(function () {
+    updateOnlineStatus: _.throttle(function() {
       setTimeout(
         () => {
           this.onLine = navigator.onLine;
         },
         navigator.onLine ? 0 : 5000
       );
-    }, 5000),
+    }, 5000)
   },
   // updated(){
 
@@ -837,7 +840,7 @@ export default {
     //   })
     // }, 4000)
     this.setLogs("/api/user/forceLogin", "forceLogin");
-  },
+  }
 };
 </script>
 
@@ -1183,7 +1186,7 @@ export default {
   }
 }
 
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 .la-app {
   transform: translateZ(0); // 强制开启GPU加速渲染
@@ -1909,8 +1912,9 @@ export default {
 .link-underline {
   cursor: pointer !important;
   text-decoration: underline !important;
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-block;
+  // display: flex;
+  // flex-wrap: wrap;
 }
 .link-underline_hover:hover {
   color: @PrimaryColor!important;
@@ -2388,10 +2392,10 @@ export default {
     margin-bottom: 10px;
   }
   .a3 {
-    background: #fff url("@/assets/imgs/back5.png") center center no-repeat;
+    background: #fff url("~@/assets/imgs/back5.png") center center no-repeat;
   }
   .a3:hover {
-    background: #4b5af8 url("@/assets/imgs/back4.png") center center no-repeat;
+    background: #4b5af8 url("~@/assets/imgs/back4.png") center center no-repeat;
   }
 }
 .fix_box_udesk_one {

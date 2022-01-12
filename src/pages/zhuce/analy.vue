@@ -114,58 +114,58 @@
       </div>
       <div class="chart_bottom">
         <div class="go-list">
-          <router-link tag="a" :to="{ path: '/zhuce/list.vue' }"
+          <router-link tag="a" :to="{ path: '/zhuce/list' }"
             >返回列表</router-link
           >
         </div>
         <div class="chart-boxes">
           <DbEcharts title="申报趋势">
-            <div id="sbqs-line" class="echarts">
+            <div id="sbqs-line-zhuce" class="echarts">
               <div class="nodata-box"></div>
             </div>
           </DbEcharts>
           <DbEcharts title="申报数量">
-            <div id="sbqs-bar" class="echarts">
+            <div id="sbqs-bar-zhuce" class="echarts">
               <div class="nodata-box"></div>
             </div>
           </DbEcharts>
           <DbEcharts title="申请类型">
-            <div id="sqlx-bar" class="echarts">
+            <div id="sqlx-bar-zhuce" class="echarts">
               <div class="nodata-box"></div>
             </div>
           </DbEcharts>
           <DbEcharts title="药品类型">
-            <div id="yplx-bar" class="echarts">
+            <div id="yplx-bar-zhuce" class="echarts">
               <div class="nodata-box"></div>
             </div>
           </DbEcharts>
           <DbEcharts title="审评结论">
-            <div id="spjl-pie" class="echarts">
+            <div id="spjl-pie-zhuce" class="echarts">
               <div class="nodata-box"></div>
             </div>
           </DbEcharts>
           <DbEcharts title="办理状态">
-            <div id="blzt-bar" class="echarts">
+            <div id="blzt-bar-zhuce" class="echarts">
               <div class="nodata-box"></div>
             </div>
           </DbEcharts>
           <DbEcharts title="ATC分类">
-            <div id="ylfl-pie" class="echarts">
+            <div id="ylfl-pie-zhuce" class="echarts">
               <div :class="atcs_sel ? 'nodata-box-atc' : 'nodata-box'"></div>
             </div>
           </DbEcharts>
           <DbEcharts title="剂型">
-            <div id="jx-bar" class="echarts">
+            <div id="jx-bar-zhuce" class="echarts">
               <div class="nodata-box"></div>
             </div>
           </DbEcharts>
           <DbEcharts title="企业排名">
-            <div id="qypm-bar" class="echarts">
+            <div id="qypm-bar-zhuce" class="echarts">
               <div class="nodata-box"></div>
             </div>
           </DbEcharts>
           <DbEcharts title="申报地区">
-            <div id="sbdq-map" class="echarts">
+            <div id="sbdq-map-zhuce" class="echarts">
               <div class="nodata-box"></div>
             </div>
           </DbEcharts>
@@ -191,52 +191,50 @@
               href="javascript:;"
               @click="handleDialogVisible(false)"
               ><i></i
-              ><img
-                src="/static/imgs/echarts/esc-fullscreen.png"
-                alt="退出全屏"
+              ><img src="/static/imgs/echarts/esc-fullscreen.png" alt="退出全屏"
             /></a>
           </div>
           <div class="echarts-items">
             <!-- 申报趋势 -->
             <div class="echarts-item">
               <!-- 折线图 -->
-              <div id="sbqs-line-open" class="open-charts"></div>
+              <div id="sbqs-line-zhuce-open" class="open-charts"></div>
             </div>
             <div class="echarts-item">
               <!-- 条形图 -->
-              <div id="sbqs-bar-open" class="open-charts"></div>
+              <div id="sbqs-bar-zhuce-open" class="open-charts"></div>
             </div>
             <div class="echarts-item">
               <!-- 申请类型 -->
-              <div id="sqlx-bar-open" class="open-charts"></div>
+              <div id="sqlx-bar-zhuce-open" class="open-charts"></div>
             </div>
             <div class="echarts-item">
               <!-- 药品类型 -->
-              <div id="yplx-bar-open" class="open-charts"></div>
+              <div id="yplx-bar-zhuce-open" class="open-charts"></div>
             </div>
             <div class="echarts-item">
               <!-- 审评结论 -->
-              <div id="spjl-pie-open" class="open-charts"></div>
+              <div id="spjl-pie-zhuce-open" class="open-charts"></div>
             </div>
             <div class="echarts-item">
               <!-- 办理状态 -->
-              <div id="blzt-bar-open" class="open-charts"></div>
+              <div id="blzt-bar-zhuce-open" class="open-charts"></div>
             </div>
             <div class="echarts-item">
               <!-- ATC分类 -->
-              <div id="ylfl-pie-open" class="open-charts"></div>
+              <div id="ylfl-pie-zhuce-open" class="open-charts"></div>
             </div>
             <div class="echarts-item">
               <!-- 剂型 -->
-              <div id="jx-bar-open" class="open-charts"></div>
+              <div id="jx-bar-zhuce-open" class="open-charts"></div>
             </div>
             <div class="echarts-item">
               <!-- 企业排名 -->
-              <div id="qypm-bar-open" class="open-charts"></div>
+              <div id="qypm-bar-zhuce-open" class="open-charts"></div>
             </div>
             <div class="echarts-item">
               <!-- 申报地区 -->
-              <div id="sbdq-map-open" class="open-charts"></div>
+              <div id="sbdq-map-zhuce-open" class="open-charts"></div>
             </div>
           </div>
           <div class="ctr-actions">
@@ -261,20 +259,21 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import DbEcharts from "@/components/common/db-echarts.vue";
-import * as echarts from "echarts";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import DbEcharts from "@/components/common/db-echarts.vue"
+
 import { mapState, mapGetters, createLogger } from "vuex";
 
 var _res = {};
 const myicon = {
-  open: "path://M432.45,595.444c0,2.177-4.661,6.82-11.305,6.82c-6.475,0-11.306-4.567-11.306-6.82s4.852-6.812,11.306-6.812C427.841,588.632,432.452,593.191,432.45,595.444L432.45,595.444z M421.155,589.876c-3.009,0-5.448,2.495-5.448,5.572s2.439,5.572,5.448,5.572c3.01,0,5.449-2.495,5.449-5.572C426.604,592.371,424.165,589.876,421.155,589.876L421.155,589.876z M421.146,591.891c-1.916,0-3.47,1.589-3.47,3.549c0,1.959,1.554,3.548,3.47,3.548s3.469-1.589,3.469-3.548C424.614,593.479,423.062,591.891,421.146,591.891L421.146,591.891zM421.146,591.891",
+  open:
+    "path://M432.45,595.444c0,2.177-4.661,6.82-11.305,6.82c-6.475,0-11.306-4.567-11.306-6.82s4.852-6.812,11.306-6.812C427.841,588.632,432.452,593.191,432.45,595.444L432.45,595.444z M421.155,589.876c-3.009,0-5.448,2.495-5.448,5.572s2.439,5.572,5.448,5.572c3.01,0,5.449-2.495,5.449-5.572C426.604,592.371,424.165,589.876,421.155,589.876L421.155,589.876z M421.146,591.891c-1.916,0-3.47,1.589-3.47,3.549c0,1.959,1.554,3.548,3.47,3.548s3.469-1.589,3.469-3.548C424.614,593.479,423.062,591.891,421.146,591.891L421.146,591.891zM421.146,591.891"
 };
 
 export default {
   components: {
     LoadingGif,
-    DbEcharts,
+    DbEcharts
   },
   data() {
     return {
@@ -294,7 +293,7 @@ export default {
         "ATC分类",
         "剂型",
         "企业排名",
-        "申报地区",
+        "申报地区"
       ], //图形标题
       basic: {
         total: [],
@@ -306,14 +305,14 @@ export default {
         yxsp: 0,
         tspz: 0,
         zdzx: 0,
-        yzxpj: 0,
+        yzxpj: 0
       },
       sbqs_line: {
         echarts: null,
         legend_data: ["申报数量", "批准"],
         xAxis_data: [],
         series_data: [],
-        data_error: false,
+        data_error: false
       },
       sbqs_bar: {
         echarts: null,
@@ -332,90 +331,90 @@ export default {
           "已发通知件",
           "已取批件",
           "资料在邮寄",
-          "已缴费",
+          "已缴费"
         ],
         yAxis_data: [],
-        series_data: [],
+        series_data: []
       },
       sqlx_bar: {
         echarts: null,
         xAxis_data: [],
-        series_data: [],
+        series_data: []
       },
       yplx_bar: {
         echarts: null,
         xAxis_data: [],
-        series_data: [],
+        series_data: []
       },
       spjl_pie: {
         echarts: null,
         xAxis_data: [],
-        series_data: [],
+        series_data: []
       },
       blzt_bar: {
         echarts: null,
         xAxis_data: [],
-        series_data: [],
+        series_data: []
       },
       // 由于剂型总数量太多，jx_bar用于存储最多15个（在首页显示），jx_open_bar存储全部（在全屏显示）
       jx_bar: {
         echarts: null,
         xAxis_data: [],
-        series_data: [],
+        series_data: []
       },
       jx_open_bar: {
         echarts: null,
         xAxis_data: [],
-        series_data: [],
+        series_data: []
       },
       ylfl_pie: {
         echarts: null,
         xAxis_data: [],
-        series_data: [],
+        series_data: []
       },
       qypm_bar: {
         echarts: null,
         yAxis_data: [],
-        series_data: [],
+        series_data: []
       },
       // 申报地区 - map、bar、pie
       sbdq_map: {
         echarts: null,
         xAxis_data: [],
         series_data: [],
-        max: 0,
+        max: 0
       },
       // sbdq_bar包含bar和pie的数据
       sbdq_bar: {
         echarts: null,
         xAxis_data: [],
-        series_data: [],
+        series_data: []
       },
       // sbdq_bar包含了bar和pie的数据，sbdq_pie暂不用
       sbdq_pie: {
         echarts: null,
         xAxis_data: [],
-        series_data: [],
+        series_data: []
       },
       // 记录大屏智能分析的无数据的选项卡
       recordNoData: new Set(),
-      atcs_sel: false, //药理分类是否多分类
+      atcs_sel: false //药理分类是否多分类
     };
   },
   computed: {
     ...mapState({
-      kshRes: (state) => state.Zhuce.kshRes,
-      analyLoading: (state) => state.Zhuce.analyLoading,
-      nopms: (state) => state.Zhuce.nopms,
-      conditions: (state) => state.Zhuce.conditions,
-      res1: (state) => state.Zhuce.res1,
-      res2: (state) => state.Zhuce.res2,
-      res3: (state) => state.Zhuce.res3,
-      activeTabName: (state) => state.Zhuce.tabname,
+      kshRes: state => state.Zhuce.kshRes,
+      analyLoading: state => state.Zhuce.analyLoading,
+      nopms: state => state.Zhuce.nopms,
+      conditions: state => state.Zhuce.conditions,
+      res1: state => state.Zhuce.res1,
+      res2: state => state.Zhuce.res2,
+      res3: state => state.Zhuce.res3,
+      activeTabName: state => state.Zhuce.tabname
     }),
     noData() {
       return !this.res1.res && !this.res2.length && !this.res3.length;
-    },
+    }
   },
   watch: {
     kshRes() {
@@ -434,7 +433,7 @@ export default {
         this.echartsClear("open-charts");
         this.echartsClear("echarts");
       }
-      if (this.$route.path === "/zhuce/list.vue") {
+      if (this.$route.path === "/zhuce/list") {
         //智能分析重新搜索清空列表数据tab无法自动复位
         let tabname = this.activeTabName;
         Store.commit("Zhuce/tabname", "");
@@ -442,7 +441,7 @@ export default {
         this.noData &&
           Store.dispatch("Zhuce/nomalSearch", {
             queryToPutong: false,
-            tabs: true,
+            tabs: true
           });
       }
     },
@@ -454,7 +453,7 @@ export default {
       } else {
         $(".dialog").addClass("hide");
       }
-    },
+    }
   },
   methods: {
     getImgName(i) {
@@ -471,8 +470,8 @@ export default {
         .css("margin-left", -this.openIndex * this.itemWidth);
       $(".dialog .echarts-item").width(this.itemWidth - 100);
     },
-    loadData: _.debounce(function () {
-      this.promise = Store.dispatch("Zhuce/getKshRes").then((res) => {
+    loadData: _.debounce(function() {
+      this.promise = Store.dispatch("Zhuce/getKshRes").then(res => {
         this.update();
         return res;
       });
@@ -552,9 +551,9 @@ export default {
       var shortData = allData === shenbaoshuliang ? pizhun : shenbaoshuliang;
 
       if (shenbaoshuliang.length) {
-        allData.forEach((item) => {
+        allData.forEach(item => {
           let currentIndex = shortData.findIndex(
-            (el) => el.key_as_string == item.key_as_string
+            el => el.key_as_string == item.key_as_string
           );
           xAxis_data.push(item.key_as_string);
           let shenbaoValue =
@@ -583,14 +582,15 @@ export default {
         this.recordNoData.delete(0);
       } else {
         this.recordNoData.add(0);
-        $("#sbqs-line").html('<div class="nodata-box"></div>');
-        $("#sbqs-line").removeAttr("_echarts_instance_");
+        $("#sbqs-line-zhuce").html('<div class="nodata-box"></div>');
+        $("#sbqs-line-zhuce").removeAttr("_echarts_instance_");
       }
     },
     drawSbqsLine() {
       var _that = this;
-      _that.sbqs_line.echarts = echarts.init(
-        document.getElementById("sbqs-line")
+      _that.sbqs_line.echarts = Echarts.init(
+        document.getElementById("sbqs-line-zhuce"),
+        "yaozh_theme"
       );
       _that.sbqs_line.echarts.setOption({
         toolbox: {
@@ -600,7 +600,7 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(0),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myMagnify: {
               show: true,
@@ -609,45 +609,48 @@ export default {
               onclick() {
                 _that.dialogVisible = true;
                 _that.initOpendKsh(0);
-              },
-            },
-          },
+              }
+            }
+          }
         },
         legend: {
           show: true,
           bottom: 0,
-          data: _that.sbqs_line.legend_data,
+          data: _that.sbqs_line.legend_data
         },
         tooltip: {
           trigger: "axis",
-          position: "right",
+          position: "right"
         },
         grid: {
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
-          data: _that.sbqs_line.xAxis_data,
+          data: _that.sbqs_line.xAxis_data
         },
         yAxis: {},
         series: [
           {
             name: "申报数量",
             type: "line",
-            data: _that.sbqs_line.series_data[0],
+            data: _that.sbqs_line.series_data[0]
           },
           {
             name: "批准",
             type: "line",
             connectNulls: true,
-            data: _that.sbqs_line.series_data[1],
-          },
-        ],
+            data: _that.sbqs_line.series_data[1]
+          }
+        ]
       });
     },
     drawSbqsLineOpen() {
       console.log(this.sbqs_line);
       var _that = this;
-      var e = echarts.init(document.getElementById("sbqs-line-open"));
+      var e = Echarts.init(
+        document.getElementById("sbqs-line-zhuce-open"),
+        "yaozh_theme"
+      );
       e.setOption({
         toolbox: {
           right: "20",
@@ -656,40 +659,40 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(0),
-              icon: "image:///static/imgs/echarts/download.png",
-            },
-          },
+              icon: "image:///static/imgs/echarts/download.png"
+            }
+          }
         },
         title: {},
         legend: {
           show: true,
           bottom: 0,
-          data: _that.sbqs_line.legend_data,
+          data: _that.sbqs_line.legend_data
         },
         tooltip: {
           show: true,
-          trigger: "axis",
+          trigger: "axis"
         },
         grid: {
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           nameLocation: "end",
-          data: _that.sbqs_line.xAxis_data,
+          data: _that.sbqs_line.xAxis_data
         },
         yAxis: {},
         series: [
           {
             name: "申报数量",
             type: "line",
-            data: _that.sbqs_line.series_data[0],
+            data: _that.sbqs_line.series_data[0]
           },
           {
             name: "批准",
             type: "line",
-            data: _that.sbqs_line.series_data[1],
-          },
-        ],
+            data: _that.sbqs_line.series_data[1]
+          }
+        ]
       });
     },
     //申报趋势堆形图
@@ -701,8 +704,8 @@ export default {
       var legend_data = this.sbqs_bar.legend_data;
       var legend_data_len = this.sbqs_bar.legend_data.length;
       // 数据全为0，显示nodata
-      let notAllZero = shenbaobanli.find((item) => {
-        return item.guifanzhuangtaizhongwen.find((ite) => {
+      let notAllZero = shenbaobanli.find(item => {
+        return item.guifanzhuangtaizhongwen.find(ite => {
           return ite.doc_count != 0;
         });
       });
@@ -736,7 +739,7 @@ export default {
             name: legend_data[i],
             type: "bar",
             stack: "状态",
-            data: series_data[i],
+            data: series_data[i]
           });
         }
 
@@ -747,14 +750,15 @@ export default {
         this.recordNoData.delete(1);
       } else {
         this.recordNoData.add(1);
-        $("#sbqs-bar").html('<div class="nodata-box"></div>');
-        $("#sbqs-bar").removeAttr("_echarts_instance_");
+        $("#sbqs-bar-zhuce").html('<div class="nodata-box"></div>');
+        $("#sbqs-bar-zhuce").removeAttr("_echarts_instance_");
       }
     },
     drawSbqsBar() {
       var _that = this;
-      _that.sbqs_bar.echarts = echarts.init(
-        document.getElementById("sbqs-bar")
+      _that.sbqs_bar.echarts = Echarts.init(
+        document.getElementById("sbqs-bar-zhuce"),
+        "yaozh_theme"
       );
       _that.sbqs_bar.echarts.setOption({
         toolbox: {
@@ -764,7 +768,7 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(1),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myMagnify: {
               show: true,
@@ -772,12 +776,12 @@ export default {
               icon: "image:///static/imgs/echarts/fullscreen.png",
               onclick() {
                 _that.initOpendKsh(1);
-              },
-            },
-          },
+              }
+            }
+          }
         },
         tooltip: {
-          position: function (pos, params, dom, rect, size) {
+          position: function(pos, params, dom, rect, size) {
             // 鼠标在左侧时 tooltip 显示到右侧，鼠标在右侧时 tooltip 显示到左侧。
             var obj = { top: 20 };
             obj[["left", "right"][+(pos[0] < size.viewSize[0] / 2)]] = 5;
@@ -786,34 +790,37 @@ export default {
           trigger: "axis",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
-          },
+            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+          }
         },
         legend: {
           type: "scroll",
           bottom: 0,
-          data: _that.sbqs_bar.legend_data,
+          data: _that.sbqs_bar.legend_data
         },
         yAxis: [
           {
             type: "category",
             axisLabel: {
-              interval: 0,
+              interval: 0
             },
-            data: _that.sbqs_bar.yAxis_data,
-          },
+            data: _that.sbqs_bar.yAxis_data
+          }
         ],
         xAxis: [
           {
-            type: "value",
-          },
+            type: "value"
+          }
         ],
-        series: _that.sbqs_bar.series_data,
+        series: _that.sbqs_bar.series_data
       });
     },
     drawSbqsBarOpen() {
       var _that = this;
-      echarts.init(document.getElementById("sbqs-bar-open")).setOption({
+      Echarts.init(
+        document.getElementById("sbqs-bar-zhuce-open"),
+        "yaozh_theme"
+      ).setOption({
         toolbox: {
           right: "20",
           show: true,
@@ -821,37 +828,37 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(1),
-              icon: "image:///static/imgs/echarts/download.png",
-            },
-          },
+              icon: "image:///static/imgs/echarts/download.png"
+            }
+          }
         },
         tooltip: {
           trigger: "axis",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
-          },
+            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+          }
         },
         legend: {
           type: "scroll",
           bottom: 0,
-          data: _that.sbqs_bar.legend_data,
+          data: _that.sbqs_bar.legend_data
         },
         yAxis: [
           {
             type: "category",
             axisLabel: {
-              interval: 0,
+              interval: 0
             },
-            data: _that.sbqs_bar.yAxis_data,
-          },
+            data: _that.sbqs_bar.yAxis_data
+          }
         ],
         xAxis: [
           {
-            type: "value",
-          },
+            type: "value"
+          }
         ],
-        series: _that.sbqs_bar.series_data,
+        series: _that.sbqs_bar.series_data
       });
     },
     //申请类型柱状图
@@ -861,14 +868,13 @@ export default {
       let series_data = [];
 
       if (_len > 0) {
-        shenqingleixing.sort(function (a, b) {
+        shenqingleixing.sort(function(a, b) {
           return b.doc_count - a.doc_count;
         });
         for (var i = 0; i < _len; i++) {
           xAxis_data.push(shenqingleixing[i].label);
           series_data.push(shenqingleixing[i].doc_count);
         }
-        console.log(series_data);
         this.sqlx_bar.xAxis_data = xAxis_data;
         this.sqlx_bar.series_data = series_data;
         this.drawSqlxBar();
@@ -876,44 +882,36 @@ export default {
         this.recordNoData.delete(2);
       } else {
         this.recordNoData.add(2);
-        $("#sqlx-bar").html('<div class="nodata-box"></div>');
-        $("#sqlx-bar").removeAttr("_echarts_instance_");
+        $("#sqlx-bar-zhuce").html('<div class="nodata-box"></div>');
+        $("#sqlx-bar-zhuce").removeAttr("_echarts_instance_");
       }
     },
     drawSqlxBar() {
       var _that = this;
-      _that.sqlx_bar.echarts = echarts.init(
-        document.getElementById("sqlx-bar")
+      _that.sqlx_bar.echarts = Echarts.init(
+        document.getElementById("sqlx-bar-zhuce"),
+        "yaozh_theme"
       );
-      console.log(_that.sqlx_bar.xAxis_data, _that.sqlx_bar.series_data);
-      let dataset = {
-        dimensions: ["name", "value"],
-        source: [],
-      };
-      _that.sqlx_bar.xAxis_data.forEach((item, i) => {
-        dataset.source.push([item, _that.sqlx_bar.series_data[i]]);
-      });
       _that.sqlx_bar.echarts.setOption({
-        dataset: [dataset],
-        xAxis: {
-          type: "category",
+        legend: {
+          bottom: 0,
+          data: _that.sqlx_bar.legend_data
         },
-        yAxis: {},
         toolbox: {
           right: "20",
           feature: {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(2),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myTogglePie: {
               show: true,
               title: "饼形图",
               icon: "image:///static/imgs/echarts/pie.png",
               onclick() {
-                _that.handleTogglePie("sqlx-bar", _that.sqlx_bar, 2);
-              },
+                _that.handleTogglePie("sqlx-bar-zhuce", _that.sqlx_bar, 2);
+              }
             },
             myMagnify: {
               show: true,
@@ -921,26 +919,45 @@ export default {
               icon: "image:///static/imgs/echarts/fullscreen.png",
               onclick() {
                 _that.initOpendKsh(2);
-              },
-            },
+              }
+            }
+          }
+        },
+        grid: {
+          containLabel: true
+        },
+        xAxis: {
+          type: "category",
+          axisLabel: {
+            interval: 0
           },
+          data: _that.sqlx_bar.xAxis_data
+        },
+        yAxis: {
+          type: "value",
+          name: "申报数量"
         },
         series: [
           {
             type: "bar",
-            id: "sqlx",
-            universalTransition: true,
-            animationDurationUpdate: 1000,
-          },
-        ],
+            label: {
+              show: true,
+              position: "top"
+            },
+            data: _that.sqlx_bar.series_data
+          }
+        ]
       });
     },
     drawSqlxBarOpen() {
       var _that = this;
-      echarts.init(document.getElementById("sqlx-bar-open")).setOption({
+      Echarts.init(
+        document.getElementById("sqlx-bar-zhuce-open"),
+        "yaozh_theme"
+      ).setOption({
         legend: {
           bottom: 0,
-          data: _that.sqlx_bar.legend_data,
+          data: _that.sqlx_bar.legend_data
         },
         toolbox: {
           right: "20",
@@ -948,7 +965,7 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(2),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myTogglePie: {
               show: true,
@@ -956,38 +973,38 @@ export default {
               icon: "image:///static/imgs/echarts/pie.png",
               onclick() {
                 _that.handleTogglePie(
-                  "sqlx-bar-open",
+                  "sqlx-bar-zhuce-open",
                   _that.sqlx_bar,
                   undefined
                 );
-              },
-            },
-          },
+              }
+            }
+          }
         },
         grid: {
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "category",
           axisLabel: {
-            interval: 0,
+            interval: 0
           },
-          data: _that.sqlx_bar.xAxis_data,
+          data: _that.sqlx_bar.xAxis_data
         },
         yAxis: {
           type: "value",
-          name: "申报数量",
+          name: "申报数量"
         },
         series: [
           {
             type: "bar",
             label: {
               show: true,
-              position: "top",
+              position: "top"
             },
-            data: _that.sqlx_bar.series_data,
-          },
-        ],
+            data: _that.sqlx_bar.series_data
+          }
+        ]
       });
     },
     //药品类型柱状图
@@ -996,7 +1013,7 @@ export default {
       let xAxis_data = [];
       let series_data = [];
       if (_len > 0) {
-        yaopinleixing.sort(function (a, b) {
+        yaopinleixing.sort(function(a, b) {
           return b.doc_count - a.doc_count;
         });
         for (var i = 0; i < _len; i++) {
@@ -1010,19 +1027,20 @@ export default {
         this.recordNoData.delete(3);
       } else {
         this.recordNoData.add(3);
-        $("#yplx-bar").html('<div class="nodata-box"></div>');
+        $("#yplx-bar-zhuce").html('<div class="nodata-box"></div>');
         $("#yqlx-bar").removeAttr("_echarts_instance_");
       }
     },
     drawYplxBar() {
       var _that = this;
-      _that.yplx_bar.echarts = echarts.init(
-        document.getElementById("yplx-bar")
+      _that.yplx_bar.echarts = Echarts.init(
+        document.getElementById("yplx-bar-zhuce"),
+        "yaozh_theme"
       );
       _that.yplx_bar.echarts.setOption({
         legend: {
           bottom: 0,
-          data: _that.yplx_bar.legend_data,
+          data: _that.yplx_bar.legend_data
         },
         toolbox: {
           right: "20",
@@ -1030,15 +1048,15 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(3),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myTogglePie: {
               show: true,
               title: "饼形图",
               icon: "image:///static/imgs/echarts/pie.png",
               onclick() {
-                _that.handleTogglePie("yplx-bar", _that.yplx_bar, 3);
-              },
+                _that.handleTogglePie("yplx-bar-zhuce", _that.yplx_bar, 3);
+              }
             },
             myMagnify: {
               show: true,
@@ -1046,42 +1064,45 @@ export default {
               icon: "image:///static/imgs/echarts/fullscreen.png",
               onclick() {
                 _that.initOpendKsh(3);
-              },
-            },
-          },
+              }
+            }
+          }
         },
         grid: {
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "category",
           axisLabel: {
-            interval: 0,
+            interval: 0
           },
-          data: _that.yplx_bar.xAxis_data,
+          data: _that.yplx_bar.xAxis_data
         },
         yAxis: {
           type: "value",
-          name: "数量",
+          name: "数量"
         },
         series: [
           {
             type: "bar",
             label: {
               show: true,
-              position: "top",
+              position: "top"
             },
-            data: _that.yplx_bar.series_data,
-          },
-        ],
+            data: _that.yplx_bar.series_data
+          }
+        ]
       });
     },
     drawYplxBarOpen() {
       var _that = this;
-      echarts.init(document.getElementById("yplx-bar-open")).setOption({
+      Echarts.init(
+        document.getElementById("yplx-bar-zhuce-open"),
+        "yaozh_theme"
+      ).setOption({
         legend: {
           bottom: 0,
-          data: _that.yplx_bar.legend_data,
+          data: _that.yplx_bar.legend_data
         },
         toolbox: {
           right: "20",
@@ -1089,7 +1110,7 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(3),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myTogglePie: {
               show: true,
@@ -1097,38 +1118,38 @@ export default {
               icon: "image:///static/imgs/echarts/pie.png",
               onclick() {
                 _that.handleTogglePie(
-                  "yplx-bar-open",
+                  "yplx-bar-zhuce-open",
                   _that.yplx_bar,
                   undefined
                 );
-              },
-            },
-          },
+              }
+            }
+          }
         },
         grid: {
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "category",
           axisLabel: {
-            interval: 0,
+            interval: 0
           },
-          data: _that.yplx_bar.xAxis_data,
+          data: _that.yplx_bar.xAxis_data
         },
         yAxis: {
           type: "value",
-          name: "数量",
+          name: "数量"
         },
         series: [
           {
             type: "bar",
             label: {
               show: true,
-              position: "top",
+              position: "top"
             },
-            data: _that.yplx_bar.series_data,
-          },
-        ],
+            data: _that.yplx_bar.series_data
+          }
+        ]
       });
     },
     //审评结论空心饼形图
@@ -1168,21 +1189,22 @@ export default {
         this.recordNoData.delete(4);
       } else {
         this.recordNoData.add(4);
-        $("#spjl-pie").html('<div class="nodata-box"></div>');
-        $("#spjl-pie").removeAttr("_echarts_instance_");
+        $("#spjl-pie-zhuce").html('<div class="nodata-box"></div>');
+        $("#spjl-pie-zhuce").removeAttr("_echarts_instance_");
       }
     },
     //审评结论
     drawSpjlPie() {
       var _that = this;
-      _that.spjl_pie.echarts = echarts.init(
-        document.getElementById("spjl-pie")
+      _that.spjl_pie.echarts = Echarts.init(
+        document.getElementById("spjl-pie-zhuce"),
+        "yaozh_theme"
       );
       _that.spjl_pie.echarts.setOption({
         legend: {
           type: "scroll",
           bottom: 0,
-          data: _that.spjl_pie.xAxis_data,
+          data: _that.spjl_pie.xAxis_data
         },
         toolbox: {
           right: "20",
@@ -1190,15 +1212,15 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(4),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myToggleBar: {
               show: true,
               title: "柱形图",
               icon: "image:///static/imgs/echarts/bar.png",
               onclick() {
-                _that.handleToggleBar("spjl-pie", _that.spjl_pie, 4);
-              },
+                _that.handleToggleBar("spjl-pie-zhuce", _that.spjl_pie, 4);
+              }
             },
             myMagnify: {
               show: true,
@@ -1206,13 +1228,13 @@ export default {
               icon: "image:///static/imgs/echarts/fullscreen.png",
               onclick() {
                 _that.initOpendKsh(4);
-              },
-            },
-          },
+              }
+            }
+          }
         },
         tooltip: {
           trigger: "item",
-          formatter: "{b}<br/>数量：{c}<br/>占比：{d}%",
+          formatter: "{b}<br/>数量：{c}<br/>占比：{d}%"
         },
         series: [
           {
@@ -1222,7 +1244,7 @@ export default {
             label: {
               normal: {
                 show: false,
-                position: "outside",
+                position: "outside"
               },
               emphasis: {
                 show: true,
@@ -1230,27 +1252,30 @@ export default {
                 align: "center",
                 textStyle: {
                   fontSize: "30",
-                  fontWeight: "bold",
-                },
-              },
+                  fontWeight: "bold"
+                }
+              }
             },
             labelLine: {
               normal: {
-                show: false,
-              },
+                show: false
+              }
             },
-            data: _that.spjl_pie.series_data,
-          },
-        ],
+            data: _that.spjl_pie.series_data
+          }
+        ]
       });
     },
     drawSpjlPieOpen() {
       var _that = this;
-      echarts.init(document.getElementById("spjl-pie-open")).setOption({
+      Echarts.init(
+        document.getElementById("spjl-pie-zhuce-open"),
+        "yaozh_theme"
+      ).setOption({
         legend: {
           type: "scroll",
           bottom: 0,
-          data: _that.spjl_pie.xAxis_data,
+          data: _that.spjl_pie.xAxis_data
         },
         toolbox: {
           right: "20",
@@ -1258,7 +1283,7 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(4),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myTogglePie: {
               show: true,
@@ -1266,17 +1291,17 @@ export default {
               icon: "image:///static/imgs/echarts/bar.png",
               onclick() {
                 _that.handleToggleBar(
-                  "spjl-pie-open",
+                  "spjl-pie-zhuce-open",
                   _that.spjl_pie,
                   undefined
                 );
-              },
-            },
-          },
+              }
+            }
+          }
         },
         tooltip: {
           trigger: "item",
-          formatter: "{b}<br/>数量：{c}<br/>占比：{d}%",
+          formatter: "{b}<br/>数量：{c}<br/>占比：{d}%"
         },
         series: [
           {
@@ -1286,7 +1311,7 @@ export default {
             label: {
               normal: {
                 show: false,
-                position: "outside",
+                position: "outside"
               },
               emphasis: {
                 show: true,
@@ -1294,18 +1319,18 @@ export default {
                 align: "center",
                 textStyle: {
                   fontSize: "30",
-                  fontWeight: "bold",
-                },
-              },
+                  fontWeight: "bold"
+                }
+              }
             },
             labelLine: {
               normal: {
-                show: false,
-              },
+                show: false
+              }
             },
-            data: _that.spjl_pie.series_data,
-          },
-        ],
+            data: _that.spjl_pie.series_data
+          }
+        ]
       });
     },
     //办理状态柱形图
@@ -1328,14 +1353,15 @@ export default {
         this.recordNoData.delete(5);
       } else {
         this.recordNoData.add(5);
-        $("#blzt-bar").html('<div class="nodata-box"></div>');
-        $("#blzt-bar").removeAttr("_echarts_instance_");
+        $("#blzt-bar-zhuce").html('<div class="nodata-box"></div>');
+        $("#blzt-bar-zhuce").removeAttr("_echarts_instance_");
       }
     },
     drawBlztBar() {
       var _that = this;
-      _that.blzt_bar.echarts = echarts.init(
-        document.getElementById("blzt-bar")
+      _that.blzt_bar.echarts = Echarts.init(
+        document.getElementById("blzt-bar-zhuce"),
+        "yaozh_theme"
       );
       _that.blzt_bar.echarts.setOption({
         toolbox: {
@@ -1344,15 +1370,15 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(5),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myTogglePie: {
               show: true,
               title: "饼形图",
               icon: "image:///static/imgs/echarts/pie.png",
               onclick() {
-                _that.handleTogglePie("blzt-bar", _that.blzt_bar, 5);
-              },
+                _that.handleTogglePie("blzt-bar-zhuce", _that.blzt_bar, 5);
+              }
             },
             myMagnify: {
               show: true,
@@ -1360,48 +1386,51 @@ export default {
               icon: "image:///static/imgs/echarts/fullscreen.png",
               onclick() {
                 _that.initOpendKsh(5);
-              },
-            },
-          },
+              }
+            }
+          }
         },
         grid: {
           // 控制图的大小，调整下面这些值就可以，
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "category",
           axisLabel: {
             interval: 0,
-            rotate: 30,
+            rotate: 30
           },
-          data: _that.blzt_bar.xAxis_data,
+          data: _that.blzt_bar.xAxis_data
         },
         yAxis: {
           type: "value",
-          name: "数量",
+          name: "数量"
         },
         series: [
           {
             type: "bar",
             label: {
               show: true,
-              position: "top",
+              position: "top"
             },
-            data: _that.blzt_bar.series_data,
-          },
-        ],
+            data: _that.blzt_bar.series_data
+          }
+        ]
       });
     },
     drawBlztBarOpen() {
       var _that = this;
-      echarts.init(document.getElementById("blzt-bar-open")).setOption({
+      Echarts.init(
+        document.getElementById("blzt-bar-zhuce-open"),
+        "yaozh_theme"
+      ).setOption({
         toolbox: {
           right: "20",
           feature: {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(5),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myTogglePie: {
               show: true,
@@ -1409,44 +1438,44 @@ export default {
               icon: "image:///static/imgs/echarts/pie.png",
               onclick() {
                 _that.handleTogglePie(
-                  "blzt-bar-open",
+                  "blzt-bar-zhuce-open",
                   _that.blzt_bar,
                   undefined
                 );
-              },
-            },
-          },
+              }
+            }
+          }
         },
         grid: {
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "category",
           axisLabel: {
-            interval: 0,
+            interval: 0
           },
-          data: _that.blzt_bar.xAxis_data,
+          data: _that.blzt_bar.xAxis_data
         },
         yAxis: {
           type: "value",
-          name: "数量",
+          name: "数量"
         },
         series: [
           {
             type: "bar",
             label: {
               show: true,
-              position: "top",
+              position: "top"
             },
-            data: _that.blzt_bar.series_data,
-          },
-        ],
+            data: _that.blzt_bar.series_data
+          }
+        ]
       });
     },
     //ATC分类
     dealYlflPie(atc) {
       this.atcs_sel = false;
-      _.forEach(this.conditions, (item) => {
+      _.forEach(this.conditions, item => {
         if (item.name === "atc") {
           if (item.atcs_sel) {
             this.atcs_sel = true;
@@ -1492,20 +1521,21 @@ export default {
         let html = this.atcs_sel
           ? '<div class="nodata-box-atc"></div>'
           : '<div class="nodata-box"></div>';
-        $("#ylfl-pie").html(html);
-        $("#ylfl-pie").removeAttr("_echarts_instance_");
+        $("#ylfl-pie-zhuce").html(html);
+        $("#ylfl-pie-zhuce").removeAttr("_echarts_instance_");
       }
     },
     drawYlflPie() {
       var _that = this;
-      _that.ylfl_pie.echarts = echarts.init(
-        document.getElementById("ylfl-pie")
+      _that.ylfl_pie.echarts = Echarts.init(
+        document.getElementById("ylfl-pie-zhuce"),
+        "yaozh_theme"
       );
       _that.ylfl_pie.echarts.setOption({
         legend: {
           type: "scroll",
           bottom: 0,
-          data: _that.ylfl_pie.xAxis_data,
+          data: _that.ylfl_pie.xAxis_data
         },
         toolbox: {
           right: "20",
@@ -1513,15 +1543,15 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(6),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myToggleBar: {
               show: true,
               title: "柱形图",
               icon: "image:///static/imgs/echarts/bar.png",
               onclick() {
-                _that.handleToggleBar("ylfl-pie", _that.ylfl_pie, 6);
-              },
+                _that.handleToggleBar("ylfl-pie-zhuce", _that.ylfl_pie, 6);
+              }
             },
             myMagnify: {
               show: true,
@@ -1529,13 +1559,13 @@ export default {
               icon: "image:///static/imgs/echarts/fullscreen.png",
               onclick() {
                 _that.initOpendKsh(6);
-              },
-            },
-          },
+              }
+            }
+          }
         },
         tooltip: {
           trigger: "item",
-          formatter: "{b}<br/>数量：{c}<br/>占比：{d}%",
+          formatter: "{b}<br/>数量：{c}<br/>占比：{d}%"
         },
         series: [
           {
@@ -1544,21 +1574,24 @@ export default {
               normal: {
                 show: true,
                 position: "outside",
-                formatter: "{b}{d}%",
-              },
+                formatter: "{b}{d}%"
+              }
             },
-            data: this.ylfl_pie.series_data,
-          },
-        ],
+            data: this.ylfl_pie.series_data
+          }
+        ]
       });
     },
     drawYlflPieOpen() {
       var _that = this;
-      echarts.init(document.getElementById("ylfl-pie-open")).setOption({
+      Echarts.init(
+        document.getElementById("ylfl-pie-zhuce-open"),
+        "yaozh_theme"
+      ).setOption({
         legend: {
           type: "scroll",
           bottom: 0,
-          data: _that.ylfl_pie.xAxis_data,
+          data: _that.ylfl_pie.xAxis_data
         },
         toolbox: {
           right: "20",
@@ -1566,7 +1599,7 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(6),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myTogglePie: {
               show: true,
@@ -1574,17 +1607,17 @@ export default {
               icon: "image:///static/imgs/echarts/bar.png",
               onclick() {
                 _that.handleToggleBar(
-                  "ylfl-pie-open",
+                  "ylfl-pie-zhuce-open",
                   _that.ylfl_pie,
                   undefined
                 );
-              },
-            },
-          },
+              }
+            }
+          }
         },
         tooltip: {
           trigger: "item",
-          formatter: "{b}<br/>数量：{c}<br/>占比：{d}%",
+          formatter: "{b}<br/>数量：{c}<br/>占比：{d}%"
         },
         series: [
           {
@@ -1593,12 +1626,12 @@ export default {
               normal: {
                 show: true,
                 position: "outside",
-                formatter: "{b}{d}%",
-              },
+                formatter: "{b}{d}%"
+              }
             },
-            data: this.ylfl_pie.series_data,
-          },
-        ],
+            data: this.ylfl_pie.series_data
+          }
+        ]
       });
     },
     //剂型
@@ -1634,20 +1667,23 @@ export default {
         this.recordNoData.delete(7);
       } else {
         this.recordNoData.add(7);
-        $("#jx-bar").html('<div class="nodata-box"></div>');
-        $("#jx-bar").removeAttr("_echarts_instance_");
+        $("#jx-bar-zhuce").html('<div class="nodata-box"></div>');
+        $("#jx-bar-zhuce").removeAttr("_echarts_instance_");
       }
     },
     drawJxBar() {
       var _that = this;
-      _that.jx_bar.echarts = echarts.init(document.getElementById("jx-bar"));
+      _that.jx_bar.echarts = Echarts.init(
+        document.getElementById("jx-bar-zhuce"),
+        "yaozh_theme"
+      );
       _that.jx_bar.echarts.setOption({
         legend: {
           bottom: 0,
-          data: _that.jx_bar.legend_data,
+          data: _that.jx_bar.legend_data
         },
         tooltip: {
-          show: true,
+          show: true
         },
         toolbox: {
           right: "20",
@@ -1655,15 +1691,15 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(7),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myTogglePie: {
               show: true,
               title: "饼形图",
               icon: "image:///static/imgs/echarts/pie.png",
               onclick() {
-                _that.handleTogglePie("jx-bar", _that.jx_bar, 7);
-              },
+                _that.handleTogglePie("jx-bar-zhuce", _that.jx_bar, 7);
+              }
             },
             myMagnify: {
               show: true,
@@ -1671,46 +1707,49 @@ export default {
               icon: "image:///static/imgs/echarts/fullscreen.png",
               onclick() {
                 _that.initOpendKsh(7);
-              },
-            },
-          },
+              }
+            }
+          }
         },
         grid: {
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "category",
           axisLabel: {
             interval: 0,
-            rotate: 30,
+            rotate: 30
           },
-          data: _that.jx_bar.xAxis_data,
+          data: _that.jx_bar.xAxis_data
         },
         yAxis: {
           type: "value",
-          name: "数量",
+          name: "数量"
         },
         series: [
           {
             type: "bar",
             label: {
               show: true,
-              position: "top",
+              position: "top"
             },
-            data: _that.jx_bar.series_data,
-          },
-        ],
+            data: _that.jx_bar.series_data
+          }
+        ]
       });
     },
     drawJxBarOpen() {
       var _that = this;
-      echarts.init(document.getElementById("jx-bar-open")).setOption({
+      Echarts.init(
+        document.getElementById("jx-bar-zhuce-open"),
+        "yaozh_theme"
+      ).setOption({
         legend: {
           bottom: 0,
-          data: _that.jx_bar.legend_data,
+          data: _that.jx_bar.legend_data
         },
         tooltip: {
-          show: true,
+          show: true
         },
         toolbox: {
           right: "20",
@@ -1718,43 +1757,43 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(7),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myTogglePie: {
               show: true,
               title: "饼形图",
               icon: "image:///static/imgs/echarts/pie.png",
               onclick() {
-                _that.handleTogglePie("jx-bar-open", _that.jx_open_bar);
-              },
-            },
-          },
+                _that.handleTogglePie("jx-bar-zhuce-open", _that.jx_open_bar);
+              }
+            }
+          }
         },
         grid: {
-          containLabel: true,
+          containLabel: true
         },
         xAxis: {
           type: "category",
           axisLabel: {
             interval: 0,
-            rotate: 30,
+            rotate: 30
           },
-          data: _that.jx_open_bar.xAxis_data,
+          data: _that.jx_open_bar.xAxis_data
         },
         yAxis: {
           type: "value",
-          name: "数量",
+          name: "数量"
         },
         series: [
           {
             type: "bar",
             label: {
               show: true,
-              position: "top",
+              position: "top"
             },
-            data: _that.jx_open_bar.series_data,
-          },
-        ],
+            data: _that.jx_open_bar.series_data
+          }
+        ]
       });
     },
     //企业排名
@@ -1781,14 +1820,15 @@ export default {
         this.recordNoData.delete(8);
       } else {
         this.recordNoData.add(8);
-        $("#qypm-bar").html('<div class="nodata-box"></div>');
-        $("#qypm-bar").removeAttr("_echarts_instance_");
+        $("#qypm-bar-zhuce").html('<div class="nodata-box"></div>');
+        $("#qypm-bar-zhuce").removeAttr("_echarts_instance_");
       }
     },
     drawQypmBar() {
       var _that = this;
-      _that.qypm_bar.echarts = echarts.init(
-        document.getElementById("qypm-bar")
+      _that.qypm_bar.echarts = Echarts.init(
+        document.getElementById("qypm-bar-zhuce"),
+        "yaozh_theme"
       );
       _that.qypm_bar.echarts.setOption({
         tooltip: {
@@ -1796,7 +1836,7 @@ export default {
             return this.echartsTooltipPositionX(point, params, dom, rect, size);
           },
           trigger: "item",
-          formatter: "{b}<br />数量: {c}",
+          formatter: "{b}<br />数量: {c}"
         },
         toolbox: {
           right: "20",
@@ -1804,7 +1844,7 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(8),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myMagnify: {
               show: true,
@@ -1812,29 +1852,29 @@ export default {
               icon: "image:///static/imgs/echarts/fullscreen.png",
               onclick() {
                 _that.initOpendKsh(8);
-              },
-            },
-          },
+              }
+            }
+          }
         },
         grid: {
-          containLabel: true,
+          containLabel: true
         },
         yAxis: {
           type: "category",
           axisLabel: {
-            formatter: function (value) {
+            formatter: function(value) {
               if (value.length > 12) {
                 return value.substring(0, 12) + "...";
               } else {
                 return value;
               }
-            },
+            }
           },
-          data: _that.qypm_bar.yAxis_data,
+          data: _that.qypm_bar.yAxis_data
         },
         xAxis: {
           type: "value",
-          name: "数量",
+          name: "数量"
         },
         series: [
           {
@@ -1842,18 +1882,21 @@ export default {
             type: "bar",
             label: {
               show: true,
-              position: "right",
-            },
-          },
-        ],
+              position: "right"
+            }
+          }
+        ]
       });
     },
     drawQypmBarOpen() {
       var _that = this;
-      echarts.init(document.getElementById("qypm-bar-open")).setOption({
+      Echarts.init(
+        document.getElementById("qypm-bar-zhuce-open"),
+        "yaozh_theme"
+      ).setOption({
         tooltip: {
           trigger: "item",
-          formatter: "{b}<br />数量: {c}",
+          formatter: "{b}<br />数量: {c}"
         },
         toolbox: {
           right: "20",
@@ -1861,20 +1904,20 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(8),
-              icon: "image:///static/imgs/echarts/download.png",
-            },
-          },
+              icon: "image:///static/imgs/echarts/download.png"
+            }
+          }
         },
         grid: {
-          containLabel: true,
+          containLabel: true
         },
         yAxis: {
           type: "category",
-          data: _that.qypm_bar.yAxis_data,
+          data: _that.qypm_bar.yAxis_data
         },
         xAxis: {
           type: "value",
-          name: "数量",
+          name: "数量"
         },
         series: [
           {
@@ -1882,10 +1925,10 @@ export default {
             type: "bar",
             label: {
               show: true,
-              position: "right",
-            },
-          },
-        ],
+              position: "right"
+            }
+          }
+        ]
       });
     },
     //地图
@@ -1902,7 +1945,7 @@ export default {
           not_map_series_data.push(Number(shengfen[i].doc_count));
           map_series_data.push({
             value: shengfen[i].doc_count,
-            name: shengfen[i].key,
+            name: shengfen[i].key
           });
           max = shengfen[i].doc_count > max ? shengfen[i].doc_count : max;
         }
@@ -1919,14 +1962,15 @@ export default {
         this.recordNoData.delete(9);
       } else {
         this.recordNoData.add(9);
-        $("#sbdq-map").html('<div class="nodata-box"></div>');
-        $("#sbdq-map").removeAttr("_echarts_instance_");
+        $("#sbdq-map-zhuce").html('<div class="nodata-box"></div>');
+        $("#sbdq-map-zhuce").removeAttr("_echarts_instance_");
       }
     },
     drawSbdqMap() {
       var _that = this;
-      _that.sbdq_map.echarts = echarts.init(
-        document.getElementById("sbdq-map")
+      _that.sbdq_map.echarts = Echarts.init(
+        document.getElementById("sbdq-map-zhuce"),
+        "yaozh_theme"
       );
       _that.sbdq_map.echarts.setOption({
         toolbox: {
@@ -1935,23 +1979,23 @@ export default {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(9),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myToggleBar: {
               show: true,
               title: "柱形图",
               icon: "image:///static/imgs/echarts/bar.png",
               onclick() {
-                _that.handleToggleBar("sbdq-map", _that.sbdq_bar, 9);
-              },
+                _that.handleToggleBar("sbdq-map-zhuce", _that.sbdq_bar, 9);
+              }
             },
             myTogglePie: {
               show: true,
               title: "饼形图",
               icon: "image:///static/imgs/echarts/pie.png",
               onclick() {
-                _that.handleTogglePie("sbdq-map", _that.sbdq_pie, 9);
-              },
+                _that.handleTogglePie("sbdq-map-zhuce", _that.sbdq_pie, 9);
+              }
             },
             myMagnify: {
               show: true,
@@ -1959,17 +2003,17 @@ export default {
               icon: "image:///static/imgs/echarts/fullscreen.png",
               onclick() {
                 _that.initOpendKsh(9);
-              },
-            },
-          },
+              }
+            }
+          }
         },
         tooltip: {
           trigger: "item",
-          formatter: function (params) {
+          formatter: function(params) {
             return `${params.name}<br/>数量：${
               params.value ? params.value : 0
             }`;
-          },
+          }
         },
         visualMap: {
           min: 0,
@@ -1977,36 +2021,39 @@ export default {
           left: "left",
           top: "bottom",
           text: ["高", "低"], // 文本，默认为数值文本
-          calculable: true,
+          calculable: true
         },
         series: [
           {
             name: "数量",
             type: "map",
-            map: "china",
+            mapType: "china",
             label: {
               normal: {
-                show: false,
+                show: false
               },
               emphasis: {
-                show: true,
-              },
+                show: true
+              }
             },
-            data: _that.sbdq_map.series_data,
-          },
-        ],
+            data: _that.sbdq_map.series_data
+          }
+        ]
       });
     },
     drawSbdqMapOpen() {
       var _that = this;
-      echarts.init(document.getElementById("sbdq-map-open")).setOption({
+      Echarts.init(
+        document.getElementById("sbdq-map-zhuce-open"),
+        "yaozh_theme"
+      ).setOption({
         toolbox: {
           right: "20",
           feature: {
             saveAsImage: {
               title: "保存",
               name: _that.getImgName(9),
-              icon: "image:///static/imgs/echarts/download.png",
+              icon: "image:///static/imgs/echarts/download.png"
             },
             myToggleBar: {
               show: true,
@@ -2014,11 +2061,11 @@ export default {
               icon: "image:///static/imgs/echarts/bar.png",
               onclick() {
                 _that.handleToggleBar(
-                  "sbdq-map-open",
+                  "sbdq-map-zhuce-open",
                   _that.sbdq_bar,
                   undefined
                 );
-              },
+              }
             },
             myTogglePie: {
               show: true,
@@ -2026,21 +2073,21 @@ export default {
               icon: "image:///static/imgs/echarts/pie.png",
               onclick() {
                 _that.handleTogglePie(
-                  "sbdq-map-open",
+                  "sbdq-map-zhuce-open",
                   _that.sbdq_pie,
                   undefined
                 );
-              },
-            },
-          },
+              }
+            }
+          }
         },
         tooltip: {
           trigger: "item",
-          formatter: function (params) {
+          formatter: function(params) {
             return `${params.name}<br/>数量：${
               params.value ? params.value : 0
             }`;
-          },
+          }
         },
         visualMap: {
           min: 0,
@@ -2048,24 +2095,24 @@ export default {
           left: "left",
           top: "bottom",
           text: ["高", "低"], // 文本，默认为数值文本
-          calculable: true,
+          calculable: true
         },
         series: [
           {
             name: "数量",
             type: "map",
-            map: "china",
+            mapType: "china",
             label: {
               normal: {
-                show: false,
+                show: false
               },
               emphasis: {
-                show: true,
-              },
+                show: true
+              }
             },
-            data: _that.sbdq_map.series_data,
-          },
-        ],
+            data: _that.sbdq_map.series_data
+          }
+        ]
       });
     },
     handleDialogVisible(value) {
@@ -2075,23 +2122,15 @@ export default {
     },
     // 切换为饼形图
     handleTogglePie(el, data, index) {
-      let _that = this,
-        option,
-        id = el.substring(0, el.indexOf("-")),
-        dataset = {
-          dimensions: ["name", "value"],
-          source: [],
-        };
-      data.xAxis_data.forEach((item, i) => {
-        dataset.source.push([item, data.series_data[i]]);
-      });
-      if (el == "spjl-pie" || el == "spjl-pie-open") {
+      let _that = this;
+      let option;
+      if (el == "spjl-pie-zhuce" || el == "spjl-pie-zhuce-open") {
         // 审评结论 专属饼形图属性
         option = {
           legend: {
             type: "scroll",
             bottom: 0,
-            data: data.xAxis_data,
+            data: data.xAxis_data
           },
           toolbox: {
             right: "20",
@@ -2099,7 +2138,7 @@ export default {
               saveAsImage: {
                 title: "保存",
                 name: _that.getImgName(index),
-                icon: "image:///static/imgs/echarts/download.png",
+                icon: "image:///static/imgs/echarts/download.png"
               },
               myToggleBar: {
                 show: true,
@@ -2107,7 +2146,7 @@ export default {
                 icon: "image:///static/imgs/echarts/bar.png",
                 onclick() {
                   _that.handleToggleBar(el, data, index);
-                },
+                }
               },
               myMagnify: {
                 show: true,
@@ -2115,13 +2154,13 @@ export default {
                 icon: "image:///static/imgs/echarts/fullscreen.png",
                 onclick() {
                   _that.initOpendKsh(index);
-                },
-              },
-            },
+                }
+              }
+            }
           },
           tooltip: {
             trigger: "item",
-            formatter: "{b}<br/>数量：{c}<br/>占比：{d}%",
+            formatter: "{b}<br/>数量：{c}<br/>占比：{d}%"
           },
           series: [
             {
@@ -2131,7 +2170,7 @@ export default {
               label: {
                 normal: {
                   show: false,
-                  position: "outside",
+                  position: "outside"
                 },
                 emphasis: {
                   show: true,
@@ -2139,29 +2178,26 @@ export default {
                   align: "center",
                   textStyle: {
                     fontSize: "30",
-                    fontWeight: "bold",
-                  },
-                },
+                    fontWeight: "bold"
+                  }
+                }
               },
               labelLine: {
                 normal: {
-                  show: false,
-                },
+                  show: false
+                }
               },
-              id,
-              colorBy: "data",
-              universalTransition: true,
-              data: data.series_data,
-            },
-          ],
+              data: data.series_data
+            }
+          ]
         };
-      } else if (el == "ylfl-pie" || el == "ylfl-pie-open") {
+      } else if (el == "ylfl-pie-zhuce" || el == "ylfl-pie-zhuce-open") {
         // ATC分类 专属饼形图属性
         option = {
           legend: {
             type: "scroll",
             bottom: 0,
-            data: data.xAxis_data,
+            data: data.xAxis_data
           },
           toolbox: {
             right: "20",
@@ -2169,7 +2205,7 @@ export default {
               saveAsImage: {
                 title: "保存",
                 name: _that.getImgName(index),
-                icon: "image:///static/imgs/echarts/download.png",
+                icon: "image:///static/imgs/echarts/download.png"
               },
               myToggleBar: {
                 show: true,
@@ -2177,7 +2213,7 @@ export default {
                 icon: "image:///static/imgs/echarts/bar.png",
                 onclick() {
                   _that.handleToggleBar(el, data, index);
-                },
+                }
               },
               myMagnify: {
                 show: true,
@@ -2185,13 +2221,13 @@ export default {
                 icon: "image:///static/imgs/echarts/fullscreen.png",
                 onclick() {
                   _that.initOpendKsh(index);
-                },
-              },
-            },
+                }
+              }
+            }
           },
           tooltip: {
             trigger: "item",
-            formatter: "{b}<br/>数量：{c}<br/>占比：{d}%",
+            formatter: "{b}<br/>数量：{c}<br/>占比：{d}%"
           },
           series: [
             {
@@ -2200,19 +2236,19 @@ export default {
                 normal: {
                   show: true,
                   position: "outside",
-                  formatter: "{b}{d}%",
-                },
+                  formatter: "{b}{d}%"
+                }
               },
-              data: data.series_data,
-            },
-          ],
+              data: data.series_data
+            }
+          ]
         };
-      } else if (el == "sbdq-map" || el == "sbdq-map-open") {
+      } else if (el == "sbdq-map-zhuce" || el == "sbdq-map-zhuce-open") {
         option = {
           legend: {
             type: "scroll",
             bottom: 0,
-            data: data.xAxis_data,
+            data: data.xAxis_data
           },
           toolbox: {
             right: "20",
@@ -2220,7 +2256,7 @@ export default {
               saveAsImage: {
                 title: "保存",
                 name: _that.getImgName(index),
-                icon: "image:///static/imgs/echarts/download.png",
+                icon: "image:///static/imgs/echarts/download.png"
               },
               myToggleBar: {
                 show: true,
@@ -2228,7 +2264,7 @@ export default {
                 icon: "image:///static/imgs/echarts/bar.png",
                 onclick() {
                   _that.handleToggleBar(el, _that.sbdq_bar, index);
-                },
+                }
               },
               myToggleMap: {
                 show: true,
@@ -2236,7 +2272,7 @@ export default {
                 icon: "image:///static/imgs/echarts/map.png",
                 onclick() {
                   _that.handleToggleMap(el, _that.sbdq_map, index);
-                },
+                }
               },
               myMagnify: {
                 show: true,
@@ -2244,13 +2280,13 @@ export default {
                 icon: "image:///static/imgs/echarts/fullscreen.png",
                 onclick() {
                   _that.initOpendKsh(index);
-                },
-              },
-            },
+                }
+              }
+            }
           },
           tooltip: {
             trigger: "item",
-            formatter: "{b}<br/>数量：{c}<br/>占比：{d}%",
+            formatter: "{b}<br/>数量：{c}<br/>占比：{d}%"
           },
           series: [
             {
@@ -2259,22 +2295,27 @@ export default {
                 normal: {
                   show: true,
                   position: "outside",
-                  formatter: "{b}{d}%",
-                },
+                  formatter: "{b}{d}%"
+                }
               },
-              data: data.series_data,
-            },
-          ],
+              data: data.series_data
+            }
+          ]
         };
       } else {
         option = {
+          legend: {
+            type: "scroll",
+            bottom: 0,
+            data: data.xAxis_data
+          },
           toolbox: {
             right: "20",
             feature: {
               saveAsImage: {
                 title: "保存",
                 name: _that.getImgName(index),
-                icon: "image:///static/imgs/echarts/download.png",
+                icon: "image:///static/imgs/echarts/download.png"
               },
               myToggleBar: {
                 show: true,
@@ -2282,7 +2323,7 @@ export default {
                 icon: "image:///static/imgs/echarts/bar.png",
                 onclick() {
                   _that.handleToggleBar(el, data, index);
-                },
+                }
               },
               myMagnify: {
                 show: true,
@@ -2290,23 +2331,30 @@ export default {
                 icon: "image:///static/imgs/echarts/fullscreen.png",
                 onclick() {
                   _that.initOpendKsh(index);
-                },
-              },
-            },
+                }
+              }
+            }
           },
-          dataset: [dataset],
-          xAxis: {
-            type: "category",
+          tooltip: {
+            trigger: "item",
+            formatter: "{b}<br/>数量：{c}<br/>占比：{d}%"
           },
-          yAxis: {},
           series: [
             {
               type: "pie",
-              id,
-              universalTransition: true,
-              animationDurationUpdate: 1000,
-            },
-          ],
+              label: {
+                normal: {
+                  show: true,
+                  position: "outside",
+                  formatter: "{b}:{d}%"
+                }
+              },
+              data: data.xAxis_data.reduce((res, item, index) => {
+                res.push({ value: data.series_data[index], name: item });
+                return res;
+              }, [])
+            }
+          ]
         };
       }
 
@@ -2314,32 +2362,31 @@ export default {
         option.toolbox.feature.myMagnify = {};
       }
       $("#" + el).removeAttr("_echarts_instance_");
-      let chart = echarts.init(document.getElementById(el));
+      let chart = Echarts.init(document.getElementById(el), "yaozh_theme");
       //chart.clear()
-      chart.setOption(option, true);
+      chart.setOption(option);
     },
     // 切换为柱形图
     handleToggleBar(el, data, index) {
       let _that = this;
-      let option,
-        id = el.substring(0, el.indexOf("-"));
-      if (el == "sbdq-map" || el == "sbdq-map-open") {
+      let option;
+      if (el == "sbdq-map-zhuce" || el == "sbdq-map-zhuce-open") {
         option = {
           tooltip: {
             trigger: "item",
-            formatter: "{b}:<br />数量: {c}",
+            formatter: "{b}:<br />数量: {c}"
           },
           dataZoom: [
             {
               type: "slider",
               startValue: 0,
-              endValue: 9,
+              endValue: 9
             },
             {
               type: "inside",
               startValue: 0,
-              endValue: 9,
-            },
+              endValue: 9
+            }
           ],
           toolbox: {
             right: "20",
@@ -2347,7 +2394,7 @@ export default {
               saveAsImage: {
                 title: "保存",
                 name: _that.getImgName(index),
-                icon: "image:///static/imgs/echarts/download.png",
+                icon: "image:///static/imgs/echarts/download.png"
               },
               myTogglePie: {
                 show: true,
@@ -2355,7 +2402,7 @@ export default {
                 icon: "image:///static/imgs/echarts/pie.png",
                 onclick() {
                   _that.handleTogglePie(el, _that.sbdq_pie, index);
-                },
+                }
               },
               myToggleMap: {
                 show: true,
@@ -2363,7 +2410,7 @@ export default {
                 icon: "image:///static/imgs/echarts/map.png",
                 onclick() {
                   _that.handleToggleMap(el, _that.sbdq_map, index);
-                },
+                }
               },
               myMagnify: {
                 show: true,
@@ -2371,43 +2418,40 @@ export default {
                 icon: "image:///static/imgs/echarts/fullscreen.png",
                 onclick() {
                   _that.initOpendKsh(index);
-                },
-              },
-            },
+                }
+              }
+            }
           },
           grid: {
-            containLabel: true,
+            containLabel: true
           },
           xAxis: {
             type: "category",
             axisLabel: {
-              rotate: 45,
+              rotate: 45
             },
-            data: data.xAxis_data,
+            data: data.xAxis_data
           },
           yAxis: {
             type: "value",
-            name: "数量",
+            name: "数量"
           },
           series: [
             {
               label: {
                 show: true,
-                position: "top",
+                position: "top"
               },
-              colorBy: "data",
-              id,
-              universalTransition: true,
               data: data.series_data,
-              type: "bar",
-            },
-          ],
+              type: "bar"
+            }
+          ]
         };
       } else {
         option = {
           tooltip: {
             trigger: "item",
-            formatter: "{b}:<br />数量: {c}",
+            formatter: "{b}:<br />数量: {c}"
           },
           toolbox: {
             right: "20",
@@ -2415,7 +2459,7 @@ export default {
               saveAsImage: {
                 title: "保存",
                 name: _that.getImgName(index),
-                icon: "image:///static/imgs/echarts/download.png",
+                icon: "image:///static/imgs/echarts/download.png"
               },
               myTogglePie: {
                 show: true,
@@ -2423,7 +2467,7 @@ export default {
                 icon: "image:///static/imgs/echarts/pie.png",
                 onclick() {
                   _that.handleTogglePie(el, data, index);
-                },
+                }
               },
               myMagnify: {
                 show: true,
@@ -2431,23 +2475,23 @@ export default {
                 icon: "image:///static/imgs/echarts/fullscreen.png",
                 onclick() {
                   _that.initOpendKsh(index);
-                },
-              },
-            },
+                }
+              }
+            }
           },
           grid: {
-            containLabel: true,
+            containLabel: true
           },
           xAxis: {
             type: "category",
             axisLabel: {
-              rotate: 45,
+              rotate: 45
             },
-            data: data.xAxis_data,
+            data: data.xAxis_data
           },
           yAxis: {
             type: "value",
-            name: "数量",
+            name: "数量"
           },
           series: [
             {
@@ -2455,10 +2499,10 @@ export default {
               type: "bar",
               label: {
                 show: true,
-                position: "top",
-              },
-            },
-          ],
+                position: "top"
+              }
+            }
+          ]
         };
       }
 
@@ -2466,13 +2510,13 @@ export default {
         option.toolbox.feature.myMagnify = {};
       }
       $("#" + el).removeAttr("_echarts_instance_");
-      let chart = echarts.init(document.getElementById(el));
-      chart.setOption(option, true);
+      let chart = Echarts.init(document.getElementById(el), "yaozh_theme");
+      chart.setOption(option);
     },
     handleToggleMap(el, data, index) {
       let _that = this;
       let option;
-      if (el == "sbdq-map" || el == "sbdq-map-open") {
+      if (el == "sbdq-map-zhuce" || el == "sbdq-map-zhuce-open") {
         option = {
           toolbox: {
             right: "20",
@@ -2480,7 +2524,7 @@ export default {
               saveAsImage: {
                 title: "保存",
                 name: _that.getImgName(index),
-                icon: "image:///static/imgs/echarts/download.png",
+                icon: "image:///static/imgs/echarts/download.png"
               },
               myToggleBar: {
                 show: true,
@@ -2488,7 +2532,7 @@ export default {
                 icon: "image:///static/imgs/echarts/bar.png",
                 onclick() {
                   _that.handleToggleBar(el, _that.sbdq_bar, index);
-                },
+                }
               },
               myTogglePie: {
                 show: true,
@@ -2496,7 +2540,7 @@ export default {
                 icon: "image:///static/imgs/echarts/pie.png",
                 onclick() {
                   _that.handleTogglePie(el, _that.sbdq_pie, index);
-                },
+                }
               },
               myMagnify: {
                 show: true,
@@ -2504,17 +2548,17 @@ export default {
                 icon: "image:///static/imgs/echarts/fullscreen.png",
                 onclick() {
                   _that.initOpendKsh(index);
-                },
-              },
-            },
+                }
+              }
+            }
           },
           tooltip: {
             trigger: "item",
-            formatter: function (params) {
+            formatter: function(params) {
               return `${params.name}<br/>数量：${
                 params.value ? params.value : 0
               }`;
-            },
+            }
           },
           visualMap: {
             min: 0,
@@ -2522,24 +2566,24 @@ export default {
             left: "left",
             top: "bottom",
             text: ["高", "低"], // 文本，默认为数值文本
-            calculable: true,
+            calculable: true
           },
           series: [
             {
               name: "数量",
               type: "map",
-              map: "china",
+              mapType: "china",
               label: {
                 normal: {
-                  show: false,
+                  show: false
                 },
                 emphasis: {
-                  show: true,
-                },
+                  show: true
+                }
               },
-              data: this.sbdq_map.series_data,
-            },
-          ],
+              data: this.sbdq_map.series_data
+            }
+          ]
         };
       }
 
@@ -2547,8 +2591,8 @@ export default {
         option.toolbox.feature.myMagnify = {};
       }
       $("#" + el).removeAttr("_echarts_instance_");
-      let chart = echarts.init(document.getElementById(el));
-      chart.setOption(option, true);
+      let chart = Echarts.init(document.getElementById(el), "yaozh_theme");
+      chart.setOption(option);
     },
     initShowScroll() {
       let outterWidth = Number($(".newtotals").width());
@@ -2558,27 +2602,27 @@ export default {
         $(".newtotals-left").hide();
         $(".newtotals-right").hide();
         $(".newtotals .total-item").css({
-          width: 100 / num + "%",
+          width: 100 / num + "%"
         });
         $(".newtotals-scroll").css({
           width: "100%",
-          margin: "0",
+          margin: "0"
         });
         $(".newtotals-scroll-inner").css({
-          width: "100%",
+          width: "100%"
         });
       } else {
         $(".newtotals-left").show();
         $(".newtotals-right").show();
         $(".newtotals-scroll").css({
           width: 150 * maxNum,
-          margin: "0px 30px",
+          margin: "0px 30px"
         });
         $(".newtotals-scroll-inner").css({
-          width: 150 * num,
+          width: 150 * num
         });
         $(".newtotals .total-item").css({
-          width: 150,
+          width: 150
         });
       }
     },
@@ -2589,7 +2633,7 @@ export default {
       if (pointer != 0 && pointer % 150 == 0) {
         $(".newtotals-scroll-inner").animate(
           {
-            left: pointer + 150,
+            left: pointer + 150
           },
           300
         );
@@ -2605,7 +2649,7 @@ export default {
       if (pointer != 150 * (maxNum - num) && pointer % 150 == 0) {
         $(".newtotals-scroll-inner").animate(
           {
-            left: pointer - 150,
+            left: pointer - 150
           },
           300
         );
@@ -2619,7 +2663,7 @@ export default {
       this.$nextTick(() => {
         this.echartsResize("echarts");
       });
-    },
+    }
   },
   created() {
     //this.initLayout()
@@ -2631,17 +2675,18 @@ export default {
   activated() {
     // this.nopms一直为undefined状态，暂时屏蔽，后续再观察是否有其它用处
     this.vueRouteToNoPms(this.nopms.ksh);
+    this.update();
     // this.initShowScroll()
   },
   updated() {
     this.vueRouteToNoPms(this.nopms.ksh);
     this.initShowScroll();
-  },
+  }
 };
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .pc-zhuce-analy {
   .nodata,
   .nodata-box,

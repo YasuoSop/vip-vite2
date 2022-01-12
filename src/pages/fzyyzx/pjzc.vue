@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import ListZcfg from './lists/list-zcfg.vue'
-import ListWtjd from './lists/list-wtjd.vue'
+import ListZcfg from './lists/list-zcfg'
+import ListWtjd from './lists/list-wtjd'
 import { mapState } from 'vuex'
 
 export default{

@@ -547,10 +547,10 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import pdfTable from "../pdfReport/table.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import pdfTable from "../pdfReport/table";
 import tablehead from "@/config/tablehead";
-import DetailKzxx from "./kzxx.vue";
+import DetailKzxx from "./kzxx";
 const tableFiled = tablehead.drugreport.instruct;
 
 export default {
@@ -698,7 +698,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 @import "../css/com.less";
 
 .download {

@@ -34,7 +34,7 @@
           <el-button @click="RemoteLoginClose" >反馈问题</el-button>
         </div>
         <div class="renew_b2">
-          <span @click="vipoverduemsg">一周内不在提醒</span>
+          <span @click="vipoverduemsg">一周内不再提醒</span>
         </div>
       </div>
     </el-dialog>
@@ -52,7 +52,7 @@
   import Axios from 'axios'
   import { mapState } from "vuex"
   import DialogFeedback from '@/components/common/dialog-feedback.vue'
-  import RenewBase from '@/pages/usercenter/renew/base.vue'
+  import RenewBase from '@/pages/usercenter/renew/base'
 
   export default {
     components:{
@@ -73,7 +73,7 @@
       }
     },
     mounted(){
-      
+
     },
     computed:{
       ...mapState({
@@ -215,7 +215,7 @@
   }
  </script>
  <style lang="less" scoped>
-    @import "@/assets/less/var.less";
+    @import "~@/assets/less/var.less";
     .RenewTips{
       /deep/.v-modal {
         z-index: 2999 !important;

@@ -25,7 +25,7 @@
       <span>医院销售数据库</span><span class="icon iconfont">&#xe67d;</span>
     </div> -->
     <div class="yyxs-img-btn" @click="GoYyxsImgBtn">
-      <img src="@/assets/imgs/yyxs/goyyxs.gif" />
+      <img src="~@/assets/imgs/yyxs/goyyxs.gif" />
     </div>
   </div>
 </template>
@@ -170,7 +170,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .menu {
   .nav-item {
     text-decoration: none;

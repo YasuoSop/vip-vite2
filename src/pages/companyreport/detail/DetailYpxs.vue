@@ -419,7 +419,7 @@ const twoHead = tablehead.companyreport.DetailYpsx2
       },
       // 药品销售数据 - 柱状图&折线图（混合）
       drawYpxsMix () {
-        Echarts.init(this.$refs.echarts_ypxs).setOption({
+        Echarts.init(this.$refs.echarts_ypxs, 'yaozh_theme').setOption({
           tooltip : {
             trigger: 'axis',
             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -497,7 +497,7 @@ const twoHead = tablehead.companyreport.DetailYpsx2
       },
       // 销售统计（年统计） - 柱状图&折线图（混合）
       drawXstjMix () {
-        Echarts.init(this.$refs.echarts_xstj).setOption({
+        Echarts.init(this.$refs.echarts_xstj, 'yaozh_theme').setOption({
           tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -583,7 +583,7 @@ const twoHead = tablehead.companyreport.DetailYpsx2
       },
       // 销量占比 - 饼形图
       drawXlBar () {
-        Echarts.init(this.$refs.echarts_xl).setOption({
+        Echarts.init(this.$refs.echarts_xl, 'yaozh_theme').setOption({
           tooltip: {
             trigger: "item",
             formatter: "{b}:{d}%"
@@ -617,7 +617,7 @@ const twoHead = tablehead.companyreport.DetailYpsx2
       },
       // 销售额占比 - 饼形图
       drawXseBar () {
-        Echarts.init(this.$refs.echarts_xse).setOption({
+        Echarts.init(this.$refs.echarts_xse, 'yaozh_theme').setOption({
           tooltip: {
             trigger: "item",
             formatter: "{b}:{d}%"
@@ -706,8 +706,8 @@ const twoHead = tablehead.companyreport.DetailYpsx2
 </script>
 
 <style lang="less">
-  @import "@/assets/less/var.less";
-  @import "@/assets/less/app.less";
+  @import "~@/assets/less/var.less";
+  @import "~@/assets/less/app.less";
 
   #ypxs {
     @conWidth: 100%;

@@ -475,7 +475,15 @@ export default {
       state.commit('search_api_param', paramAfter)
 
       // state.dispatch("getKshRes")
-
+      // console.log(param);
+      // console.log(state.state.putong);
+      // console.log(state.state.conditions);
+      // if (param.name) {
+      //   delete param.searchwords
+      //   delete param.comprehensive
+      //   delete state.state.putong.searchwords
+      //   delete state.state.putong.comprehensive
+      // }
       // if (Qs.stringify(state.state.search_api_param) != Qs.stringify(param)) {
       this.vue.getSearchParams('linchuangshiyan', state, param, null, Payload)
       return window.Axios({

@@ -33,9 +33,9 @@ function Decrypt() {
             return ''
         }
 
-    this.decryptResponse = function(input, key = 'yaozh_cydn') {
+    this.decryptResponse = function(input, key = 'VIP4.2.0') {
         if (!input) return false
-        _salt = md5(key)
+        _salt = md5(md5(key))
         _saltIdx = 0
         let output = '',
             i = 0

@@ -8,7 +8,7 @@
       <transition name="el-fade-in-linear">
         <div v-if="showPromtNotice" class="prompt-notice">
           <div class="prompt-content">
-            <img src="@/assets/imgs/notice_icon.png" />
+            <img src="~@/assets/imgs/notice_icon.png" />
             <div class="text-container">
               <marquee
                 v-if="noticeMsgStr.length - (61 * noticeMsg.length - 1) > 70"
@@ -22,7 +22,7 @@
             <img
               @click="closeNotice"
               class="close_notice_icon"
-              src="@/assets/imgs/notice_close.png"
+              src="~@/assets/imgs/notice_close.png"
             />
           </div>
         </div>
@@ -114,12 +114,12 @@
               v-if="isLogin"
             >
               <div class="logo">
-                <img src="@/assets/imgs/intro_logo.png" />
+                <img src="~@/assets/imgs/intro_logo.png" />
               </div>
             </router-link>
             <router-link tag="a" to="/introduce" v-else>
               <div class="logo">
-                <img src="@/assets/imgs/intro_logo.png" />
+                <img src="~@/assets/imgs/intro_logo.png" />
               </div>
             </router-link>
 
@@ -359,42 +359,42 @@
               <div class="main_con">
                 <div class="main_con1">
                   <div class="move_lt">
-                    <img src="@/assets/imgs/block2.png" />
+                    <img src="~@/assets/imgs/block2.png" />
                   </div>
                   <div class="move_rt">
                     <p>
-                      <img src="@/assets/imgs/move1.png" />
+                      <img src="~@/assets/imgs/move1.png" />
                       <span>多库整合轻松检索</span>
                     </p>
                     <p>
-                      <img src="@/assets/imgs/move2.png" />
+                      <img src="~@/assets/imgs/move2.png" />
                       <span>多种搜索方式、方便快捷</span>
                     </p>
                     <p>
-                      <img src="@/assets/imgs/move3.png" />
+                      <img src="~@/assets/imgs/move3.png" />
                       <span>智能分析、精准捕捉</span>
                     </p>
                     <p>
-                      <img src="@/assets/imgs/move4.png" />
+                      <img src="~@/assets/imgs/move4.png" />
                       <span>注册时光轴、详细申报动态一目了然</span>
                     </p>
                     <p>
-                      <img src="@/assets/imgs/move5.png" />
+                      <img src="~@/assets/imgs/move5.png" />
                       <span>订阅注册数据、实时追踪申报动态</span>
                     </p>
                   </div>
                 </div>
                 <div class="main_con2">
                   <div class="main_lt">
-                    <img src="@/assets/imgs/zhuan.png" />
+                    <img src="~@/assets/imgs/zhuan.png" />
                   </div>
                   <div class="main_mid">
-                    <img src="@/assets/imgs/mid.png" />
-                    <img src="@/assets/imgs/1.png" />
-                    <img src="@/assets/imgs/4.png" />
-                    <img src="@/assets/imgs/2.png" />
-                    <img src="@/assets/imgs/3.png" />
-                    <img src="@/assets/imgs/5.png" />
+                    <img src="~@/assets/imgs/mid.png" />
+                    <img src="~@/assets/imgs/1.png" />
+                    <img src="~@/assets/imgs/4.png" />
+                    <img src="~@/assets/imgs/2.png" />
+                    <img src="~@/assets/imgs/3.png" />
+                    <img src="~@/assets/imgs/5.png" />
                   </div>
                   <div class="main_rt">
                     <p class="p1">核心数据</p>
@@ -426,13 +426,13 @@
                   </div>
                   <div class="main_rt moveto">
                     <p>
-                      <img src="@/assets/imgs/fei1.png" />
+                      <img src="~@/assets/imgs/fei1.png" />
                     </p>
                     <p>
-                      <img src="@/assets/imgs/fei2.png" />
+                      <img src="~@/assets/imgs/fei2.png" />
                     </p>
                     <p>
-                      <img src="@/assets/imgs/fei3.png" />
+                      <img src="~@/assets/imgs/fei3.png" />
                     </p>
                   </div>
                 </div>
@@ -451,37 +451,37 @@
                 <div class="custom">
                   <div class="custom_item">
                     <div class="top">
-                      <img src="@/assets/imgs/custom1.png" />
+                      <img src="~@/assets/imgs/custom1.png" />
                     </div>
                     <p>医药研发企业</p>
                   </div>
                   <div class="custom_item">
                     <div class="top">
-                      <img src="@/assets/imgs/custom2.png" />
+                      <img src="~@/assets/imgs/custom2.png" />
                     </div>
                     <p>生产企业</p>
                   </div>
                   <div class="custom_item">
                     <div class="top">
-                      <img src="@/assets/imgs/custom3.png" />
+                      <img src="~@/assets/imgs/custom3.png" />
                     </div>
                     <p>研发机构</p>
                   </div>
                   <div class="custom_item">
                     <div class="top">
-                      <img src="@/assets/imgs/custom4.png" />
+                      <img src="~@/assets/imgs/custom4.png" />
                     </div>
                     <p>科研院所</p>
                   </div>
                   <div class="custom_item">
                     <div class="top">
-                      <img src="@/assets/imgs/custom5.png" />
+                      <img src="~@/assets/imgs/custom5.png" />
                     </div>
                     <p>医药销售公司</p>
                   </div>
                   <div class="custom_item">
                     <div class="top">
-                      <img src="@/assets/imgs/custom6.png" />
+                      <img src="~@/assets/imgs/custom6.png" />
                     </div>
                     <p>投资机构</p>
                   </div>
@@ -530,19 +530,19 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;邮箱：service@yaozh.com
                       </p>
                       <p class="p2">
-                        Copyright © 2009-2021 药智网 YAOZH.COM All Rights
+                        Copyright © 2009-2022 药智网 YAOZH.COM All Rights
                         Reserved
                       </p>
                     </div>
                     <div class="footer_rt">
                       <div>
-                        <img src="@/assets/imgs/footer_erwei.jpg" />
+                        <img src="~@/assets/imgs/footer_erwei.jpg" />
                       </div>
                       <p class="p2">药智网二维码</p>
                     </div>
                     <div class="footer_rt">
                       <div>
-                        <img src="@/assets/imgs/scan_vipty_bottom_1.png" />
+                        <img src="~@/assets/imgs/scan_vipty_bottom_1.png" />
                       </div>
                       <p class="p2">药智数据APP</p>
                     </div>
@@ -554,21 +554,21 @@
           <!-- 右侧固定栏 -->
           <div class="fix_box">
             <a class="a1" v-if="btnFlag" @click="backTop">
-              <img src="@/assets/imgs/back0.png" class="img0" />
-              <img src="@/assets/imgs/back1.png" class="img1" />
+              <img src="~@/assets/imgs/back0.png" class="img0" />
+              <img src="~@/assets/imgs/back1.png" class="img1" />
             </a>
             <a class="a2">
-              <img src="@/assets/imgs/back2.png" class="img0" />
-              <img src="@/assets/imgs/back3.png" class="img1" />
+              <img src="~@/assets/imgs/back2.png" class="img0" />
+              <img src="~@/assets/imgs/back3.png" class="img1" />
               <div class="erweima">
-                <!-- <img src="@/assets/imgs/appma.jpg"> -->
-                <img src="@/assets/imgs/scan_introduce_rightside_2.png" />
+                <!-- <img src="~@/assets/imgs/appma.jpg"> -->
+                <img src="~@/assets/imgs/scan_introduce_rightside_2.png" />
                 <p>扫码免费下载APP</p>
               </div>
             </a>
             <a @click="handleOutClick2()" class="a3">
-              <img src="@/assets/imgs/back4.png" class="img0" />
-              <img src="@/assets/imgs/back5.png" class="img1" />
+              <img src="~@/assets/imgs/back4.png" class="img0" />
+              <img src="~@/assets/imgs/back5.png" class="img1" />
             </a>
           </div>
         </div>
@@ -577,9 +577,10 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import DialogProbation from "@/components/common/dialog-probation.vue";
-
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import crypto from "crypto-js";
+import DialogProbation from "@/components/common/dialog-probation.vue"
+import { setTimeout } from "timers";
 import { mapState } from "vuex";
 import detailScrollMixins from "@/mixins/detailScroll";
 import Moment from "moment";
@@ -1137,7 +1138,7 @@ function getScrollTop() {
 }
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .fullscreen-loading {
   top: 0;
   left: 0;
@@ -1387,13 +1388,13 @@ p {
   position: relative;
   width: 100%;
   height: 908px;
-  background: url(@/assets/imgs/header_bg.png) no-repeat center top;
+  background: url(~@/assets/imgs/header_bg.png) no-repeat center top;
   background-size: 100% auto;
 }
 .container_wrapper2 {
   width: 100%;
   height: 2566px;
-  background: url(@/assets/imgs/middle_bg.jpg) no-repeat center top;
+  background: url(~@/assets/imgs/middle_bg.jpg) no-repeat center top;
   .container {
     position: relative;
   }
@@ -1575,7 +1576,7 @@ p {
 .container_wrapper3 {
   width: 100%;
   height: 1316px;
-  background: url(@/assets/imgs/footer_bg.jpg) no-repeat center top;
+  background: url(~@/assets/imgs/footer_bg.jpg) no-repeat center top;
   .container {
     position: relative;
     .custom {
@@ -1622,7 +1623,7 @@ p {
     right: 0;
     width: 527px;
     height: 438px;
-    background: url(@/assets/imgs/introa1.png) no-repeat center top;
+    background: url(~@/assets/imgs/introa1.png) no-repeat center top;
     p {
       color: #4b5af8;
       font-size: 20px;
@@ -1779,19 +1780,19 @@ p {
       padding-left: 27px;
       height: 32px;
       margin-right: 33px;
-      background: url(@/assets/imgs/introduce/img_1.png) no-repeat left center;
+      background: url(~@/assets/imgs/introduce/img_1.png) no-repeat left center;
       //background-size: auto 100%;
     }
     .p4_img:nth-child(2) {
-      background: url(@/assets/imgs/introduce/img_2.png) no-repeat left center;
+      background: url(~@/assets/imgs/introduce/img_2.png) no-repeat left center;
       // background-size: auto 100%;
     }
     .p4_img:nth-child(3) {
-      background: url(@/assets/imgs/introduce/img_3.png) no-repeat left center;
+      background: url(~@/assets/imgs/introduce/img_3.png) no-repeat left center;
       //background-size: auto 100%;
     }
     .p4_img:nth-child(4) {
-      background: url(@/assets/imgs/introduce/img_4.png) no-repeat left center;
+      background: url(~@/assets/imgs/introduce/img_4.png) no-repeat left center;
       //background-size: auto 100%;
     }
   }
@@ -1895,32 +1896,32 @@ p {
     .div1 {
       width: 80px;
       height: 44px;
-      background: url(@/assets/imgs/block1.jpg) no-repeat 0px 0px;
+      background: url(~@/assets/imgs/block1.jpg) no-repeat 0px 0px;
     }
     .div2 {
       width: 80px;
       height: 44px;
-      background: url(@/assets/imgs/block1.jpg) no-repeat -415px 0px;
+      background: url(~@/assets/imgs/block1.jpg) no-repeat -415px 0px;
     }
     .div3 {
       width: 80px;
       height: 44px;
-      background: url(@/assets/imgs/block1.jpg) no-repeat -830px 0px;
+      background: url(~@/assets/imgs/block1.jpg) no-repeat -830px 0px;
     }
     .div4 {
       width: 80px;
       height: 46px;
-      background: url(@/assets/imgs/block1.jpg) no-repeat 0px -298px;
+      background: url(~@/assets/imgs/block1.jpg) no-repeat 0px -298px;
     }
     .div5 {
       width: 80px;
       height: 46px;
-      background: url(@/assets/imgs/block1.jpg) no-repeat -415px -298px;
+      background: url(~@/assets/imgs/block1.jpg) no-repeat -415px -298px;
     }
     .div6 {
       width: 80px;
       height: 46px;
-      background: url(@/assets/imgs/block1.jpg) no-repeat -830px -298px;
+      background: url(~@/assets/imgs/block1.jpg) no-repeat -830px -298px;
     }
     p {
       color: #333;

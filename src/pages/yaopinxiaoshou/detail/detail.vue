@@ -4,7 +4,7 @@
     <LoadingGif :loadFlag="isLoading" v-if="isLoading"></LoadingGif>
     <!-- 加载完成显示部分 -->
     <div class="detail-list" v-else>
-      <div class="detail-header">
+      <div class="detail-header header-fixed">
         <div class="header-left">
           <div class="left-top">
             <span class="top-id" :title="head_data.name1">{{
@@ -19,7 +19,7 @@
               <a
                 :href="
                   '/search?comprehensive=company&searchwords=' +
-                  head_data.company
+                    head_data.company
                 "
                 >{{ head_data.company }}</a
               >
@@ -28,7 +28,10 @@
         </div>
       </div>
       <div class="main">
-        <div class="left-nav">
+        <div
+          class="left-nav"
+          :style="{ top: (showPromtNotice ? 128 : 98) + 'px' }"
+        >
           <div class="nav-list nav-event" @click="handleNavClick">
             <a class="nav-item active">销售数据</a>
             <a class="nav-item" v-if="extendList.length">扩展信息</a>
@@ -86,10 +89,10 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import selectNuit from "../selectNuit.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import selectNuit from "../selectNuit";
 import detailScrollMixins from "@/mixins/detailScroll.js";
 import { mapState } from "vuex";
 
@@ -98,7 +101,7 @@ export default {
     LoadingGif,
     ExtendButton,
     SlideSection,
-    selectNuit,
+    selectNuit
   },
   mixins: [detailScrollMixins],
   data() {
@@ -114,16 +117,16 @@ export default {
         echarts: null,
         xAxis_data: [],
         yAxis_data1: [],
-        yAxis_data2: [],
+        yAxis_data2: []
       },
-      extendList: [],
+      extendList: []
     };
   },
   computed: {
     ...mapState({
-      allBase: (state) => state.Yaopinxiaoshou.allBase,
-      helpInfo: (state) => state.Yaopinxiaoshou.helpInfo,
-      nopms: (state) => state.Yaopinxiaoshou.nopms,
+      allBase: state => state.Yaopinxiaoshou.allBase,
+      helpInfo: state => state.Yaopinxiaoshou.helpInfo,
+      nopms: state => state.Yaopinxiaoshou.nopms
     }),
     nuitValue() {
       let value = "";
@@ -142,37 +145,31 @@ export default {
           break;
       }
       return value;
-    },
+    }
   },
   watch: {
     nuit() {
       this.dealEchartsData();
     },
-    showPromtNotice(val) {
+  showPromtNotice(val) {
       if (val) {
-        setTimeout(() => {
-          if ($(".left-nav").css("top"))
-            $(".left-nav").css(
-              "top",
-              parseInt($(".left-nav").css("top").replace("px", "")) + 30 + "px"
-            );
-        }, 600);
+        if ($(".left-nav").css("top")) {
+          $(".left-nav").css("top", "128px");
+        }
       } else {
-        setTimeout(() => {
-          if ($(".left-nav").css("top")) $(".left-nav").css("top", "88px");
-        }, 600);
+        if ($(".left-nav").css("top")) $(".left-nav").css("top", "98px");
       }
-    },
+    }
   },
   methods: {
     handleScroll() {
       let top = $(".main").offset().top,
         leftNav = $(".left-nav");
-      if (top <= 50) {
-        leftNav.css("top", (this.showPromtNotice ? 88 : 58) + "px");
-      } else {
-        leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
-      }
+      // if (top <= 50) {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 98) + "px");
+      // } else {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
+      // }
     },
     dealEchartsData() {
       let ecData = this.view_data.list;
@@ -205,15 +202,16 @@ export default {
     drawEcharts() {
       var _that = this;
       _that.echarts_data.echarts = Echarts.init(
-        document.getElementById("ec-xsfx")
+        document.getElementById("ec-xsfx"),
+        "yaozh_theme"
       );
       _that.echarts_data.echarts.setOption({
         tooltip: {
           trigger: "axis",
-          formatter: (params) => {
+          formatter: params => {
             //实现设计图上的提示样式
             let str = params[0].name + "<br>";
-            _.map(params, (item) => {
+            _.map(params, item => {
               if (item.seriesType == "bar") {
                 let seriesname = item.seriesName.split(":");
                 str +=
@@ -236,23 +234,23 @@ export default {
               }
             });
             return str;
-          },
+          }
         },
         grid: {
           containLabel: true,
-          bottom: 90,
+          bottom: 90
         },
         legend: {
           data: [
             {
               name: `销售额（${this.nuitValue}元/RMB）`,
-              icon: "circle",
+              icon: "circle"
             },
             {
-              name: "同比（%）",
-            },
+              name: "同比（%）"
+            }
           ],
-          bottom: 30,
+          bottom: 30
         },
         xAxis: [
           {
@@ -260,13 +258,13 @@ export default {
             name: "销售年份",
             nameLocation: "center",
             nameTextStyle: {
-              padding: [15, 0, 0, 0],
+              padding: [15, 0, 0, 0]
             },
             data: this.echarts_data.xAxis_data,
             axisPointer: {
-              type: "shadow",
-            },
-          },
+              type: "shadow"
+            }
+          }
         ],
         yAxis: [
           {
@@ -275,17 +273,17 @@ export default {
             nameLocation: "center",
             nameGap: 50,
             axisLabel: {
-              formatter: function (value) {
+              formatter: function(value) {
                 if (value.toString().length >= 4) {
                   return value / 1000 + "k";
                 } else {
                   return value;
                 }
-              },
+              }
             },
             splitLine: {
-              show: false,
-            },
+              show: false
+            }
           },
           {
             type: "value",
@@ -293,14 +291,14 @@ export default {
             nameLocation: "center",
             nameGap: 50,
             splitLine: {
-              show: false,
+              show: false
             },
             axisLabel: {
-              formatter: function (value) {
+              formatter: function(value) {
                 return value + "%";
-              },
-            },
-          },
+              }
+            }
+          }
         ],
         series: [
           {
@@ -311,18 +309,18 @@ export default {
             label: {
               show: true,
               position: "top",
-              formatter: function (value) {
+              formatter: function(value) {
                 let rt = (value.data / 1000).toFixed(1);
                 return rt + "k";
-              },
-            },
+              }
+            }
           },
           {
             name: "同比（%）",
             type: "line",
             yAxisIndex: 1,
-            data: this.echarts_data.yAxis_data2,
-          },
+            data: this.echarts_data.yAxis_data2
+          }
         ],
         title: {
           text: this.view_data.title + "-销售分析",
@@ -330,11 +328,11 @@ export default {
           top: 0,
           textStyle: {
             fontSize: "16",
-            color: "#646A7A",
+            color: "#646A7A"
           },
-          fontSize: "8",
+          fontSize: "8"
         },
-        fontSize: "14",
+        fontSize: "14"
       });
     },
     handleAxios() {
@@ -343,10 +341,10 @@ export default {
           method: "get",
           url: "/api/ypxs/" + this.id,
           params: {
-            accesstoken: GETCOOKIEFUN("accesstoken"),
-          },
+            accesstoken: GETCOOKIEFUN("accesstoken")
+          }
         })
-        .then((res) => {
+        .then(res => {
           if (res.data.code === 200 && res.data.data) {
             let data = res.data.data;
             this.head_data = data.Title;
@@ -355,7 +353,7 @@ export default {
             this.getExtendList("ypxs", data.extendList);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           this.removeLoading;
         })
@@ -384,9 +382,9 @@ export default {
       $(".state-sign").css({
         visibility: "visible",
         transform: "scale(1)",
-        transition: "all 300ms cubic-bezier(.75,0,1,1)",
+        transition: "all 300ms cubic-bezier(.75,0,1,1)"
       });
-    },
+    }
   },
   created() {
     if (!this.nopms.xq) {
@@ -410,13 +408,13 @@ export default {
   updated() {
     this.vueRouteToNoPms(this.nopms.xqy);
     this.vueTogglePmsTooltip();
-  },
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 @FontsizeSmall: 13px;
 @FontsizeSmallBold: bold;

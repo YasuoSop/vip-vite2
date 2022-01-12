@@ -4,7 +4,7 @@
     <LoadingGif :loadFlag="isLoading" v-if="isLoading"></LoadingGif>
     <!-- 加载完成显示部分 -->
     <div class="detail-list" v-else>
-      <div class="detail-header">
+      <div class="detail-header header-fixed">
         <div class="header-left">
           <div class="left-top">
             <span
@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <div class="main">
+      <div class="main" style="padding-top: 50px;">
         <slide-section :title="'基础信息'">
           <div class="tb-wrap">
             <table class="tb-f" v-if="route == 3">
@@ -144,9 +144,9 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
 import { mapState } from "vuex";
 import detailScrollMixins from "@/mixins/detailScroll.js";
 export default {
@@ -251,8 +251,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 .pdf-wrapper-left {
   float: left;

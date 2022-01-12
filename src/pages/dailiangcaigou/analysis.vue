@@ -24,10 +24,10 @@
 </template>
 
 <script>
-import leftNav from "@/components/common/leftNav.vue";
-import pici from "./analys/pici.vue";
-import yaoping from "./analys/yaoping.vue";
-import qiye from "./analys/qiye.vue";
+import leftNav from "@/components/common/leftNav.vue"
+import pici from "./analys/pici";
+import yaoping from "./analys/yaoping";
+import qiye from "./analys/qiye";
 import { mapState } from "vuex";
 export default {
   components: {
@@ -95,9 +95,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 .dailiangcaigou-analy {
   clear: both;

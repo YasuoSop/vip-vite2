@@ -9,7 +9,7 @@
           智能分析
         </span>
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Linchuangshiyan" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Linchuangshiyan" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"
@@ -393,7 +393,7 @@
   }
 </script>
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   .la-qy{
 
   }
@@ -411,7 +411,7 @@
         &.active{
           color: @PrimaryColor;
           font-weight: 600;
-          background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
+          background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
           border: none;
         }
       }
@@ -425,7 +425,7 @@
       &.active{
         color: @PrimaryColor;
         font-weight: 600;
-        background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
+        background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
         border: none;
       }
     }

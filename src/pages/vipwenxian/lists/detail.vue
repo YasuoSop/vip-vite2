@@ -60,7 +60,7 @@
 <script>
   import LoadingGif from '@/components/common/globalCom/loading-gif.vue'
   import MainTop from '@/components/common/main-top.vue'
-  import noPermission from "@/pages/permission/no-permission.vue";
+  import noPermission from "@/pages/permission/no-permission";
   import { mapState } from "vuex";
   export default {
     data() {
@@ -146,8 +146,8 @@
   }
 </script>
  <style lang="less" >
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
 .la-app .la-app-main {
   .china-page {
     width: 100%;

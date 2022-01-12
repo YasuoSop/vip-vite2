@@ -244,7 +244,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .table-ul {
   // margin-top: 30px;
 }

@@ -2,14 +2,25 @@
   <div class="data-nav" :style="{ minHeight: `calc(100vh - 40px - 48px - ${ (showPromtNotice ? 30 : 0) + 'px'}` }">
     <div class="dn-title">
       <i class="iconfont font-nav">&#xe601;</i>
-      <span class="icon-nav-content">数据导航</span>
+      <span class="icon-nav-content">数据导航
+        <el-tooltip
+          class="item tooltips-position"
+          effect="light"
+          placement="right"
+        >
+          <div
+            slot="content"
+          >呈现关键词模糊匹配到的数据库及对应数据统计，含有关键词所有相关的其他数据统计，例如检索培达替尼，会出现盐酸培达替尼等相关药品数据统计，检索恒瑞，会出现江苏恒瑞、上海恒瑞等相关企业数据统计。</div>
+          <i class="el-icon-question cl-green"></i>
+        </el-tooltip>
+      </span>
     </div>
     <rp-part v-for="(item, index) in data" :key="index" :icon="getIconFont(item.title)" :title="item.title" :array="item._child"></rp-part>
   </div>
 </template>
 
 <script>
-import RpPart from './rp-part.vue'
+import RpPart from './rp-part'
 import { mapState } from 'vuex'
 
 export default {
@@ -40,7 +51,7 @@ export default {
         case "保健品": return "&#xe65b;"; break
         case "一致性评价": return "&#xeb4c;"; break
         case "医药化学": return "&#xe6a9;"; break
-        
+
       }
     }
   },
@@ -51,8 +62,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import "@/assets/less/var.less";
-  
+  @import "~@/assets/less/var.less";
+
   .data-nav {
     box-sizing: border-box;
     // position: relative;
@@ -155,7 +166,7 @@ export default {
               }
             }
           }
-        } 
+        }
       }
       .desc-more {
         text-align: center;

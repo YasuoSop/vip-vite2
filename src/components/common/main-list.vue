@@ -58,7 +58,7 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .sec2 {
   box-shadow: @BoxShadow;
   width: 100%;

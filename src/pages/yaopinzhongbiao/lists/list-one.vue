@@ -145,12 +145,12 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import TooltipBD from "@/components/common/globalCom/target-tooltip.vue";
+import TooltipBD from "@/components/common/globalCom/target-tooltip.vue"
 import tablehead from "@/config/tablehead";
-import List from "@/components/layouts/list.vue";
-import Export from "@/components/common/export.vue";
-import listCheck from "@/components/common/list-check.vue";
-import toAnaly from "./toAnaly.vue";
+import List from "@/components/layouts/list.vue"
+import Export from "@/components/common/export.vue"
+import listCheck from "@/components/common/list-check.vue"
+import toAnaly from "./toAnaly";
 import commonMixins from "@/mixins/common.js";
 import setTableHMixins from "@/mixins/setTableH.js";
 const defaultFiled = tablehead.yaopinzhongbiao.slh;
@@ -247,6 +247,12 @@ export default {
   },
   // safari浏览器回到当前页面会导致样式错乱问题，由于使用了keepalive所以需要在activated生命周期中在调一次计算方法
   activated() {
+    let tempTableconf = _.cloneDeep(this.tableconf),
+      actionName = `${
+        this.vuex_name[0].toUpperCase() + this.vuex_name.substr(1)
+      }/tableconf`; // 第一个字母转大写
+    this.$store.commit(actionName, []);
+    this.$store.commit(actionName, tempTableconf);
     this.registerEven();
   },
   watch: {
@@ -292,7 +298,7 @@ export default {
 };
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .la-slh {
   min-height: 100px;
   .no-data-msg {

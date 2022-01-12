@@ -211,7 +211,7 @@
                   </div>
                   <div v-if="item.prop == 'target'" :title="''">
                     <TooltipBD
-                      :targets="scope.row.target || '/'"
+                      :targets="scope.row.target_unique || '/'"
                       :targets_abbr="scope.row.targets_abbr || '/'"
                     />
                   </div>
@@ -262,7 +262,7 @@
                 <img v-else src="/static/imgs/general/no-drug-img.jpg" />
               </div>
               <div class="tags">
-                <span v-if="item.zgss" class="tag tag-green">中国上市</span>
+                <span v-if="item.chinamarked == 1" class="tag tag-green">中国上市</span>
                 <span v-if="item.higheststatus != ''" class="tag tag-orange">{{
                   item.higheststatus || "/"
                 }}</span>
@@ -310,12 +310,12 @@
 </template>
 
 <script>
-import TooltipBD from "@/components/common/globalCom/target-tooltip.vue";
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
+import TooltipBD from "@/components/common/globalCom/target-tooltip.vue"
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
 import commonMixins from "@/mixins/common.js";
-import DialogFeedback from "@/components/common/dialog-feedback.vue";
-import Export from "@/components/common/export.vue";
-import listCheck from "@/components/common/list-check.vue";
+import DialogFeedback from "@/components/common/dialog-feedback.vue"
+import Export from "@/components/common/export.vue"
+import listCheck from "@/components/common/list-check.vue"
 import { mapState } from "vuex";
 import defaultFiled from "./table";
 import setTableHMixins from "@/mixins/setTableH.js";
@@ -470,7 +470,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .la-list {
   .actions {
     top: 0px;

@@ -31,9 +31,10 @@
 </template>
 
 <script>
-import BaseTable from './children/BaseTable.vue'
-import nameTable from './children/nameTable.vue'
-import qyTable from './children/qyTable.vue'
+import BaseTable from './children/BaseTable'
+import nameTable from './children/nameTable'
+import qyTable from './children/qyTable'
+
 import { mapState } from 'vuex'
 
 export default{
@@ -65,7 +66,7 @@ export default{
     //从智能分析返回列表刷新
     $route:{
       handler(){
-        if(this.$route.path==='/cfdadrug/list.vue'){
+        if(this.$route.path==='/cfdadrug/list'){
           //智能分析重新搜索清空列表数据tab无法自动复位
           let tabname= this.activeTabName
           Store.commit('CfdaDrug/tabname','')
@@ -121,7 +122,7 @@ export default{
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .el-tabs__header{
   padding-left: 14px;
   margin: 0px;

@@ -64,24 +64,25 @@
                     class="t-line5"
                     v-if="vueCheckDetailPms('Faers', '患者疾病转归')"
                   >
-                    <template v-for="(item, ix) in data.baseInfo.outc_cod">
-                      <div
+                    <div v-for="(item, ix) in data.baseInfo.outc_cod"
+                      :key="ix"
+                      class="link-a"
+                    >
+                      <span
                         @click="linkTo(`/faers`, { outc_cod: `${item}` })"
                         v-if="ix < data.baseInfo.outc_cod.length - 1"
-                        :key="ix"
-                        class="link-a"
+                        :title="outc_codComp(item)"
                       >
                         {{ outc_codComp(item) + ";" }}
-                      </div>
-                      <div
+                      </span>
+                      <span
                         v-else
                         @click="linkTo(`/faers`, { outc_cod: `${item}` })"
-                        :key="ix"
-                        class="link-a"
+                        :title="outc_codComp(item)"
                       >
                         {{ outc_codComp(item) }}
-                      </div>
-                    </template>
+                      </span>
+                    </div>
                   </span>
                   <div v-else class="abandon-click-method">暂无权限</div>
                 </td>
@@ -171,24 +172,22 @@
               <tr>
                 <td>适应症</td>
                 <td>
-                  <template v-for="(item, ix) in data.baseInfo.indi_pt">
-                    <div
+                  <div v-for="(item, ix) in data.baseInfo.indi_pt" :key="ix" class="link-a">
+                    <span
                       @click="linkTo(`/faers`, { indi_pt: `${item}` })"
                       v-if="ix < data.baseInfo.indi_pt.length - 1"
-                      :key="ix"
-                      class="link-a"
+                      :title="item"
                     >
                       {{ item + ";" }}
-                    </div>
-                    <div
+                    </span>
+                    <span
                       v-else
                       @click="linkTo(`/faers`, { indi_pt: `${item}` })"
-                      :key="ix"
-                      class="link-a"
+                      :title="item"
                     >
                       {{ item }}
-                    </div>
-                  </template>
+                    </span>
+                  </div>
                 </td>
                 <td>报告来源</td>
                 <td>
@@ -197,24 +196,22 @@
                     class="t-line5"
                     v-if="vueCheckDetailPms('Faers', '报告来源')"
                   >
-                    <template v-for="(item, ix) in data.baseInfo.rpsr_cod">
+                    <div v-for="(item, ix) in data.baseInfo.rpsr_cod" :key="ix" class="link-a">
                       <div
                         @click="linkTo(`/faers`, { rpsr_cod: `${item}` })"
                         v-if="ix < data.baseInfo.rpsr_cod.length - 1"
-                        :key="ix"
-                        class="link-a"
+                        :title="rpsr_codComp(item)"
                       >
                         {{ rpsr_codComp(item) + ";" }}
                       </div>
                       <div
                         v-else
                         @click="linkTo(`/faers`, { rpsr_cod: `${item}` })"
-                        :key="ix"
-                        class="link-a"
+                        :title="rpsr_codComp(item)"
                       >
                         {{ rpsr_codComp(item) }}
                       </div>
-                    </template>
+                    </div>
                   </span>
                   <div v-else class="abandon-click-method">暂无权限</div>
                 </td>
@@ -236,14 +233,11 @@
                   </el-tooltip>
                 </td>
                 <td>
-                  <span>
                     <div
-                      @click="linkTo(`/faers`, { occp_cod: `${data.baseInfo.occp_cod}` })"
                       class="link-a"
                     >
-                      {{ occp_codComp(data.baseInfo.occp_cod) }}
-                    </div></span
-                  >
+                      <span @click="linkTo(`/faers`, { occp_cod: `${data.baseInfo.occp_cod}` })">{{ occp_codComp(data.baseInfo.occp_cod) }}</span>
+                    </div>
                 </td>
               </tr>
               <tr>
@@ -254,24 +248,20 @@
                     class="t-line5"
                     v-if="vueCheckDetailPms('Faers', '不良事件')"
                   >
-                    <template v-for="(item, ix) in data.baseInfo.pt">
-                      <div
+                    <div v-for="(item, ix) in data.baseInfo.pt" :key="ix" class="link-a">
+                      <span
                         @click="linkTo(`/faers`, { pt: `${item}` })"
                         v-if="ix < data.baseInfo.pt.length - 1"
-                        :key="ix"
-                        class="link-a"
                       >
                         {{ item + ";" }}
-                      </div>
-                      <div
+                      </span>
+                      <span
                         v-else
                         @click="linkTo(`/faers`, { pt: `${item}` })"
-                        :key="ix"
-                        class="link-a"
                       >
                         {{ item }}
-                      </div>
-                    </template>
+                      </span>
+                    </div>
                   </span>
                   <div v-else class="abandon-click-method">暂无权限</div>
                 </td>
@@ -401,32 +391,32 @@
                     class="t-line5"
                     v-if="vueCheckDetailPms('Faers', '主要可疑药品')"
                   >
-                    <template
+                    <div
                       v-for="(item, ix) in data.drugInfo.me_prod_ai_guifan_ps"
+                      :key="ix"
+                      class="link-a"
                     >
-                      <div
+                      <span
                         @click="
                           linkTo(`/faers`, { me_prod_ai_guifan_ps: `${item}` })
                         "
                         v-if="
                           ix < data.drugInfo.me_prod_ai_guifan_ps.length - 1
                         "
-                        :key="ix"
-                        class="link-a"
+                        :title="item"
                       >
                         {{ item + ";" }}
-                      </div>
-                      <div
+                      </span>
+                      <span
                         v-else
                         @click="
                           linkTo(`/faers`, { me_prod_ai_guifan_ps: `${item}` })
                         "
-                        :key="ix"
-                        class="link-a"
+                        :title="item"
                       >
                         {{ item }}
-                      </div>
-                    </template>
+                      </span>
+                    </div>
                   </span>
                   <div v-else class="abandon-click-method">暂无权限</div>
                 </td>
@@ -439,31 +429,31 @@
                     class="t-line5"
                     v-if="vueCheckDetailPms('Faers', '相互作用药物')"
                   >
-                    <template
+                    <div
                       v-for="(item, ix) in data.drugInfo.me_prod_ai_guifan_i"
+                      :key="ix"
+                      class="link-a"
                     >
-                      <div
+                      <span
                         @click="
                           linkTo(`/faers`, { me_prod_ai_guifan_i: `${item}` })
                         "
                         v-if="ix < data.drugInfo.me_prod_ai_guifan_i.length - 1"
-                        :key="ix"
-                        class="link-a"
+                        :title="item"
                       >
                         {{ item + ";" }}
-                      </div>
-                      <div
+                      </span>
+                      <span
                         v-else
                         div
                         @click="
                           linkTo(`/faers`, { me_prod_ai_guifan_i: `${item}` })
                         "
-                        :key="ix"
-                        class="link-a"
+                        :title="item"
                       >
                         {{ item }}
-                      </div>
-                    </template>
+                      </span>
+                    </div>
                   </span>
                   <div v-else class="abandon-click-method">暂无权限</div>
                 </td>
@@ -537,32 +527,32 @@
                     class="t-line5"
                     v-if="vueCheckDetailPms('Faers', '次要可疑药品')"
                   >
-                    <template
+                    <div
                       v-for="(item, ix) in data.drugInfo.me_prod_ai_guifan_ss"
+                      class="link-a"
+                      :key="ix"
                     >
-                      <div
+                      <span
                         @click="
                           linkTo(`/faers`, { me_prod_ai_guifan_ss: `${item}` })
                         "
                         v-if="
                           ix < data.drugInfo.me_prod_ai_guifan_ss.length - 1
                         "
-                        :key="ix"
-                        class="link-a"
+                        :title="item"
                       >
                         {{ item + ";" }}
-                      </div>
-                      <div
+                      </span>
+                      <span
                         v-else
                         @click="
                           linkTo(`/faers`, { me_prod_ai_guifan_ss: `${item}` })
                         "
-                        :key="ix"
-                        class="link-a"
+                        :title="item"
                       >
                         {{ item }}
-                      </div>
-                    </template>
+                      </span>
+                    </div>
                   </span>
                   <div v-else class="abandon-click-method">暂无权限</div>
                 </td>
@@ -573,20 +563,23 @@
                     class="t-line5"
                     v-if="vueCheckDetailPms('Faers', '给药途径')"
                   >
-                    <template v-for="(item, ix) in data.drugInfo.route">
+                    <div v-for="(item, ix) in data.drugInfo.route" :key="ix" style="
+                          width: 27vw;
+                          min-width: 270px;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                          white-space: nowrap;">
                       <span
-                        :key="ix"
+                        :title="item"
                         v-if="ix < data.drugInfo.route.length - 1"
-                        style="display: flex;width: 95%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"
                         >{{ item + ";" }}</span
                       >
                       <span
                         v-else
-                        :key="ix"
-                        style="display: flex;width: 95%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"
+                        :title="item"
                         >{{ item }}</span
                       >
-                    </template>
+                    </div>
                   </span>
                   <div v-else class="abandon-click-method">暂无权限</div>
                 </td>
@@ -683,30 +676,30 @@
                     class="t-line5"
                     v-if="vueCheckDetailPms('Faers', '伴随药物')"
                   >
-                    <template
+                    <div
                       v-for="(item, ix) in data.drugInfo.me_prod_ai_guifan_c"
+                      :key="ix"
+                      class="link-a"
                     >
-                      <div
+                      <span
                         @click="
                           linkTo(`/faers`, { me_prod_ai_guifan_c: `${item}` })
                         "
                         v-if="ix < data.drugInfo.me_prod_ai_guifan_c.length - 1"
-                        :key="ix"
-                        class="link-a"
+                        :title="item"
                       >
                         {{ item + ";" }}
-                      </div>
-                      <div
+                      </span>
+                      <span
                         v-else
                         @click="
                           linkTo(`/faers`, { me_prod_ai_guifan_c: `${item}` })
                         "
-                        :key="ix"
-                        class="link-a"
+                        :title="item"
                       >
                         {{ item }}
-                      </div>
-                    </template>
+                      </span>
+                    </div>
                   </span>
                   <div v-else class="abandon-click-method">暂无权限</div>
                 </td>
@@ -835,12 +828,12 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import List from "@/components/layouts/list.vue";
-import Export from "@/components/common/export.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import LaFooter from "@/components/layouts/footer.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import List from "@/components/layouts/list.vue"
+import Export from "@/components/common/export.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import LaFooter from "@/components/layouts/footer.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
 import { mapState } from "vuex";
 import detailScrollMixins from "@/mixins/detailScroll";
 
@@ -920,25 +913,13 @@ export default {
     }
   },
   watch: {
-    showPromtNotice(val) {
+  showPromtNotice(val) {
       if (val) {
-        setTimeout(() => {
-          if ($(".left-nav").css("top"))
-            $(".left-nav").css(
-              "top",
-              parseInt(
-                $(".left-nav")
-                  .css("top")
-                  .replace("px", "")
-              ) +
-                30 +
-                "px"
-            );
-        }, 600);
+        if ($(".left-nav").css("top")) {
+          $(".left-nav").css("top", "128px");
+        }
       } else {
-        setTimeout(() => {
-          if ($(".left-nav").css("top")) $(".left-nav").css("top", "118px");
-        }, 600);
+        if ($(".left-nav").css("top")) $(".left-nav").css("top", "98px");
       }
     }
   },
@@ -1076,8 +1057,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 
 @FontsizeSmall: 13px;
 @FontsizeSmallBold: bold;
@@ -1249,13 +1230,18 @@ export default {
   overflow-y: auto;
 }
 .link-a {
-  display: flex;
-  width: 95%;
+  display: block;
+  width: 27vw;
+  min-width: 270px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #4877e8;
-  cursor: pointer;
+
+  span {
+    cursor: pointer;
+  }
+
   &:hover {
     text-decoration: underline;
   }

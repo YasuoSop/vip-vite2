@@ -4,7 +4,7 @@
     <LoadingGif :loadFlag="isLoading" v-if="isLoading"></LoadingGif>
     <!-- 加载完成显示部分 -->
     <div class="detail-list" v-else>
-      <div class="detail-header">
+      <div class="detail-header header-fixed">
         <div class="header-left">
           <div class="left-top">
             <span
@@ -36,14 +36,19 @@
       </div>
       <!-- 详情模板1 -->
       <div class="main analysis-html">
-        <div class="left-nav">
+        <div
+          class="left-nav"
+          :style="{ top: (showPromtNotice ? 128 : 98) + 'px' }"
+        >
           <div class="nav-list nav-event" @click="handleNavClick">
             <a class="nav-item active" v-if="isEmpty(timeData)">修订日期</a>
             <a class="nav-item" v-if="data_content.hzyyjd">患者用药交代</a>
             <a class="nav-item" v-if="isEmpty(nameData)">药品名称</a>
             <a class="nav-item" v-if="data_content.chengfen">成分</a>
             <a class="nav-item" v-if="data_content.xingzhuang">性状</a>
-            <a class="nav-item" v-if="data_content.zhuzhi">适应症</a>
+            <a class="nav-item" v-if="data_content.zhuzhi">{{
+              data_content.bianma.indexOf("Z") > -1 ? "功能主治" : "适应症"
+            }}</a>
             <a class="nav-item" v-if="data_content.guige">规格</a>
             <a class="nav-item" v-if="data_content.yongfa">用法用量</a>
             <a class="nav-item" v-if="data_content.fanying">不良反应</a>
@@ -52,11 +57,13 @@
             <a class="nav-item" v-if="isEmpty(yfData)">孕妇及哺乳期妇女用药</a>
             <a class="nav-item" v-if="data_content.child">儿童用药</a>
             <a class="nav-item" v-if="data_content.old">老年用药</a>
-            <a class="nav-item" v-if="data_content.xianghuzhuoyong">药物相互作用</a>
+            <a class="nav-item" v-if="data_content.xianghuzhuoyong"
+              >药物相互作用</a
+            >
             <a class="nav-item" v-if="data_content.guoliang">药物过量</a>
             <a class="nav-item" v-if="data_content.clinical">临床试验</a>
             <a class="nav-item" v-if="data_content.yaoli">药物毒理</a>
-            <a class="nav-item" v-if="data_content.donglixue">药学动力学</a>
+            <a class="nav-item" v-if="data_content.donglixue">药代动力学</a>
             <a class="nav-item" v-if="data_content.zhucang">贮藏</a>
             <a class="nav-item" v-if="data_content.baozhuang">包装</a>
             <a class="nav-item" v-if="data_content.youxiaoqi">有效期</a>
@@ -64,20 +71,32 @@
             <a class="nav-item" v-if="data_content.pizhunwenhao">批准文号</a>
             <a class="nav-item" v-if="data_content.source">生产企业</a>
             <a class="nav-item" v-if="isEmpty(yzData)">药智信息</a>
-            <a class="nav-item" v-if="extendList && extendList.length > 0">扩展信息</a>
+            <a class="nav-item" v-if="extendList && extendList.length > 0"
+              >扩展信息</a
+            >
           </div>
         </div>
         <div class="right-list">
           <div
             class="list-in-left"
             :class="{
-              'list-in-left-no-img': !data.Image || data.Image.length === 0,
+              'list-in-left-no-img': !data.Image || data.Image.length === 0
             }"
           >
+            <div class="tips">
+              <div class="gth">!</div>
+              <p class="info">
+                {{
+                  data_content.otcsort
+                    ? "请仔细阅读说明书并按说明使用或在药师指导下购买和使用"
+                    : "请仔细阅读说明书并在医师指导下使用"
+                }}
+              </p>
+            </div>
             <!-- 修订日期 -->
             <slide-lan
               :title="'修订日期'"
-              class="the-part part-one"
+              class="the-part part-one part-active"
               v-if="isEmpty(timeData)"
             >
               <table class="tb-xdrq">
@@ -92,7 +111,12 @@
                 </tr>
                 <tr v-if="data_content.xiugairi">
                   <td class="part-detail-title">【修改日期】</td>
-                  <td><div class="reset-style" v-html="data_content.xiugairi"></div></td>
+                  <td>
+                    <div
+                      class="reset-style"
+                      v-html="data_content.xiugairi"
+                    ></div>
+                  </td>
                 </tr>
               </table>
             </slide-lan>
@@ -107,7 +131,7 @@
             </slide-lan>
 
             <!-- 药品名称 -->
-             <slide-lan
+            <slide-lan
               :title="'药品名称'"
               class="the-part part-three"
               v-if="isEmpty(nameData)"
@@ -166,7 +190,9 @@
 
             <!-- 适应症 -->
             <slide-lan
-              :title="'适应症'"
+              :title="
+                data_content.bianma.indexOf('Z') > -1 ? '功能主治' : '适应症'
+              "
               class="the-part part-six"
               v-if="data_content.zhuzhi"
             >
@@ -267,7 +293,10 @@
               class="the-part part-fifteen"
               v-if="data_content.xianghuzhuoyong"
             >
-              <div class="reset-style" v-html="data_content.xianghuzhuoyong"></div>
+              <div
+                class="reset-style"
+                v-html="data_content.xianghuzhuoyong"
+              ></div>
             </slide-lan>
 
             <!-- 药物过量 -->
@@ -297,9 +326,9 @@
               <div class="reset-style" v-html="data_content.yaoli"></div>
             </slide-lan>
 
-            <!-- 药学动力学 -->
+            <!-- 药代动力学 -->
             <slide-lan
-              :title="'药学动力学'"
+              :title="'药代动力学'"
               class="the-part part-nineteen"
               v-if="data_content.donglixue"
             >
@@ -339,7 +368,10 @@
               class="the-part part-twenty-three"
               v-if="data_content.zhixingbiaozhun"
             >
-              <div class="reset-style" v-html="data_content.zhixingbiaozhun"></div>
+              <div
+                class="reset-style"
+                v-html="data_content.zhixingbiaozhun"
+              ></div>
             </slide-lan>
 
             <!-- 批准文号 -->
@@ -354,10 +386,12 @@
             <!-- 生产企业 -->
             <slide-lan
               :title="'生产企业'"
-              class="the-part part-twenty-five"
+              class="the-part part-twenty-five the-qiye"
               v-if="data_content.source"
             >
-              <div class="part-detail-title" style="display: block;">【企业名称】</div>
+              <div class="part-detail-title" style="display: block;">
+                【企业名称】
+              </div>
               <div
                 class="link-div"
                 style="margin-top: 5px;display:inline-block;"
@@ -369,7 +403,7 @@
             <!-- 药智信息 -->
             <slide-lan
               :title="'药智信息'"
-              class="the-part part-twenty-six"
+              class="the-part part-twenty-six the-alone"
               v-if="isEmpty(yzData)"
             >
               <!-- 医保类别 -->
@@ -408,7 +442,7 @@
 
             <slide-lan
               :title="'扩展信息'"
-              class="the-part part-twenty-seven"
+              class="the-part part-twenty-seven the-alone"
               v-if="extendList && extendList.length > 0"
             >
               <div class="extend-list">
@@ -442,10 +476,10 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
-import SlideLan from "@/components/common/slide-lan.vue";
-import LaFooter from "@/components/layouts/footer.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
+import SlideLan from "@/components/common/slide-lan.vue"
+import LaFooter from "@/components/layouts/footer.vue"
 import detailScrollMixins from "@/mixins/detailScroll.js";
 import { mapState } from "vuex";
 
@@ -454,7 +488,7 @@ export default {
     LoadingGif,
     SlideLan,
     LaFooter,
-    ExtendButton,
+    ExtendButton
   },
   mixins: [detailScrollMixins],
   data() {
@@ -473,42 +507,36 @@ export default {
       yfData: {}, // 孕妇及哺乳期妇女用药
       yzData: {}, // 药智信息
       // 扩展信息
-      extendList: [],
+      extendList: []
     };
   },
   computed: {
     ...mapState({
-      nopms: (state) => state.ShuomingshuZg.nopms,
-      allBase: (state) => state.ShuomingshuZg.allBase,
-      helpInfo: (state) => state.ShuomingshuZg.helpInfo,
-    }),
+      nopms: state => state.ShuomingshuZg.nopms,
+      allBase: state => state.ShuomingshuZg.allBase,
+      helpInfo: state => state.ShuomingshuZg.helpInfo
+    })
   },
   watch: {
-    showPromtNotice(val) {
+  showPromtNotice(val) {
       if (val) {
-        setTimeout(() => {
-          if ($(".left-nav").css("top"))
-            $(".left-nav").css(
-              "top",
-              parseInt($(".left-nav").css("top").replace("px", "")) + 30 + "px"
-            );
-        }, 600);
+        if ($(".left-nav").css("top")) {
+          $(".left-nav").css("top", "128px");
+        }
       } else {
-        setTimeout(() => {
-          if ($(".left-nav").css("top")) $(".left-nav").css("top", "118px");
-        }, 600);
+        if ($(".left-nav").css("top")) $(".left-nav").css("top", "98px");
       }
-    },
+    }
   },
   methods: {
     handleScroll() {
       let top = $(".main").offset().top,
         leftNav = $(".left-nav");
-      if (top <= 50) {
-        leftNav.css("top", (this.showPromtNotice ? 88 : 58) + "px");
-      } else {
-        leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
-      }
+      // if (top <= 50) {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 98) + "px");
+      // } else {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
+      // }
     },
     goList(key, val) {
       val = val.replace(/<.*?>/gi, "");
@@ -530,21 +558,34 @@ export default {
           method: "get",
           url: "/api/instruct/" + this.id,
           params: {
-            accesstoken: GETCOOKIEFUN("accesstoken"),
-          },
+            accesstoken: GETCOOKIEFUN("accesstoken")
+          }
         })
-        .then((res) => {
+        .then(res => {
           if (res.data.code === 200 && res.data.data) {
             let data = res.data.data;
             this.data = data;
             // 修订日期
             this.timeData = handlObj(data.Content, ["hezhunri", "xiugairi"]);
             // 药品名称
-            this.nameData =  handlObj(data.Content, ["name", "englishname", "shangpinname"]);
+            this.nameData = handlObj(data.Content, [
+              "name",
+              "englishname",
+              "shangpinname"
+            ]);
             // 孕妇及哺乳期妇女用药
-            this.yfData = handlObj(data.Content, ["pregnant", "renshenfenji", "buruqifenji"]);
+            this.yfData = handlObj(data.Content, [
+              "pregnant",
+              "renshenfenji",
+              "buruqifenji"
+            ]);
             // 药智信息
-            this.yzData = handlObj(data.Content, ["yibao", "otcsort", "atc", "atcarr",]);
+            this.yzData = handlObj(data.Content, [
+              "yibao",
+              "otcsort",
+              "atc",
+              "atcarr"
+            ]);
             // 获取扩展信息的数据
             this.getExtendList("instruct", data.extendList);
             // 一一对应获取数据
@@ -552,7 +593,7 @@ export default {
             this.data_content = data.Content;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         })
         .then(this.removeLoading);
@@ -571,7 +612,7 @@ export default {
     },
     getAtcNames(name) {
       return name ? name.replace(/\s+/g, "").split(";") : [];
-    },
+    }
   },
   created() {
     setTimeout(() => {
@@ -593,13 +634,13 @@ export default {
   updated() {
     this.vueRouteToNoPms(this.nopms.xqy);
     this.vueTogglePmsTooltip();
-  },
+  }
 };
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 .link-div {
   text-decoration: underline;
   cursor: pointer;
@@ -667,6 +708,48 @@ export default {
               }
             }
           }
+          .the-qiye {
+            .content {
+              border-bottom: unset;
+            }
+          }
+          .the-alone {
+            box-shadow: 0px 1px 8px 0px #d8e2fa;
+            border-radius: 4px;
+            .header {
+              height: 40px;
+              line-height: 40px;
+              background: #eff2fa;
+              margin-top: 10px;
+
+              .lc {
+                font-size: 16px;
+                margin-left: 20px;
+                font-weight: 600;
+              }
+
+              .lc::before {
+                width: 0;
+                height: 0;
+              }
+            }
+
+            .content {
+              border-bottom: unset;
+            }
+          }
+
+          .part-active {
+            .header {
+              .lc {
+                color: #4877e8;
+              }
+
+              .lc::before {
+                background-color: #4877e8;
+              }
+            }
+          }
           .part-one {
             .tb-jbxx {
               td {
@@ -723,6 +806,33 @@ export default {
             }
           }
         }
+        .tips {
+          display: flex;
+          height: 40px;
+          align-items: center;
+          background: #eff2fa;
+          color: #f77b52;
+          padding: 0 20px;
+          box-sizing: border-box;
+          border-radius: 4px 4px 0px 0px;
+          box-shadow: 0px 1px 8px 0px #d8e2fa;
+
+          .gth {
+            width: 14px;
+            height: 14px;
+            line-height: 14px;
+            border-radius: 50%;
+            text-align: center;
+            border: 1px solid #f77b52;
+            font-size: 12px;
+            margin-right: 6px;
+          }
+
+          .info {
+            font-size: 13px;
+            line-height: 13px;
+          }
+        }
         .list-in-left-no-img {
           width: 100%;
           padding-right: 0;
@@ -730,6 +840,7 @@ export default {
         .list-in-right {
           width: 380px;
           display: inline-block;
+          margin-left: 10px;
           // position: absolute;
           // right: 0;
           // top: 0px;

@@ -121,9 +121,9 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import pdfTable from "../pdfReport/table.vue";
-import DetailKzxx from "./kzxx.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import pdfTable from "../pdfReport/table";
+import DetailKzxx from "./kzxx";
 import tablehead from "@/config/tablehead";
 const tableFiled = tablehead.drugreport.yaopinzhongbiao;
 export default {
@@ -314,7 +314,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 @import "../css/com.less";
 
 .detail-items {

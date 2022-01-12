@@ -5,7 +5,7 @@
       <div slot="title" class="dialog-header">
         保存条件
       </div>
-      <SavedPop @closeSavedPop="()=>savedPopVisible = false" vuex_name="Yyxs"></SavedPop>
+      <SavedPop @closeSavedPop="()=>savedPopVisible = false.vue"x_name="Yyxs"></SavedPop>
     </el-dialog>
     <!-- 高级搜索弹出框 -->
     <el-dialog :visible.sync="dialogFormVisible" :modal-append-to-body="false" width="815px">
@@ -100,7 +100,7 @@
       <section class="sec2">
         <!-- <div class="la-body-tab">
           <div class="market_nav">
-            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/yyxs/list.vue'}">
+            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/yyxs/list'}">
               <span class="nav"><i class="iconfont pr5" style="font-size:20px;">&#xe627;</i>销售数据</span>
             </a>
             <a @click.prevent="navRouteTo(2)" class="nav_one" :class="{'router-link-active': $route.path == '/yyxs/analy', 'abandon-click-method': nopms.ksh}">
@@ -213,7 +213,7 @@
     methods: {
       navRouteTo (index) {
         if (index == 1) {
-          this.$router.push({ path: '/yyxs/list.vue'})
+          this.$router.push({ path: '/yyxs/list'})
         } else if (index == 2 && !this.nopms.ksh) {
           window.ga("send","event", "tab", "click", "yyxs_analy");
       window._paq.push(['trackEvent', 'tab',"click", "yyxs_analy", ])
@@ -261,8 +261,8 @@
 </script>
 
 <style lang="less">
-  @import "@/assets/less/app.less";
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/app.less";
+  @import "~@/assets/less/var.less";
   // end-slot
   .el-dialog {
     border-radius: 20px!important;

@@ -3,7 +3,7 @@
     <List :loading="listLoading" :nodata="res2 && !res2.length">
       <div class="actions">
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Yyxs" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" style="text-align:left;" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Yyxs" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" style="text-align:left;" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"
@@ -80,7 +80,7 @@
           :label="item.label">
           <template slot-scope="scope">
             <div :title="scope.row[item.prop]">
-            <div v-if="item.prop === 'ypfx'" class="extensible-td" @click="showAnaly(scope.row.guifanname)">
+            <div v-if="item.prop === 'ypfx'" @click="showAnaly(scope.row.guifanname)">
               <router-link target="_blank" class="cl-blue" :to="{ path: '/yyxsdata', query: { tab: '1',ypname:scope.row.guifanname,type: '2' }}">药品分析</router-link>
             </div>
             <div v-else :class="{'extensible-td': Number(scope.row[item.prop])}" @click="item.prop != 'guifanname'?getExpandRes(scope.row.guifanname, item.prop, scope.row[item.prop], item.label,scope):''">
@@ -406,7 +406,7 @@
 </script>
 
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   .la-ypmc{
     min-height: 100px;
     .no-data-msg {
@@ -430,7 +430,7 @@
         &.active{
           color: @PrimaryColor;
           font-weight: 600;
-          background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
+          background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
           border: none;
         }
       }
@@ -444,7 +444,7 @@
       &.active{
         color: @PrimaryColor;
         font-weight: 600;
-        background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
+        background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
         border: none;
       }
     }

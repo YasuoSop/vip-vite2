@@ -98,7 +98,7 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .no-data-msg {
   width: 100%;
   text-align: center;

@@ -4,7 +4,7 @@
     <transition name="el-fade-in-linear">
       <div v-if="showPromtNotice" class="prompt-notice">
         <div class="prompt-content">
-          <img src="@/assets/imgs/notice_icon.png" />
+          <img src="~@/assets/imgs/notice_icon.png" />
           <div class="text-container">
             <marquee
               v-if="noticeMsgStr.length - (61 * noticeMsg.length - 1) > 70"
@@ -17,73 +17,97 @@
           <img
             @click="closeNotice"
             class="close_notice_icon"
-            src="@/assets/imgs/notice_close.png"
+            src="~@/assets/imgs/notice_close.png"
           />
         </div>
       </div>
     </transition>
 
-    <div style="width: 100vw; display: flex; align-items: center">
+    <div style="width: 100%; display: flex; align-items: center">
       <router-link tag="a" class="logo" to="/home">
-        <img src="@/assets/imgs/home-logo.png" />
+        <img src="~@/assets/imgs/home-logo.png" />
       </router-link>
       <div :class="$route.path != '/home' ? 'right' : 'right2'">
         <nav class="la-header-nav">
           <div
             class="header-nav-item"
+            @mouseover="mouseOver"
+            :class="{
+              'hover-sc': item.shortlabel == '市场' && firstShowTrzNav == '1'
+            }"
             v-for="item in menuList"
             :key="'/' + item.label"
             v-if="
               item.groupList[0].group.length > 0 ||
-              item.shortlabel == '其他' ||
-              item.shortlabel == '导航'
+                item.shortlabel == '其他' ||
+                item.shortlabel == '导航'
             "
           >
-            <div v-if="item.label !== '更多'">{{ item.label }}</div>
+            <div
+              style="display: flex;align-items: center;"
+              v-if="item.label !== '更多'"
+            >
+              {{ item.label }}
+              <!-- 显示new标签 -->
+              <img
+                v-if="item.navlabel === 4"
+                src="/static/imgs/tag-new.svg#svgView(preserveAspectRatio(none))"
+                class="new-tag"
+              />
+            </div>
             <div v-else style="display: flex; margin: 23px 0">
               <div class="dot"></div>
               <div class="dot"></div>
               <div class="dot"></div>
             </div>
             <div class="submenu" v-if="item.type != 2">
-              <template v-for="lists in item.groupList">
-                <ul class="group-list">
-                  <li v-for="list in lists.group" :key="list.href">
-                    <router-link
-                      class="group-item"
-                      tag="a"
-                      :to="'/' + list.href"
-                      :title="list.title"
-                      v-if="list.href.indexOf('http') != 0"
-                    >
-                      <i class="iconfont li-style">&#xe757;</i>
-                      <span
-                        v-html="list.label"
-                        :class="{ internal: list.internal }"
-                      ></span>
-                      <span :class="navStatus(list.navlabel)">{{
-                        statusIcon(list.navlabel)
-                      }}</span>
-                    </router-link>
-                    <a
-                      class="group-item"
-                      :href="list.href"
-                      :title="list.title"
-                      target="_blank"
-                      v-else
-                    >
-                      <i class="iconfont li-style">&#xe757;</i>
-                      <span
-                        v-html="list.label"
-                        :class="{ internal: list.internal }"
-                      ></span>
-                      <span :class="navStatus(list.navlabel)">{{
-                        statusIcon(list.navlabel)
-                      }}</span>
-                    </a>
-                  </li>
-                </ul>
-              </template>
+              <img
+                class="trz-rk"
+                v-if="item.shortlabel == '市场'"
+                src="~@/assets/imgs/trz/trz-rk.png"
+                alt
+                @click="goTrzHome"
+              />
+              <ul
+                class="group-list"
+                :key="'group-item' + listIndex"
+                v-for="(lists, listIndex) in item.groupList"
+              >
+                <li v-for="list in lists.group" :key="list.href">
+                  <router-link
+                    class="group-item"
+                    tag="a"
+                    :to="'/' + list.href"
+                    :title="list.title"
+                    v-if="list.href.indexOf('http') != 0"
+                  >
+                    <i class="iconfont li-style">&#xe757;</i>
+                    <span
+                      v-html="list.label"
+                      :class="{ internal: list.internal }"
+                    ></span>
+                    <span :class="navStatus(list.navlabel)">
+                      {{ statusIcon(list.navlabel) }}
+                    </span>
+                  </router-link>
+                  <a
+                    class="group-item"
+                    :href="list.href"
+                    :title="list.title"
+                    target="_blank"
+                    v-else
+                  >
+                    <i class="iconfont li-style">&#xe757;</i>
+                    <span
+                      v-html="list.label"
+                      :class="{ internal: list.internal }"
+                    ></span>
+                    <span :class="navStatus(list.navlabel)">
+                      {{ statusIcon(list.navlabel) }}
+                    </span>
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
           <!-- nav底部滑动交互条 -->
@@ -137,8 +161,8 @@
                   query: {
                     comprehensive: searchCategory,
                     searchwords: filterSerchText(trimKeyword),
-                    source: '1',
-                  },
+                    source: '1'
+                  }
                 }"
                 type="primary"
                 native-type="submit"
@@ -208,7 +232,7 @@
             <div class="header-downs-tips-ou" v-show="tipsShow">
               <div class="header-downs-tips">
                 <em class="arrow-top"></em>
-                <img src="@/assets/imgs/sumscan_vipty_top.png" />
+                <img src="~@/assets/imgs/sumscan_vipty_top.png" />
                 <a href="javascript:;" @click="googleGa('android')">
                   <i class="iconfont">&#xe674;</i>
                   <span>下载</span>
@@ -260,16 +284,16 @@
                           zcdy: item.short_head_title === '订阅',
                           //'zbgg': item.short_head_title === '中标',
                           xtgg: item.short_head_title === '系统',
-                          fkhf: item.short_head_title === '反馈',
+                          fkhf: item.short_head_title === '反馈'
                         }"
                         :title="item.head_title"
                       >
                         {{ item.short_head_title }}
                       </div>
                       <div class="content">
-                        <span class="content-title text-overflow">{{
-                          item.title
-                        }}</span>
+                        <span class="content-title text-overflow">
+                          {{ item.title }}
+                        </span>
                       </div>
                       <div class="time">{{ item.addtime.split(" ")[0] }}</div>
                     </div>
@@ -385,13 +409,14 @@
 </template>
 
 <script>
-import inputPopover from "@/components/inputs/input-popover.vue";
+import inputPopover from "@/components/inputs/input-popover.vue"
+import crypto from "crypto-js";
 import { mapState } from "vuex";
 import Moment from "moment";
 
 export default {
   components: {
-    inputPopover,
+    inputPopover
   },
   data() {
     return {
@@ -402,28 +427,28 @@ export default {
         { path: "/home", label: this.$t("header.navPath.home") },
         {
           path: "/report?ga_source=vip&ga_name=topnav",
-          label: this.$t("header.navPath.drug"),
+          label: this.$t("header.navPath.drug")
         },
         {
           path: "/newdrug/list?ga_source=vip&ga_name=topnav",
-          label: this.$t("header.navPath.newdrug"),
+          label: this.$t("header.navPath.newdrug")
         },
         {
           path: "/targetdatas/list?ga_source=vip&ga_name=topnav",
-          label: this.$t("header.navPath.target"),
+          label: this.$t("header.navPath.target")
         },
         {
           path: "/company?ga_source=vip&ga_name=topnav",
-          label: this.$t("header.navPath.company"),
+          label: this.$t("header.navPath.company")
         },
         {
           path: "/yzx/pjdt?ga_source=vip&ga_name=topnav",
-          label: this.$t("header.navPath.consistencyEvaluation"),
+          label: this.$t("header.navPath.consistencyEvaluation")
         },
         {
           path: "/yyxsdata?ga_source=vip&ga_name=topnav",
-          label: this.$t("header.navPath.yyxsdata"),
-        },
+          label: this.$t("header.navPath.yyxsdata")
+        }
         // 未开发的暂时注释掉
         // {path: "/intelligent", label: this.$t("header.navPath.intelligent")},
         // {path: "/information", label: this.$t("header.navPath.information")}
@@ -436,7 +461,7 @@ export default {
         "company",
         "devices",
         "disease",
-        "chinesemedicine",
+        "chinesemedicine"
       ],
       path: this.$route.path ? this.$route.path : "",
       userInfo: {},
@@ -445,13 +470,13 @@ export default {
       showWhat: 0,
       param: {
         page: 1,
-        pageSize: 10,
+        pageSize: 10
       },
       popShow: false,
       tipsShow: false,
       APPshow: false,
       winWdith: window.innerWidth,
-      timer: null, // 菜单定时器
+      timer: null // 菜单定时器
     };
   },
   computed: {
@@ -485,17 +510,18 @@ export default {
       return padding;
     },
     ...mapState({
-      xxtzNum: (state) => state.UserCenter.xxtzNum,
-      xxtzNumUnread: (state) => state.UserCenter.xxtzNumUnread,
-      headerMsg: (state) => state.UserCenter.headerMsg,
-      msgBellShow: (state) => state.Layouts.msgBellShow,
-      accountData: (state) => state.UserCenter.accountData,
-      stepNumHome: (state) => state.UserCenter.stepNumHome,
-      guideFlagsRenew: (state) => state.UserCenter.guideFlagsRenew,
-      renewTipsAPP: (state) => state.UserCenter.renewTipsAPP,
-      questionClose: (state) => state.UserCenter.questionClose,
-      showPromtNotice: (state) => state.showPromtNotice,
-      userData: (state) => state.UserCenter.accountData,
+      xxtzNum: state => state.UserCenter.xxtzNum,
+      xxtzNumUnread: state => state.UserCenter.xxtzNumUnread,
+      headerMsg: state => state.UserCenter.headerMsg,
+      msgBellShow: state => state.Layouts.msgBellShow,
+      accountData: state => state.UserCenter.accountData,
+      stepNumHome: state => state.UserCenter.stepNumHome,
+      guideFlagsRenew: state => state.UserCenter.guideFlagsRenew,
+      renewTipsAPP: state => state.UserCenter.renewTipsAPP,
+      questionClose: state => state.UserCenter.questionClose,
+      showPromtNotice: state => state.showPromtNotice,
+      firstShowTrzNav: state => state.firstShowTrzNav,
+      userData: state => state.UserCenter.accountData
     }),
     searchCategory: {
       get() {
@@ -503,7 +529,7 @@ export default {
       },
       set(val) {
         this.$store.commit("Search/sendComprehensive", val);
-      },
+      }
     },
     searchwords: {
       get() {
@@ -511,8 +537,8 @@ export default {
       },
       set(val) {
         this.$store.commit("Search/sendKeywords", val);
-      },
-    },
+      }
+    }
   },
   watch: {
     userData() {
@@ -534,7 +560,7 @@ export default {
           }, 300);
         }
       },
-      immediate: true,
+      immediate: true
     },
     guideFlagsRenew: {
       handler(val) {
@@ -552,7 +578,7 @@ export default {
           }, 300);
         }
       },
-      immediate: true,
+      immediate: true
     },
     renewTipsAPP: {
       handler(val) {
@@ -570,7 +596,7 @@ export default {
           }, 300);
         }
       },
-      immediate: true,
+      immediate: true
     },
     questionClose: {
       handler(val) {
@@ -588,7 +614,7 @@ export default {
           }, 300);
         }
       },
-      immediate: true,
+      immediate: true
     },
     $route(val) {
       this.handleNavPoint();
@@ -635,10 +661,17 @@ export default {
     showPromtNotice: {
       handler(val) {
         // this.registerEven();
-      },
-    },
+      }
+    }
   },
   methods: {
+    // 点击图片调整到投融资详情页
+    goTrzHome() {
+      let routeData = this.$router.resolve({
+        path: "/trz/home?ga_source=vip&ga_name=trzad"
+      });
+      window.open(routeData.href, "_blank");
+    },
     statusIcon(status) {
       switch (status) {
         case 1:
@@ -663,19 +696,19 @@ export default {
       window
         .Axios({
           method: "get",
-          url: "/api/config/nav",
+          url: "/api/config/nav"
         })
-        .then((res) => {
+        .then(res => {
           this.menuList = [];
           let data = res.data.data;
           let iconConfig = this.iconConfig;
           let userGradeId = this.userData.grade_id;
           let isInside = this.insideUserList.indexOf(userGradeId) > -1;
-          data.forEach((item) => {
+          data.forEach(item => {
             let iconList = _.find(iconConfig, { label: item.label });
             let list = JSON.parse(JSON.stringify(item));
             let groupList = (list.groupList[0].group = []);
-            item.groupList[0].group.forEach((items) => {
+            item.groupList[0].group.forEach(items => {
               if (isInside) {
                 if (items.internal) {
                   items.label += "（内）";
@@ -688,7 +721,7 @@ export default {
               groupList.push(items);
             });
             if (list.label == "市场") {
-              list.groupList[0].group.forEach((item) => {
+              list.groupList[0].group.forEach(item => {
                 if (item.title == "医院销售数据") {
                   item.href = "yyxsdata?type_id=2";
                 }
@@ -701,13 +734,13 @@ export default {
             that.frontEndLog(that.$route.path, {
               handlerType: "refresh",
               handlerTypeDesc: "首页导航数据为空",
-              token: GETCOOKIEFUN("accesstoken"),
+              token: GETCOOKIEFUN("accesstoken")
             });
           } catch (error) {
             console.info(error);
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.info(error);
         });
     },
@@ -736,8 +769,8 @@ export default {
         query: {
           comprehensive: this.searchCategory,
           searchwords: $.trim(this.filterSerchText(key)),
-          source,
-        },
+          source
+        }
       });
     },
     // 顶部消息route跳转（多方式）
@@ -748,39 +781,39 @@ export default {
         this.$router.push({
           path: "/usercenter/message/" + item.id,
           query: {
-            infoid_formid: item.infoid,
-          },
+            infoid_formid: item.infoid
+          }
         });
       } else if (item.dbid === 0 && item.type === 13) {
         // 反馈回复
         this.$router.push({
           path: "/usercenter/suggest/" + item.infoid,
           query: {
-            infoid_formid: item.infoid,
-          },
+            infoid_formid: item.infoid
+          }
         });
       } else if (item.field == "shoulihao" && item.type == 1) {
         // 注册数据库 - 按受理号订阅 && 受理号变化
         this.$router.push({
           path: "/usercenter/take/dynamic/slh/" + item.id,
           query: {
-            infoid_formid: item.infoid,
-          },
+            infoid_formid: item.infoid
+          }
         });
       } else if (item.field == "shoulihao" && item.type == 2) {
         // 注册数据库 - 按受理号订阅 && 新申请
         const { href } = this.$router.resolve({
           path: "/zhuce/" + item.infoid,
           query: {
-            infoid_formid: item.infoid,
-          },
+            infoid_formid: item.infoid
+          }
         });
         window.open(href, "_blank");
       } else if (item.field != "shoulihao") {
         // 注册数据库 - 非按受理号订阅
         this.$router.push({
           path: "/usercenter/take/dynamic/other/" + item.id,
-          query: { title: item.title, infoid_formid: item.infoid },
+          query: { title: item.title, infoid_formid: item.infoid }
         });
       }
     },
@@ -795,7 +828,7 @@ export default {
         "/targetdatas",
         "/company",
         "/yzx",
-        "/yyxsdata",
+        "/yyxsdata"
       ];
       _.forEach(urlList, (item, i) => {
         if (this.$route.path.indexOf(item) > -1) {
@@ -803,11 +836,15 @@ export default {
         }
       });
       if (index != -1) {
-        let width = $(".la-header-nav .header-nav-item").eq(index).width();
+        let width = $(".la-header-nav .header-nav-item")
+          .eq(index)
+          .width();
         for (let i = 0; i < index; i++) {
           distance =
             distance +
-            $(".la-header-nav .header-nav-item").eq(i).width() +
+            $(".la-header-nav .header-nav-item")
+              .eq(i)
+              .width() +
             this.padding +
             this.padding;
         }
@@ -816,14 +853,14 @@ export default {
           opacity: 1,
           left: distance,
           width: width,
-          transition: "all 500ms",
+          transition: "all 500ms"
         });
       } else {
         $(".slide-z").css({
           opacity: 0,
           left: 0,
           width: 0,
-          transition: "all 500ms",
+          transition: "all 500ms"
         });
       }
     },
@@ -831,14 +868,16 @@ export default {
     handleNavHover() {
       let _that = this;
       $(".la-header-nav .header-nav-item").hover(
-        function () {
+        function() {
           let distance = 0;
           let index = $(this).index();
           let width = $(this).width();
           for (let i = 0; i < index; i++) {
             distance =
               distance +
-              $(".la-header-nav .header-nav-item").eq(i).width() +
+              $(".la-header-nav .header-nav-item")
+                .eq(i)
+                .width() +
               _that.padding +
               _that.padding;
           }
@@ -847,14 +886,18 @@ export default {
             opacity: 1,
             left: distance,
             width: width,
-            transition: "all 500ms",
+            transition: "all 500ms"
           });
         },
-        function () {
+        function() {
           // $('.slide-z').css({'opacity': 0, 'left': 0, 'width': 0, 'transition': 'all 500ms'})
           _that.handleNavPoint();
         }
       );
+    },
+
+    mouseOver() {
+      this.$store.commit("firstShowTrzNav", 0);
     },
     handleSearchClick() {
       if (Boolean(this.searchwords)) {
@@ -880,15 +923,15 @@ export default {
                 // accesstoken: this.vueGetCookie("accesstoken"), // 输入提示无需accesstoken
               },
               _.set({}, this.searchCategory, key)
-            ),
+            )
           })
-          .then((res) => {
+          .then(res => {
             if ((res.data.code = 200 && res.data.data)) {
               let data = res.data.data;
               this.input_keys = data;
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log(err);
           });
       } else {
@@ -909,17 +952,17 @@ export default {
           url: "/api/search/delhistory",
           params: _.assign(
             {
-              accesstoken: this.vueGetCookie("accesstoken"),
+              accesstoken: this.vueGetCookie("accesstoken")
             },
             _.set({}, this.searchCategory, key)
-          ),
+          )
         })
-        .then((res) => {
+        .then(res => {
           if ((res.data.code = 200)) {
             console.log("删除历史搜索");
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
 
@@ -932,17 +975,17 @@ export default {
           url: "/api/search/delhistory",
           params: _.assign(
             {
-              accesstoken: this.vueGetCookie("accesstoken"),
+              accesstoken: this.vueGetCookie("accesstoken")
             },
             _.set({}, this.searchCategory, "")
-          ),
+          )
         })
-        .then((res) => {
+        .then(res => {
           if ((res.data.code = 200)) {
             console.log("删除所有历史搜索");
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
 
@@ -959,16 +1002,16 @@ export default {
           url: "/api/search/history",
           params: {
             accesstoken: this.vueGetCookie("accesstoken"),
-            type: this.searchCategory,
-          },
+            type: this.searchCategory
+          }
         })
-        .then((res) => {
+        .then(res => {
           if ((res.data.code = 200 && res.data.data)) {
             let data = res.data.data;
             this.history_keys = data;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -976,7 +1019,7 @@ export default {
       // 获取消息数量
       Store.dispatch("UserCenter/handleHeaderMsgAxios", {
         page: 1,
-        pageSize: 5,
+        pageSize: 5
       });
     },
     // 时间戳+随机字符串 生成签名
@@ -994,19 +1037,21 @@ export default {
         .Axios({
           method: "post",
           url: "/api/ajax/loginout",
-          params: {},
+          params: {}
         })
-        .then((res) => {
+        .then(res => {
           return true;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     // 点击退出登录
     handleLogOut() {
       let timeStamp = Date.now();
-      let randStr = Math.random().toString(36).slice(2); // 生成随机字符串
+      let randStr = Math.random()
+        .toString(36)
+        .slice(2); // 生成随机字符串
       // console.log(timeStamp + "~" +randStr);
       let accesstoken = this.vueGetCookie("accesstoken");
       // if(!accesstoken){
@@ -1021,10 +1066,10 @@ export default {
             accesstoken: accesstoken,
             timeStamp: timeStamp,
             randStr: randStr,
-            signature: this.getSignature([timeStamp + "", randStr, "newdb"]),
-          },
+            signature: this.getSignature([timeStamp + "", randStr, "newdb"])
+          }
         })
-        .then((res) => {
+        .then(res => {
           if (res.data.code == 200) {
             let flag = this.$route.path.includes("/login");
             this.vueBackToLogin(flag); //全局方法，清楚cookie
@@ -1032,7 +1077,7 @@ export default {
             // this.ajaxloginout();
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
 
@@ -1053,18 +1098,18 @@ export default {
             accesstoken: this.vueGetCookie("accesstoken"),
             id: theId,
             msg_readid: theId,
-            from: 1,
-          },
+            from: 1
+          }
         })
-        .then((res) => {
+        .then(res => {
           if (res.data.code === 200) {
             Store.dispatch("UserCenter/handleHeaderMsgAxios", {
               page: 1,
-              pageSize: 5,
+              pageSize: 5
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -1075,25 +1120,25 @@ export default {
           url: "/api/usercenter/msgread",
           params: {
             accesstoken: this.vueGetCookie("accesstoken"),
-            type: "all",
-          },
+            type: "all"
+          }
         })
-        .then((res) => {
+        .then(res => {
           if (res.data.code === 200) {
             Store.dispatch("UserCenter/handleXxtzAxios", this.param);
             Store.dispatch("UserCenter/handleHeaderMsgAxios", {
               page: 1,
-              pageSize: 5,
+              pageSize: 5
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     //点击通知弹窗和引导窗以外的区域隐藏
     popHide() {
-      $(document).click((e) => {
+      $(document).click(e => {
         let ele = e ? e.target : window.event.srcElement;
         if (
           ele.id.indexOf("el-popover") === -1 &&
@@ -1118,7 +1163,7 @@ export default {
           "trackEvent",
           "button",
           "click",
-          "appdownload_ios_vipty_top",
+          "appdownload_ios_vipty_top"
         ]);
       } else {
         window.open("https://static.yaozh.com/yaozh_latest.apk", "_blank");
@@ -1133,7 +1178,7 @@ export default {
           "trackEvent",
           "button",
           "click",
-          "appdownload_android_vipty_top",
+          "appdownload_android_vipty_top"
         ]);
       }
     },
@@ -1155,12 +1200,12 @@ export default {
     },
     getNoticeMsg() {
       window.Axios.post("/api/config/notice")
-        .then((res) => {
+        .then(res => {
           let data = res.data;
           if (data.code == 200) {
             let curTimeStamp = Moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
             this.noticeMsg = [];
-            data.data.forEach((item) => {
+            data.data.forEach(item => {
               if (
                 (Moment(curTimeStamp).isAfter(
                   Moment(item.time_start * 1000).format("YYYY-MM-DD HH:mm:ss")
@@ -1179,7 +1224,7 @@ export default {
               }
             });
             this.noticeMsgStr = "";
-            this.noticeMsg.forEach((item) => {
+            this.noticeMsg.forEach(item => {
               this.noticeMsgStr +=
                 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
                 item.content;
@@ -1220,7 +1265,7 @@ export default {
             }, 100);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -1256,7 +1301,7 @@ export default {
         console.log("str1=" + str1);
         return str1;
       }
-    },
+    }
   },
   created() {
     if (this.userData.grade_id) {
@@ -1289,7 +1334,7 @@ export default {
 
     // 处理点击目标dom外的显示与隐藏
     let _that = this;
-    $(document).click((e) => {
+    $(document).click(e => {
       let ele = e ? e.target : window.event.srcElement;
       if (
         ele.id != "header-search-input" &&
@@ -1323,13 +1368,16 @@ export default {
     //     }
     //   }
     // })
-  },
+    if (localStorage.getItem("firstShowTrzNav") == 0) {
+      this.$store.commit("firstShowTrzNav", 0);
+    }
+  }
 };
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
-@import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/app.less";
 @height: 48px;
 @leftWidth: 295px;
 
@@ -1578,6 +1626,7 @@ i {
   // margin-top: 30px;
   line-height: @height;
   width: 100%;
+  min-width: 1200px;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -1712,6 +1761,12 @@ i {
         font-family: Source Han Sans CN;
         color: #ffffff;
 
+        .new-tag {
+          margin-top: -9px;
+          width: 23px;
+          height: 11px;
+        }
+
         .dot {
           border-radius: 50%;
           background: #fff;
@@ -1727,83 +1782,98 @@ i {
             display: block;
           }
         }
-      }
-      .submenu {
-        z-index: 2001;
-        display: none;
-        position: absolute;
-        top: 48px;
-        left: 0;
-        min-width: 230px;
-        height: auto;
-        background-color: @menuHoverBackgroundColor;
-        color: @White;
-        border-radius: 0px 0px 4px 4px;
-        .group-title {
-          display: block;
-          width: 217px;
-          padding: 20px 20px 5px 30px;
-          font-size: @FontSizeSmall + 2;
-        }
-        .group-list {
-          padding: 20px 0 30px 0;
-          max-height: calc(100vh - 48px - 20px - 30px);
-          overflow-y: auto;
-          li {
-            white-space: nowrap;
-            font-size: @FontSizeSmall;
-            height: 30px;
-            line-height: 30px;
-            padding: 0px;
-            cursor: pointer;
-            overflow: hidden;
-            position: relative;
-            // transition: background-color 100ms;
-            .group-item {
-              // 注意：z-inde只在position为非static（默认）的情况下生效
+        .submenu {
+          z-index: 2001;
+          display: none;
+          position: absolute;
+          top: 48px;
+          left: 0;
+          min-width: 230px;
+          height: auto;
+          background-color: @menuHoverBackgroundColor;
+          color: @White;
+          border-radius: 0px 0px 4px 4px;
+          .group-title {
+            display: block;
+            width: 217px;
+            padding: 20px 20px 5px 30px;
+            font-size: @FontSizeSmall + 2;
+          }
+          .group-list {
+            padding: 20px 0 30px 0;
+            max-height: calc(100vh - 48px - 20px - 30px);
+            overflow-y: auto;
+            li {
+              white-space: nowrap;
+              font-size: @FontSizeSmall;
+              height: 30px;
+              line-height: 30px;
+              padding: 0px;
+              cursor: pointer;
+              overflow: hidden;
               position: relative;
-              text-decoration: none;
-              color: @White;
-              width: 100%;
-              height: 100%;
-              padding: 0px 0 0px 10px;
-              font-weight: 400;
-              display: flex;
-              font-size: 12px;
-              font-family: Microsoft YaHei;
-              box-sizing: border-box;
-              // z-index: 100;
-              .li-style {
-                font-size: 12px;
-                vertical-align: middle;
-                margin-right: 6px;
-              }
-              a {
-                color: @White;
+              // transition: background-color 100ms;
+              .group-item {
+                // 注意：z-inde只在position为非static（默认）的情况下生效
+                position: relative;
                 text-decoration: none;
+                color: @White;
+                width: 100%;
+                height: 100%;
+                padding: 0px 0 0px 10px;
+                font-weight: 400;
+                display: flex;
+                font-size: 12px;
+                font-family: Microsoft YaHei;
+                box-sizing: border-box;
+                // z-index: 100;
+                .li-style {
+                  font-size: 12px;
+                  vertical-align: middle;
+                  margin-right: 6px;
+                }
+                a {
+                  color: @White;
+                  text-decoration: none;
+                }
               }
-            }
-            // &::after {
-            //   content: '';
-            //   position: absolute;
-            //   right: -100%;
-            //   top: 0;
-            //   width: 100%;
-            //   height: 30px;
-            //   background: @PrimaryColor;
-            //   transition: right 200ms;
-            //   z-index: 1;
-            // }
-            &:hover {
-              // &::after{
-              //   right: 0px;
+              // &::after {
+              //   content: '';
+              //   position: absolute;
+              //   right: -100%;
+              //   top: 0;
+              //   width: 100%;
+              //   height: 30px;
+              //   background: @PrimaryColor;
               //   transition: right 200ms;
+              //   z-index: 1;
               // }
-              background-color: @PrimaryColor;
-              // transition: background-color 300ms;
+              &:hover {
+                // &::after{
+                //   right: 0px;
+                //   transition: right 200ms;
+                // }
+                background-color: @PrimaryColor;
+                // transition: background-color 300ms;
+              }
             }
           }
         }
+      }
+
+      .header-nav-item.hover-sc {
+        background: #35384a;
+        .submenu {
+          display: block;
+        }
+      }
+      .trz-rk {
+        display: block;
+        width: 300px;
+        height: 150px;
+        position: absolute;
+        left: 230px;
+        cursor: pointer;
       }
     }
     .search-form-box {
@@ -1817,6 +1887,14 @@ i {
         height: 26px;
         line-height: 26px;
         border-radius: 14px;
+
+        @media screen and (min-width: 1918px) {
+          width: 396px;
+        }
+
+        @media screen and (max-width: 1281px) {
+          width: 196px;
+        }
         .comprehensive {
           position: absolute;
           left: 0px;
@@ -2181,83 +2259,99 @@ i {
             display: block;
           }
         }
-      }
-      .submenu {
-        z-index: 2001;
-        display: none;
-        position: absolute;
-        top: 48px;
-        left: 0;
-        min-width: 230px;
-        height: auto;
-        background-color: @menuHoverBackgroundColor;
-        color: @White;
-        border-radius: 0px 0px 4px 4px;
-        .group-title {
-          display: block;
-          width: 217px;
-          padding: 20px 20px 5px 30px;
-          font-size: @FontSizeSmall + 2;
-        }
-        .group-list {
-          padding: 20px 0 30px 0;
-          max-height: calc(100vh - 48px - 20px - 30px);
-          overflow-y: auto;
-          li {
-            white-space: nowrap;
-            font-size: @FontSizeSmall;
-            height: 30px;
-            line-height: 30px;
-            padding: 0px;
-            cursor: pointer;
-            overflow: hidden;
-            position: relative;
-            // transition: background-color 100ms;
-            .group-item {
-              // 注意：z-inde只在position为非static（默认）的情况下生效
+
+        .submenu {
+          z-index: 2001;
+          display: none;
+          position: absolute;
+          top: 48px;
+          left: 0;
+          min-width: 230px;
+          height: auto;
+          background-color: @menuHoverBackgroundColor;
+          color: @White;
+          border-radius: 0px 0px 4px 4px;
+          .group-title {
+            display: block;
+            width: 217px;
+            padding: 20px 20px 5px 30px;
+            font-size: @FontSizeSmall + 2;
+          }
+          .group-list {
+            padding: 20px 0 30px 0;
+            max-height: calc(100vh - 48px - 20px - 30px);
+            overflow-y: auto;
+            li {
+              white-space: nowrap;
+              font-size: @FontSizeSmall;
+              height: 30px;
+              line-height: 30px;
+              padding: 0px;
+              cursor: pointer;
+              overflow: hidden;
               position: relative;
-              text-decoration: none;
-              color: @White;
-              width: 100%;
-              height: 100%;
-              padding: 0px 0 0px 10px;
-              font-weight: 400;
-              display: flex;
-              font-size: 12px;
-              font-family: Microsoft YaHei;
-              box-sizing: border-box;
-              // z-index: 100;
-              .li-style {
-                font-size: 12px;
-                vertical-align: middle;
-                margin-right: 6px;
-              }
-              a {
-                color: @White;
+              // transition: background-color 100ms;
+              .group-item {
+                // 注意：z-inde只在position为非static（默认）的情况下生效
+                position: relative;
                 text-decoration: none;
+                color: @White;
+                width: 100%;
+                height: 100%;
+                padding: 0px 0 0px 10px;
+                font-weight: 400;
+                display: flex;
+                font-size: 12px;
+                font-family: Microsoft YaHei;
+                box-sizing: border-box;
+                // z-index: 100;
+                .li-style {
+                  font-size: 12px;
+                  vertical-align: middle;
+                  margin-right: 6px;
+                }
+                a {
+                  color: @White;
+                  text-decoration: none;
+                }
               }
-            }
-            // &::after {
-            //   content: '';
-            //   position: absolute;
-            //   right: -100%;
-            //   top: 0;
-            //   width: 100%;
-            //   height: 30px;
-            //   background: @PrimaryColor;
-            //   transition: right 200ms;
-            //   z-index: 1;
-            // }
-            &:hover {
-              // &::after{
-              //   right: 0px;
+              // &::after {
+              //   content: '';
+              //   position: absolute;
+              //   right: -100%;
+              //   top: 0;
+              //   width: 100%;
+              //   height: 30px;
+              //   background: @PrimaryColor;
               //   transition: right 200ms;
+              //   z-index: 1;
               // }
-              background-color: @PrimaryColor;
-              // transition: background-color 300ms;
+              &:hover {
+                // &::after{
+                //   right: 0px;
+                //   transition: right 200ms;
+                // }
+                background-color: @PrimaryColor;
+                // transition: background-color 300ms;
+              }
             }
           }
         }
+      }
+
+      .header-nav-item.hover-sc {
+        background: #35384a;
+        .submenu {
+          display: block;
+        }
+      }
+      .trz-rk {
+        display: block;
+        width: 300px;
+        height: 150px;
+        position: absolute;
+        left: 230px;
+        cursor: pointer;
       }
     }
     .search-form-box {
@@ -2781,21 +2875,21 @@ i {
   .la-header {
     .right {
       .search-form-box {
-        .c-search-form {
-          width: 288px;
-          .header-xiala-history {
-            width: 288px;
-            &::after {
-              width: 270px;
-            }
-          }
-          .header-xiala-input {
-            width: 300px;
-            &::after {
-              width: 270px;
-            }
-          }
-        }
+        // .c-search-form {
+        //   width: 288px;
+        //   .header-xiala-history {
+        //     width: 288px;
+        //     &::after {
+        //       width: 270px;
+        //     }
+        //   }
+        //   .header-xiala-input {
+        //     width: 300px;
+        //     &::after {
+        //       width: 270px;
+        //     }
+        //   }
+        // }
       }
     }
   }
@@ -2804,21 +2898,21 @@ i {
   .la-header {
     .right {
       .search-form-box {
-        .c-search-form {
-          width: 195px;
-          .header-xiala-history {
-            width: 195px;
-            &::after {
-              width: 165px;
-            }
-          }
-          .header-xiala-input {
-            width: 195px;
-            &::after {
-              width: 165px;
-            }
-          }
-        }
+        // .c-search-form {
+        //   width: 195px;
+        //   .header-xiala-history {
+        //     width: 195px;
+        //     &::after {
+        //       width: 165px;
+        //     }
+        //   }
+        //   .header-xiala-input {
+        //     width: 195px;
+        //     &::after {
+        //       width: 165px;
+        //     }
+        //   }
+        // }
       }
     }
   }

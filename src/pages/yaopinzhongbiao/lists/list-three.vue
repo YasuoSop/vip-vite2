@@ -4,7 +4,7 @@
       <div class="actions">
         <toAnaly></toAnaly>
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Yaopinzhongbiao" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Yaopinzhongbiao" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
         <!-- 导出 -->
         <Export
           :out_max="300"
@@ -139,8 +139,8 @@
             <div v-if="item.prop === 'min_feiyong'">
               {{ scope.row.min_feiyong }}
             </div>
-            <div v-if="item.prop === 'qyfx'" class="extensible-td" @click="showGhAnaly(scope.row.guifanqiyezhongbiao)">
-              <a href="javascript:void(0);" class="cl-blue">企业分析</a>
+            <div v-if="item.prop === 'qyfx'" class="extensible-td" >
+              <a href="javascript:void(0);" @click="showGhAnaly(scope.row.guifanqiyezhongbiao)" class="cl-blue">企业分析</a>
             </div>
             </div>
           </template>
@@ -173,7 +173,7 @@
   import { mapState } from 'vuex'
   import tablehead from '@/config/tablehead'
   import listCheck from "@/components/common/list-check.vue"
-  import toAnaly from "./toAnaly.vue"
+  import toAnaly from "./toAnaly"
   import commonMixins from '@/mixins/common.js'
   import setTableHMixins from '@/mixins/setTableH.js'
   const defaultFiled = tablehead.yaopinzhongbiao.qy
@@ -440,7 +440,7 @@
 </script>
 
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
 
   .la-qy{
     min-height: 100px;
@@ -465,7 +465,7 @@
         &.active{
           color: @PrimaryColor;
           font-weight: 600;
-          background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
+          background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom #f5f8fb!important;
           border: none;
         }
       }
@@ -479,7 +479,7 @@
       &.active{
         color: @PrimaryColor;
         font-weight: 600;
-        background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
+        background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 30px bottom;
         border: none;
       }
     }

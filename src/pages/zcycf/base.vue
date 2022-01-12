@@ -5,7 +5,7 @@
       <div slot="title" class="dialog-header">
         保存条件
       </div>
-      <SavedPop @closeSavedPop="closeSavedPop" vuex_name="Zcycf"></SavedPop>
+      <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="Zcycf"></SavedPop>
     </el-dialog>
 
     <!-- 高级搜索弹出框 -->
@@ -97,7 +97,7 @@
       <section class="sec2">
         <!-- <div class="la-body-tab">
           <div class="market_nav">
-            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/chufang/list.vue'}">
+            <a @click.prevent="navRouteTo(1)" class="nav_one" :class="{'router-link-active': $route.path == '/chufang/list'}">
               <span class="nav"><i class="iconfont pr5" style="font-size:20px;">&#xe627;</i>处方数据</span>
             </a>
             <a @click.prevent="navRouteTo(2)" class="nav_one" :class="{'router-link-active': $route.path == '/chufang/analy', 'abandon-click-method': nopms.ksh}">
@@ -188,7 +188,7 @@
     methods: {
       navRouteTo (index) {
         if (index == 1) {
-          this.$router.push({ path: '/chufang/list.vue'})
+          this.$router.push({ path: '/chufang/list'})
         } else if (index == 2 && !this.nopms.ksh) {
           window.ga("send","event", "tab", "click", "chufang_analy");
           window._paq.push(['trackEvent', 'tab',"click","chufang_analy", ])
@@ -257,8 +257,8 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
   .zcycf {
     .la-optioned{
       margin-bottom: 0;

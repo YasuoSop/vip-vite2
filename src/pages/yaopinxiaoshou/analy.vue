@@ -28,7 +28,7 @@
       <div class="chart_bottom" style="padding-top:11px;">
         <div class="go-list">
           <selectNuit v-model="nuit" gaKey="zhinengfenxi" title="货币单位" analy />
-          <router-link tag="a" :to="{path:'/ypxs/list.vue'}">返回列表</router-link>
+          <router-link tag="a" :to="{path:'/ypxs/list'}">返回列表</router-link>
         </div>
         <div class="chart-boxes">
           <DbEcharts title="品种排行">
@@ -106,7 +106,7 @@
 <script>
 import LoadingGif from '@/components/common/globalCom/loading-gif.vue'
 import DbEcharts from "@/components/common/db-echarts.vue"
-import selectNuit from './selectNuit.vue'
+import selectNuit from './selectNuit'
 import { mapState, mapGetters } from "vuex"
 
 var _res = {}
@@ -300,7 +300,7 @@ export default {
     },
     drawA() {
       var _that = this;
-      _that.data_a.echarts = Echarts.init(document.getElementById("echarts-a"));
+      _that.data_a.echarts = Echarts.init(document.getElementById("echarts-a"), 'yaozh_theme');
       _that.data_a.echarts.setOption({
         tooltip: {
           position: (point, params, dom, rect, size) => {
@@ -374,7 +374,7 @@ export default {
     },
     drawAOpen() {
       var _that = this;
-      Echarts.init(document.getElementById("a-open")).setOption({
+      Echarts.init(document.getElementById("a-open"), 'yaozh_theme').setOption({
         tooltip: {
           trigger: "axis",
           formatter: (params)=>{
@@ -449,7 +449,7 @@ export default {
     },
     drawB() {
       var _that = this;
-      _that.data_b.echarts = Echarts.init(document.getElementById("echarts-b"));
+      _that.data_b.echarts = Echarts.init(document.getElementById("echarts-b"), 'yaozh_theme');
       _that.data_b.echarts.setOption({
         tooltip: {
           position: (point, params, dom, rect, size) => {
@@ -523,7 +523,7 @@ export default {
     },
     drawBOpen() {
       var _that = this;
-      Echarts.init(document.getElementById("b-open")).setOption({
+      Echarts.init(document.getElementById("b-open"), 'yaozh_theme').setOption({
         tooltip: {
           trigger: 'axis',
           formatter: (params)=>{
@@ -605,7 +605,7 @@ export default {
     },
     drawC() {
       var _that = this;
-      _that.data_c.echarts = Echarts.init(document.getElementById("echarts-c"));
+      _that.data_c.echarts = Echarts.init(document.getElementById("echarts-c"), 'yaozh_theme');
       _that.data_c.echarts.setOption({
         tooltip: {
           trigger: 'axis',
@@ -727,7 +727,7 @@ export default {
     },
     drawCOpen() {
       var _that = this;
-      Echarts.init(document.getElementById("c-open")).setOption({
+      Echarts.init(document.getElementById("c-open"), 'yaozh_theme').setOption({
         tooltip: {
           trigger: 'axis',
           formatter:(params,ticket)=>{
@@ -877,7 +877,7 @@ export default {
     },
     drawD() {
       var _that = this;
-      _that.data_d.echarts = Echarts.init(document.getElementById("echarts-d"));
+      _that.data_d.echarts = Echarts.init(document.getElementById("echarts-d"), 'yaozh_theme');
       _that.data_d.echarts.setOption({
         legend: {
           type: "scroll",
@@ -926,7 +926,7 @@ export default {
     },
     drawDOpen() {
       var _that = this;
-      Echarts.init(document.getElementById("d-open")).setOption({
+      Echarts.init(document.getElementById("d-open"), 'yaozh_theme').setOption({
         legend: {
           type: "scroll",
           bottom: 0,
@@ -1018,7 +1018,7 @@ export default {
         this.echartsClear('open-charts');
         this.echartsClear('echarts');
       }
-      if(this.$route.path==='/ypxs/list.vue'){
+      if(this.$route.path==='/ypxs/list'){
         //智能分析重新搜索清空列表数据tab无法自动复位
         let tabname= this.activeTabName
         Store.commit('Yaopinxiaoshou/tabname','')
@@ -1060,7 +1060,7 @@ export default {
   background: #fff;
 }
 
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
   .chart {
     .totals {
       // margin-top:20px!important;

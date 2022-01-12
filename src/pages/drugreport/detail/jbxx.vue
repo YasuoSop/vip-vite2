@@ -11,54 +11,52 @@
           <td
             v-if="
               res.target_unique &&
-              res.target_unique.length > 0 &&
-              !res.target_unique.includes('')
+                res.target_unique.length > 0 &&
+                !res.target_unique.includes('')
             "
           >
-            <span
-              style="display: inline-flex; flex-wrap: wrap; width: 100%"
-              :style="wordBreak"
-              :class="{ 't-line5': !jspdf }"
-            >
-              <router-link
-                tag="a"
-                v-for="(item, index) in res.target_unique"
-                v-if="item.hrefid != ''"
-                :key="index"
-                target="_blank"
-                :style="
-                  !jspdf
-                    ? 'display: block;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color: rgb(72, 119, 232);'
-                    : ''
-                "
-                :to="`/targetdatas/${item.hrefid}`"
-              >
-                {{
-                  item.name +
-                    (jspdf
-                      ? index < res.target_unique.length - 1
-                        ? ";"
-                        : ""
-                      : "") || "/"
-                }}
-              </router-link>
-              <span
-                v-else
-                :style="
-                  !jspdf
-                    ? 'display: block;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'
-                    : ''
-                "
-              >
-                {{
-                  item.name +
-                    (jspdf
-                      ? index < res.target_unique.length - 1
-                        ? ";"
-                        : ""
-                      : "") || "/"
-                }}
-              </span>
+            <span :style="wordBreak" :class="{ 't-line5': !jspdf }">
+              <div v-for="(item, index) in res.target_unique" :key="index">
+                <div style="display: inline-block;" v-if="item.hrefid != ''">
+                  <router-link
+                    tag="a"
+                    target="_blank"
+                    :style="
+                      !jspdf
+                        ? 'display: block;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color: rgb(72, 119, 232);'
+                        : ''
+                    "
+                    :to="`/targetdatas/${item.hrefid}`"
+                  >
+                    {{
+                      item.name +
+                        (jspdf
+                          ? index < res.target_unique.length - 1
+                            ? ";"
+                            : ""
+                          : "") || "/"
+                    }}
+                  </router-link>
+                </div>
+                <div v-else>
+                  <span
+                    :style="
+                      !jspdf
+                        ? 'display: block;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'
+                        : ''
+                    "
+                  >
+                    {{
+                      item.name +
+                        (jspdf
+                          ? index < res.target_unique.length - 1
+                            ? ";"
+                            : ""
+                          : "") || "/"
+                    }}
+                  </span>
+                </div>
+              </div>
             </span>
           </td>
           <td v-else>/</td>
@@ -68,50 +66,48 @@
           <td
             v-if="res.targets_abbr.length > 0 && !res.targets_abbr.includes('')"
           >
-            <span
-              style="display: inline-flex; flex-wrap: wrap; width: 100%"
-              :style="wordBreak"
-              :class="{ 't-line5': !jspdf }"
-            >
-              <router-link
-                tag="a"
-                :to="'/targetdatas/' + item.hrefid"
-                target="_blank"
-                v-for="(item, index) in res.targets_abbr"
-                v-if="item.hrefid != ''"
-                :key="index"
-                :style="
-                  !jspdf
-                    ? 'display: block;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color: #4877e8;'
-                    : ''
-                "
-              >
-                {{
-                  item.name +
-                    (jspdf
-                      ? index < res.targets_abbr.length - 1
-                        ? ";"
-                        : ""
-                      : "") || "/"
-                }}
-              </router-link>
-              <span
-                v-else
-                :style="
-                  !jspdf
-                    ? 'display: block;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'
-                    : ''
-                "
-              >
-                {{
-                  item.name +
-                    (jspdf
-                      ? index < res.targets_abbr.length - 1
-                        ? ";"
-                        : ""
-                      : "") || "/"
-                }}
-              </span>
+            <span :style="wordBreak" :class="{ 't-line5': !jspdf }">
+              <div v-for="(item, index) in res.targets_abbr" :key="index">
+                <div style="display: inline-block;" v-if="item.hrefid != ''">
+                  <router-link
+                    tag="a"
+                    :to="'/targetdatas/' + item.hrefid"
+                    target="_blank"
+                    :style="
+                      !jspdf
+                        ? 'display: block;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color: #4877e8;'
+                        : ''
+                    "
+                  >
+                    {{
+                      item.name +
+                        (jspdf
+                          ? index < res.targets_abbr.length - 1
+                            ? ";"
+                            : ""
+                          : "") || "/"
+                    }}
+                  </router-link>
+                </div>
+                <div v-else>
+                  <span
+                    :style="
+                      !jspdf
+                        ? 'display: block;width: 100%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'
+                        : ''
+                    "
+                  >
+                    {{
+                      item.name +
+                        (jspdf
+                          ? index < res.targets_abbr.length - 1
+                            ? ";"
+                            : ""
+                          : "") || "/"
+                    }}
+                  </span>
+                </div>
+              </div>
             </span>
           </td>
           <td v-else>/</td>
@@ -143,7 +139,7 @@
                 :key="item"
                 class="clearfix"
               >
-                <span>{{ res.atc }}&nbsp;&nbsp;</span>
+                <span>{{ item }}&nbsp;&nbsp;</span>
                 <span>{{ getAtc(item, res.atcarr) }}</span>
                 <br v-if="index % 2 != 0" />
               </div>
@@ -220,17 +216,17 @@
 
 <script>
 import { mapState } from "vuex";
-import DetailKzxx from "./kzxx.vue";
+import DetailKzxx from "./kzxx";
 export default {
   components: { DetailKzxx },
   props: {
     extendList: Array,
     jspdf: {
-      type: Boolean,
+      type: Boolean
     },
     res: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   data() {
     return {
@@ -239,13 +235,13 @@ export default {
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
-      max-height: 36px;`,
+      max-height: 36px;`
     };
   },
   computed: {
     ...mapState({
-      pdfHandlerStatus: (state) => state.DrugReport.pdfHandlerStatus,
-    }),
+      pdfHandlerStatus: state => state.DrugReport.pdfHandlerStatus
+    })
   },
   mounted() {},
   methods: {
@@ -271,12 +267,12 @@ export default {
     },
     getAtcNames(name) {
       return name ? name.replace(/\s+/g, "").split(";") : [];
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 @import "../css/com.less";
 
 .table-left-head {

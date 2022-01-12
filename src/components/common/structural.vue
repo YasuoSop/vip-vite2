@@ -40,7 +40,7 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .hxs-btn-wrap{
   margin: 0 15px;
   .hxs-btn{

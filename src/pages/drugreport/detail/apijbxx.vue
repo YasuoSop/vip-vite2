@@ -43,7 +43,7 @@
 
 <script>
 import { mapState } from "vuex";
-import DetailKzxx from "./kzxx.vue";
+import DetailKzxx from "./kzxx";
 export default {
   components: { DetailKzxx },
   props: {
@@ -100,7 +100,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 @import "../css/com.less";
 
 .table-left-head {

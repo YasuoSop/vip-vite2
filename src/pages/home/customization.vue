@@ -20,7 +20,7 @@
   }
 </script>
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   .la-Customization{
     box-shadow: @BoxShadow;
     width: 1182px;

@@ -100,12 +100,12 @@
               </div>
               <!-- 品种一致性情况 -->
               <div v-else-if="item.prop === 'guifanname'">
-                <div v-if="vueCheckListPms('Dailiangcaigou', item.label)" style="color: #4877E8;text-decoration: underline;cursor: pointer" @click="goYpYzxpj(scope.row.guifanname)">查看</div>
+                <div v-if="vueCheckListPms('Dailiangcaigou', item.label)" style="color: #4877E8;text-decoration: underline;cursor: pointer;display: inline-block;" @click="goYpYzxpj(scope.row.guifanname)">查看</div>
                 <span v-else class="abandon-click-method">暂无权限</span>
               </div>
               <!-- 企业一致性情况 -->
               <div v-else-if="item.prop === 'guifanqiyezhongbiao'">
-                <div v-if="vueCheckListPms('Dailiangcaigou', item.label)"  style="color: #4877E8;text-decoration: underline;cursor: pointer" @click="goQyYzxpj(scope.row.guifanqiyezhongbiao)">查看</div>
+                <div v-if="vueCheckListPms('Dailiangcaigou', item.label)"  style="color: #4877E8;text-decoration: underline;cursor: pointer;display: inline-block;" @click="goQyYzxpj(scope.row.guifanqiyezhongbiao)">查看</div>
                 <span v-else class="abandon-click-method">暂无权限</span>
               </div>
               <!-- 文件来源 -->
@@ -346,7 +346,7 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .la-list {
   .item_top {
     height: 190px;

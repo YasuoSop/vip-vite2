@@ -65,7 +65,7 @@
                 <span class="topic"><span v-if="item.type_title">#</span>{{item.type_title}}</span>
               </router-link>
               <!-- 点击标记为已读 -->
-              <i class="handle-read el-icon-circle-check cl-green" @click="changeToReaded(item.id,$event)"></i>
+              <i class="handle-read el-icon-circle-check cl-green" @click.stop="changeToReaded(item.id,$event)"></i>
             </div>
             <div class="time">{{item.addtime.split(' ')[0]}}</div>
           </div>
@@ -103,6 +103,9 @@ export default {
       xxtzNum: state => state.UserCenter.xxtzNum,
     })
   },
+  created() {
+    Store.dispatch("UserCenter/handleXxtzAxios", {page: 1, pageSize: 10})
+  },
   methods: {
     // currentPage 改变时会触发
     handleCurrentChange(val) {
@@ -110,7 +113,6 @@ export default {
       Store.dispatch("UserCenter/handleXxtzAxios", this.param)
     },
     changeToReaded(theId,event) {
-     
       let url=''
       let params={}
       let urlId=event.currentTarget.parentNode.firstChild.attributes['data-id'].value
@@ -164,7 +166,7 @@ export default {
         url: url,
       }
       Axios(Object.assign({},obj,params)).then((res) => {
-        
+
         if (res.data.code === 200) {
           Store.dispatch("UserCenter/handleXxtzAxios", this.param)
           Store.dispatch("UserCenter/handleHeaderMsgAxios", {page: 1, pageSize: 5})
@@ -187,7 +189,7 @@ export default {
           Store.dispatch("UserCenter/handleXxtzAxios", this.param)
           Store.dispatch("UserCenter/handleHeaderMsgAxios", {page: 1, pageSize: 5})
           Store.dispatch("UserCenter/handleDyglAxios", this.param)
-          
+
         }
       }).catch((err) => {
         console.log(err)
@@ -198,7 +200,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .mc {
   .right-view {
     .all-none {

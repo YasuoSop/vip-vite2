@@ -813,8 +813,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
 
 .el-select-dropdown__item {
   padding-left: 15px;

@@ -3,8 +3,8 @@
     <!-- 自定义加载界面 -->
     <LoadingGif :loadFlag="isLoading" v-if="isLoading"></LoadingGif>
     <!-- 加载完成显示部分 -->
-    <div class="detail-list" v-else>
-      <div class="detail-header">
+    <div class="detail-list china-detail" v-else>
+      <div class="detail-header header-fixed">
         <div class="header-left">
           <div class="left-top">
             <span class=" top-id" :title="data.pizhunwenhao">{{
@@ -21,13 +21,16 @@
             <span class="id-green bg-orange" v-if="data.titel.jiyao">{{
               data.titel.jiyao
             }}</span>
+            <span class="id-green bg-orange" v-if="jbxx.yuanyan == 1"
+              >原研</span
+            >
           </div>
         </div>
       </div>
       <div class="main">
         <div
           class="left-nav"
-          :style="{ top: (showPromtNotice ? 118 : 88) + 'px' }"
+          :style="{ top: (showPromtNotice ? 128 : 98) + 'px' }"
         >
           <div class="nav-list nav-event" @click="handleNavClick">
             <a class="nav-item active" v-if="hasPartOne">基本信息</a>
@@ -42,257 +45,202 @@
           <slide-section :title="'基本信息'" class="the-part" v-if="hasPartOne">
             <div class="tb-wrap">
               <table class="tb-t">
-                <tr>
-                  <td>批准文号</td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.pizhunwenhao ? jbxx.pizhunwenhao : "/" }}
-                    </div>
-                  </td>
-                  <td>原批准文号</td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.yuanpizhunwenhao ? jbxx.yuanpizhunwenhao : "/" }}
-                    </div>
-                  </td>
-                </tr>
-                <tr>
+                <tr v-if="jbxx.name">
                   <td>药品名称（中文）</td>
-                  <td>
+                  <td colspan="3">
                     <div class="td-line5">
-                      {{ jbxx.name ? jbxx.name : "/" }}
+                      {{ jbxx.name }}
                     </div>
                   </td>
+                </tr>
+                <tr v-if="jbxx.englishname">
                   <td>药品名称（英文）</td>
-                  <td>
+                  <td colspan="3">
                     <div class="td-line5">
-                      {{ jbxx.englishname ? jbxx.englishname : "/" }}
+                      {{ jbxx.englishname }}
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <tr v-if="jbxx.brandname">
                   <td>商品名（中文）</td>
-                  <td>
+                  <td colspan="3">
                     <div class="td-line5">
-                      {{ jbxx.brandname ? jbxx.brandname : "/" }}
+                      {{ jbxx.brandname }}
                     </div>
                   </td>
-                  <td>靶点简称</td>
-                  <td>
+                </tr>
+                <tr v-if="jbxx.type">
+                  <td>药品类型</td>
+                  <td colspan="3">
                     <div class="td-line5">
-                      {{ jbxx.targets_abbr ? jbxx.targets_abbr : "/" }}
+                      {{ jbxx.type }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.pizhunwenhao">
+                  <td>批准文号</td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.pizhunwenhao }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.jixing">
+                  <td>剂型</td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.jixing }}
                     </div>
                   </td>
                 </tr>
                 <tr>
-                  <td>适应症</td>
-                  <td>
-                    <div class="td-line5" v-html="jbxx.shiyingzheng ? jbxx.shiyingzheng : '/'">
-                    </div>
-                  </td>
-                  <td>靶点全称</td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.targets ? jbxx.targets : "/" }}
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>本位码（中文）</td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.benweima ? jbxx.benweima : "/" }}
-                    </div>
-                  </td>
-                  <td>本位码备注</td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.remarks ? jbxx.remarks : "/" }}
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    无需开展一致性评价品种
-
-                    <el-tooltip effect="zhuce" placement="right">
-                      <div slot="content">
-                        根据《临床价值明确，无法推荐参比制剂的化学药品目录》分类。
-                      </div>
-                      <i
-                        class="el-icon-question cl-green"
-                        style="margin-left:4px;"
-                      ></i>
-                    </el-tooltip>
-                  </td>
-                  <td>{{ data.wftjcbzj == 1 ? "是" : "否" }}</td>
-                  <td>
-                    过度重复品种
-
-                    <el-tooltip effect="zhuce" placement="right">
-                      <div slot="content">
-                        根据中国药学会发布的过度重复药品提示性公告标记分类。过度重复：同一药品已获批准文号企业数在20家以上；获批企业数≤3家：指在该药品大类是过度重复品种，但药品当前剂型已有批准文号企业数≤3家。
-                      </div>
-                      <i
-                        class="el-icon-question cl-green"
-                        style="margin-left:4px;"
-                      ></i>
-                    </el-tooltip>
-                  </td>
-                  <td>
-                    <div class="td-line5">
-                      {{ data.gdcf ? data.gdcf : "/" }}
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <!-- <td>
-                    带量采购品种
-                    <el-tooltip effect="zhuce" placement="right">
-                      <div slot="content">
-                        集中采购品种目录中药品名称、规格及其生产企业相同的药品
-                      </div>
-                      <i
-                        class="el-icon-question cl-green"
-                        style="margin-left:4px;"
-                      ></i>
-                    </el-tooltip>
-                  </td>
-                  <td>
-                    <div class="td-line5">
-                      <router-link
-                        target="_blank"
-                        class="under_a"
-                        :to="{
-                          path: '/dailiangcaigou',
-                          query: {
-                            fourth_condition: `bianma=${jbxx.bianma} _and
-                        qiyebianmatz=${jbxx.qiyebianmatz} _and guifanguige=${jbxx.guifanguige}`
-                          }
-                        }"
-                        v-if="jbxx.dailiangcaigou === '是'"
-                        >{{
-                          jbxx.dailiangcaigou ? jbxx.dailiangcaigou : "/"
-                        }}</router-link
-                      >
-                      <div v-else>
-                        {{ jbxx.dailiangcaigou ? jbxx.dailiangcaigou : "/" }}
-                      </div>
-                    </div>
-                  </td> -->
                   <td>规格</td>
                   <td colspan="3">
                     <div class="td-line5">
-                      {{ jbxx.guige ? jbxx.guige : "/" }}
+                      {{ jbxx.guige }}
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td>剂型</td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.jixing ? jbxx.jixing : "/" }}
-                    </div>
-                  </td>
-                  <td>药品类型</td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.type ? jbxx.type : "/" }}
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <!-- <td>原研/仿制（药智）
-                    <el-tooltip  effect="zhuce" placement="right">
-                      <div slot="content">原研/仿制（药智）的分类主要是根据药品注册分类和新闻等信息综合判断。</div>
-                      <i class="el-icon-question cl-green" style="margin-left:4px;"></i>
-                    </el-tooltip>
-                  </td>
-                  <td><div class="td-line5">{{jbxx.yuanyanhuofangzhi ? jbxx.yuanyanhuofangzhi : '/'}}</div></td> -->
-                  <td>批准日期</td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.authorizationday ? jbxx.authorizationday : "/" }}
-                    </div>
-                  </td>
-                  <td>生产企业</td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.shengchanqiye ? jbxx.shengchanqiye : "/" }}
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>生产地址</td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.address ? jbxx.address : "/" }}
-                    </div>
-                  </td>
+                <tr v-if="jbxx.mah">
                   <td>上市许可持有人</td>
-                  <td>
-                    <div class="td-line5">{{ jbxx.mah || "/" }}</div>
+                  <td colspan="3">
+                    <div class="td-line5">{{ jbxx.mah }}</div>
                   </td>
                 </tr>
-                <tr>
+                <tr v-if="jbxx.mahaddresszhongwen">
                   <td>上市许可持有人地址</td>
                   <td colspan="3">
                     <div class="td-line5">
-                      {{ jbxx.mahaddresszhongwen || "/" }}
+                      {{ jbxx.mahaddresszhongwen }}
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td>
+                <tr v-if="jbxx.shengchanqiye">
+                  <td>生产企业</td>
+                  <td colspan="3">
                     <div class="td-line5">
-                      同成分厂家数
-                      <el-tooltip effect="zhuce" placement="right">
-                        <div slot="content">
-                          活性成分相同的厂家数。
-                        </div>
-                        <i
-                          class="el-icon-question cl-green"
-                          style="margin-left:4px;"
-                        ></i>
-                      </el-tooltip>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.changjiashuat || "/" }}
-                    </div>
-                  </td>
-                  <td>
-                    <div class="td-line5">
-                      自产原料药厂家
-                      <el-tooltip effect="zhuce" placement="right">
-                        <div slot="content">
-                          既生产原料药又生产该原料药的制剂产品的厂家。
-                        </div>
-                        <i
-                          class="el-icon-question cl-green"
-                          style="margin-left:4px;"
-                        ></i>
-                      </el-tooltip>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="td-line5">
-                      {{ jbxx.zcyly || "/" }}
+                      {{ jbxx.shengchanqiye }}
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td>
+                <tr v-if="jbxx.authorizationday">
+                  <td>批准日期</td>
+                  <td colspan="3">
                     <div class="td-line5">
-                      保健药品
+                      {{ jbxx.authorizationday }}
                     </div>
                   </td>
-                  <td>
+                </tr>
+                <tr v-if="jbxx.address">
+                  <td>生产地址</td>
+                  <td colspan="3">
                     <div class="td-line5">
-                      {{ jbxx.baojianpin || "/" }}
+                      {{ jbxx.address }}
                     </div>
                   </td>
+                </tr>
+                <tr v-if="jbxx.yuanpizhunwenhao">
+                  <td>
+                    原批准文号
+                    <el-tooltip effect="zhuce" placement="right">
+                      <div slot="content">
+                        再注册前的批准文号。
+                      </div>
+                      <i
+                        class="el-icon-question cl-green"
+                        style="margin-left:4px;"
+                      ></i>
+                    </el-tooltip>
+                  </td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.yuanpizhunwenhao }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.benweima">
+                  <td>药品本位码</td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.benweima }}
+                    </div>
+                  </td>
+                </tr>
+
+                <tr v-if="jbxx.remarks">
+                  <td>药品本位码备注</td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.remarks }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.yspzwh">
+                  <td>
+                    原始批准文号
+                    <el-tooltip effect="zhuce" placement="right">
+                      <div slot="content">
+                        首次批准的批准文号。
+                      </div>
+                      <i
+                        class="el-icon-question cl-green"
+                        style="margin-left:4px;"
+                      ></i>
+                    </el-tooltip>
+                  </td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.yspzwh }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.yspzsj">
+                  <td>原始批准日期</td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.yspzsj }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.targets_abbr && jbxx.targets_abbr.length > 0">
+                  <td>靶点简称</td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.targets_abbr }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.targets">
+                  <td>靶点全称</td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.targets }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="data.atc || data.atcarr.length > 0">
+                  <td>ATC分类</td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      <div
+                        v-for="(item, index) in getAtcNames(data.atc)"
+                        :key="item"
+                        class="clearfix"
+                      >
+                        <span>{{ item }}&nbsp;&nbsp;</span
+                        ><span>{{ getAtc(item, data.atcarr) }}</span>
+                        <br v-if="index % 2 != 0" />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.shiyingzheng">
+                  <td>适应症</td>
+                  <td colspan="3">
+                    <div class="td-line5" v-html="jbxx.shiyingzheng"></div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.dailiangcaigou1">
                   <td>
                     <div class="td-line5">
                       带量采购品种
@@ -307,7 +255,7 @@
                       </el-tooltip>
                     </div>
                   </td>
-                  <td>
+                  <td colspan="3">
                     <div class="td-line5">
                       <router-link
                         target="_blank"
@@ -321,34 +269,126 @@
                         }"
                         v-if="jbxx.dailiangcaigou1 === '已中选'"
                         >{{
-                          jbxx.dailiangcaigou1
-                            ? jbxx.dailiangcaigou1
-                            : "/"
+                          jbxx.dailiangcaigou1 ? jbxx.dailiangcaigou1 : "/"
                         }}</router-link
                       >
                       <div v-else>
-                        {{
-                          jbxx.dailiangcaigou1
-                            ? jbxx.dailiangcaigou1
-                            : "/"
-                        }}
+                        {{ jbxx.dailiangcaigou1 ? jbxx.dailiangcaigou1 : "/" }}
                       </div>
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td>ATC分类</td>
+                <tr v-if="data.gdcf">
+                  <td>
+                    过度重复品种
+                    <el-tooltip effect="zhuce" placement="right">
+                      <div slot="content">
+                        根据中国药学会发布的过度重复药品提示性公告标记分类。过度重复：同一药品已获批准文号企业数在20家以上；获批企业数≤3家：指在该药品大类是过度重复品种，但药品当前剂型已有批准文号企业数≤3家。
+                      </div>
+                      <i
+                        class="el-icon-question cl-green"
+                        style="margin-left:4px;"
+                      ></i>
+                    </el-tooltip>
+                  </td>
                   <td colspan="3">
                     <div class="td-line5">
-                      <div
-                        v-for="(item, index) in getAtcNames(data.atc)"
-                        :key="item"
-                        class="clearfix"
-                      >
-                        <span>{{ item }}&nbsp;&nbsp;</span
-                        ><span>{{ getAtc(item, data.atcarr) }}</span>
-                        <br v-if="index % 2 != 0" />
+                      {{ data.gdcf }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="data.wftjcbzj && data.wftjcbzj == 1">
+                  <td>
+                    无需开展一致性评价品种
+                    <el-tooltip effect="zhuce" placement="right">
+                      <div slot="content">
+                        根据《临床价值明确，无法推荐参比制剂的化学药品目录》分类。
                       </div>
+                      <i
+                        class="el-icon-question cl-green"
+                        style="margin-left:4px;"
+                      ></i>
+                    </el-tooltip>
+                  </td>
+                  <td colspan="3">{{ data.wftjcbzj == 1 ? "是" : "否" }}</td>
+                </tr>
+                <tr v-if="jbxx.zcyly">
+                  <td>
+                    <div class="td-line5">
+                      自产原料药厂家
+                      <el-tooltip effect="zhuce" placement="right">
+                        <div slot="content">
+                          既生产原料药又生产该原料药的制剂产品的厂家。
+                        </div>
+                        <i
+                          class="el-icon-question cl-green"
+                          style="margin-left:4px;"
+                        ></i>
+                      </el-tooltip>
+                    </div>
+                  </td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.zcyly }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.changjiashuat">
+                  <td>
+                    <div class="td-line5">
+                      同成分厂家数
+                      <el-tooltip effect="zhuce" placement="right">
+                        <div slot="content">
+                          活性成分相同的厂家数。
+                        </div>
+                        <i
+                          class="el-icon-question cl-green"
+                          style="margin-left:4px;"
+                        ></i>
+                      </el-tooltip>
+                    </div>
+                  </td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.changjiashuat }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.baojianpin">
+                  <td>
+                    <div class="td-line5">
+                      保健药品
+                    </div>
+                  </td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.baojianpin }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="jbxx.otc">
+                  <td>市场状态</td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      {{ jbxx.otc }}
+                    </div>
+                  </td>
+                </tr>
+                <tr v-if="data.zhuanli">
+                  <td>专利信息</td>
+                  <td colspan="3">
+                    <div class="td-line5">
+                      <a
+                        v-for="(item, index) in data.zhuanli.split(';')"
+                        :key="index"
+                        :href="
+                          `https://patent.yaozh.com/list?words=KWS=${item}&sourceType=cn`
+                        "
+                        target="_blank"
+                        class="cl-blue"
+                      >
+                        {{ item }} &nbsp;
+                      </a>
                     </div>
                   </td>
                 </tr>
@@ -436,6 +476,14 @@
                           :key="index2"
                         >
                           <div class="time" v-if="index2 === 0 && key1">
+                            <span class="year"
+                              >{{
+                                key1
+                                  .toString()
+                                  .split("；")[0]
+                                  .split("-")[0]
+                              }}年</span
+                            >
                             <span class="m-d"
                               >{{
                                 key1
@@ -448,14 +496,6 @@
                                   .split("；")[0]
                                   .split("-")[2]
                               }}日</span
-                            >
-                            <span class="year"
-                              >{{
-                                key1
-                                  .toString()
-                                  .split("；")[0]
-                                  .split("-")[0]
-                              }}年</span
                             >
                           </div>
                           <!-- 没有具体年月日时，则如下显示 -->
@@ -475,101 +515,351 @@
                             <tr>
                               <td
                                 v-bind:rowspan="
-                                  getRowSpan(resetTableObject(item))
+                                  getRowSpan(resetTableObject(item, key1))
                                 "
                                 class="spe-td"
                               >
                                 {{ item.drugidStatus }}
                               </td>
                               <td
-                                v-for="(val2, index2) in resetTableObject(item)"
+                                v-for="(val2, index2) in resetTableObject(
+                                  item,
+                                  key1
+                                )"
                                 :key="index2"
                                 v-if="index2 >= 0 && index2 < 3"
+                                :colspan="val2.col"
                               >
-                                {{ $t("lDetail.devProgress." + val2.thename) }}
-                                <router-link
-                                  class="link"
-                                  :to="yflcLink(item, val2.thename)"
-                                  target="_blank"
-                                  v-if="
-                                    (val2.thename === 'shoulihao' ||
-                                      val2.thename === 'me_id' ||
-                                      (val2.thename == 'pizhunwenhao' &&
-                                        item.pizhunwenhao_type != 0)) &&
-                                      item.id
-                                  "
-                                  >{{ val2.thevalue }}</router-link
-                                >
-                                <span v-else>{{ val2.thevalue }}</span>
+                                <span>
+                                  {{
+                                    $t("lDetail.devProgress." + val2.thename)
+                                  }}
+
+                                  <span
+                                    v-if="
+                                      (val2.thename === 'shoulihao' ||
+                                        val2.thename === 'me_id' ||
+                                        (val2.thename == 'pizhunwenhao' &&
+                                          item.pizhunwenhao_type != 0)) &&
+                                        item.id
+                                    "
+                                  >
+                                    <span
+                                      v-for="(txt,
+                                      txtKey,
+                                      txti) in val2.thevalue"
+                                      :key="txti"
+                                    >
+                                      <router-link
+                                        class="link"
+                                        :to="
+                                          yflcLink(
+                                            item,
+                                            val2.thename,
+                                            txt,
+                                            txtKey
+                                          )
+                                        "
+                                        target="_blank"
+                                        >{{ txt }}
+                                      </router-link>
+                                      <span
+                                        style="color:#545B6D;"
+                                        v-if="
+                                          txti <
+                                            Object.keys(val2.thevalue).length -
+                                              1
+                                        "
+                                      >
+                                        /
+                                      </span>
+                                    </span>
+                                  </span>
+                                  <span v-else>
+                                    {{ val2.thevalue }}
+                                    <span
+                                      v-if="
+                                        item.pijian &&
+                                          item.pijian.pizhunwenhao &&
+                                          val2.thename == 'jielun'
+                                      "
+                                    >
+                                      (批准文号：
+                                      <!-- item.pijian.tp = 1 国产 否则进口 -->
+                                      <a
+                                        class="pzh"
+                                        v-if="item.pijian.xuhao"
+                                        :href="
+                                          item.pijian.tp == 1
+                                            ? `/cfdadrug/detail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                            : `/cfdadrug/jkdetail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                        "
+                                        target="_blank"
+                                        >{{ item.pijian.pizhunwenhao }}</a
+                                      >
+                                      <span v-else>{{
+                                        item.pijian.pizhunwenhao
+                                      }}</span
+                                      >)
+                                    </span>
+                                  </span>
+                                </span>
                               </td>
                             </tr>
                             <tr>
                               <td
-                                v-for="(val2, index2) in resetTableObject(item)"
+                                v-for="(val2, index2) in resetTableObject(
+                                  item,
+                                  key1
+                                )"
                                 :key="index2"
                                 v-if="index2 >= 3 && index2 < 6"
+                                :colspan="val2.col"
                               >
-                                {{ $t("lDetail.devProgress." + val2.thename) }}
-                                <router-link
-                                  class="link"
-                                  :to="yflcLink(item, val2.thename)"
-                                  target="_blank"
-                                  v-if="
-                                    (val2.thename === 'shoulihao' ||
-                                      val2.thename === 'me_id' ||
-                                      (val2.thename == 'pizhunwenhao' &&
-                                        item.pizhunwenhao_type != 0)) &&
-                                      item.id
-                                  "
-                                  >{{ val2.thevalue }}</router-link
-                                >
-                                <span v-else>{{ val2.thevalue }}</span>
+                                <span>
+                                  {{
+                                    $t("lDetail.devProgress." + val2.thename)
+                                  }}
+
+                                  <span
+                                    v-if="
+                                      (val2.thename === 'shoulihao' ||
+                                        val2.thename === 'me_id' ||
+                                        (val2.thename == 'pizhunwenhao' &&
+                                          item.pizhunwenhao_type != 0)) &&
+                                        item.id
+                                    "
+                                  >
+                                    <span
+                                      v-for="(txt,
+                                      txtKey,
+                                      txti) in val2.thevalue"
+                                      :key="txti"
+                                    >
+                                      <router-link
+                                        class="link"
+                                        :to="
+                                          yflcLink(
+                                            item,
+                                            val2.thename,
+                                            txt,
+                                            txtKey
+                                          )
+                                        "
+                                        target="_blank"
+                                        >{{ txt }}
+                                      </router-link>
+                                      <span
+                                        style="color:#545B6D;"
+                                        v-if="
+                                          txti <
+                                            Object.keys(val2.thevalue).length -
+                                              1
+                                        "
+                                      >
+                                        /
+                                      </span>
+                                    </span>
+                                  </span>
+                                  <span v-else>
+                                    {{ val2.thevalue }}
+                                    <span
+                                      v-if="
+                                        item.pijian &&
+                                          item.pijian.pizhunwenhao &&
+                                          val2.thename == 'jielun'
+                                      "
+                                    >
+                                      (批准文号：
+                                      <!-- item.pijian.tp = 1 国产 否则进口 -->
+                                      <a
+                                        class="pzh"
+                                        v-if="item.pijian.xuhao"
+                                        :href="
+                                          item.pijian.tp == 1
+                                            ? `/cfdadrug/detail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                            : `/cfdadrug/jkdetail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                        "
+                                        target="_blank"
+                                        >{{ item.pijian.pizhunwenhao }}</a
+                                      >
+                                      <span v-else>{{
+                                        item.pijian.pizhunwenhao
+                                      }}</span
+                                      >)
+                                    </span>
+                                  </span>
+                                </span>
                               </td>
                             </tr>
                             <tr>
                               <td
-                                v-for="(val2, index2) in resetTableObject(item)"
+                                v-for="(val2, index2) in resetTableObject(
+                                  item,
+                                  key1
+                                )"
                                 :key="index2"
                                 v-if="index2 >= 6 && index2 < 9"
+                                :colspan="val2.col"
                               >
-                                {{ $t("lDetail.devProgress." + val2.thename) }}
-                                <router-link
-                                  class="link"
-                                  :to="yflcLink(item, val2.thename)"
-                                  target="_blank"
-                                  v-if="
-                                    (val2.thename === 'shoulihao' ||
-                                      val2.thename === 'me_id' ||
-                                      (val2.thename == 'pizhunwenhao' &&
-                                        item.pizhunwenhao_type != 0)) &&
-                                      item.id
-                                  "
-                                  >{{ val2.thevalue }}</router-link
-                                >
-                                <span v-else>{{ val2.thevalue }}</span>
+                                <span>
+                                  {{
+                                    $t("lDetail.devProgress." + val2.thename)
+                                  }}
+                                  <span
+                                    v-if="
+                                      (val2.thename === 'shoulihao' ||
+                                        val2.thename === 'me_id' ||
+                                        (val2.thename == 'pizhunwenhao' &&
+                                          item.pizhunwenhao_type != 0)) &&
+                                        item.id
+                                    "
+                                  >
+                                    <span
+                                      v-for="(txt,
+                                      txtKey,
+                                      txti) in val2.thevalue"
+                                      :key="txti"
+                                    >
+                                      <router-link
+                                        class="link"
+                                        :to="
+                                          yflcLink(
+                                            item,
+                                            val2.thename,
+                                            txt,
+                                            txtKey
+                                          )
+                                        "
+                                        target="_blank"
+                                        >{{ txt }}
+                                      </router-link>
+                                      <span
+                                        style="color:#545B6D;"
+                                        v-if="
+                                          txti <
+                                            Object.keys(val2.thevalue).length -
+                                              1
+                                        "
+                                      >
+                                        /
+                                      </span>
+                                    </span>
+                                  </span>
+                                  <span v-else>
+                                    {{ val2.thevalue }}
+                                    <span
+                                      v-if="
+                                        item.pijian &&
+                                          item.pijian.pizhunwenhao &&
+                                          val2.thename == 'jielun'
+                                      "
+                                    >
+                                      (批准文号：
+                                      <!-- item.pijian.tp = 1 国产 否则进口 -->
+                                      <a
+                                        class="pzh"
+                                        v-if="item.pijian.xuhao"
+                                        :href="
+                                          item.pijian.tp == 1
+                                            ? `/cfdadrug/detail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                            : `/cfdadrug/jkdetail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                        "
+                                        target="_blank"
+                                        >{{ item.pijian.pizhunwenhao }}</a
+                                      >
+                                      <span v-else>{{
+                                        item.pijian.pizhunwenhao
+                                      }}</span
+                                      >)
+                                    </span>
+                                  </span>
+                                </span>
                               </td>
                             </tr>
                             <tr>
                               <td
-                                v-for="(val2, index2) in resetTableObject(item)"
+                                v-for="(val2, index2) in resetTableObject(
+                                  item,
+                                  key1
+                                )"
                                 :key="index2"
                                 v-if="index2 >= 9 && index2 < 12"
+                                :colspan="val2.col"
                               >
-                                {{ $t("lDetail.devProgress." + val2.thename) }}
-                                <router-link
-                                  class="link"
-                                  :to="yflcLink(item, val2.thename)"
-                                  target="_blank"
-                                  v-if="
-                                    (val2.thename === 'shoulihao' ||
-                                      val2.thename === 'me_id' ||
-                                      (val2.thename == 'pizhunwenhao' &&
-                                        item.pizhunwenhao_type != 0)) &&
-                                      item.id
-                                  "
-                                  >{{ val2.thevalue }}</router-link
-                                >
-                                <span v-else>{{ val2.thevalue }}</span>
+                                <span>
+                                  {{
+                                    $t("lDetail.devProgress." + val2.thename)
+                                  }}
+                                  <span
+                                    v-if="
+                                      (val2.thename === 'shoulihao' ||
+                                        val2.thename === 'me_id' ||
+                                        (val2.thename == 'pizhunwenhao' &&
+                                          item.pizhunwenhao_type != 0)) &&
+                                        item.id
+                                    "
+                                  >
+                                    <span
+                                      v-for="(txt,
+                                      txtKey,
+                                      txti) in val2.thevalue"
+                                      :key="txti"
+                                    >
+                                      <router-link
+                                        class="link"
+                                        :to="
+                                          yflcLink(
+                                            item,
+                                            val2.thename,
+                                            txt,
+                                            txtKey
+                                          )
+                                        "
+                                        target="_blank"
+                                        >{{ txt }}
+                                      </router-link>
+                                      <span
+                                        style="color:#545B6D;"
+                                        v-if="
+                                          txti <
+                                            Object.keys(val2.thevalue).length -
+                                              1
+                                        "
+                                      >
+                                        /
+                                      </span>
+                                    </span>
+                                  </span>
+                                  <span v-else>
+                                    {{ val2.thevalue }}
+                                    <span
+                                      v-if="
+                                        item.pijian &&
+                                          item.pijian.pizhunwenhao &&
+                                          val2.thename == 'jielun'
+                                      "
+                                    >
+                                      (批准文号：
+                                      <!-- item.pijian.tp = 1 国产 否则进口 -->
+                                      <a
+                                        class="pzh"
+                                        v-if="item.pijian.xuhao"
+                                        :href="
+                                          item.pijian.tp == 1
+                                            ? `/cfdadrug/detail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                            : `/cfdadrug/jkdetail/${item.pijian.xuhao}?pizhunwenhao=${item.pijian.pizhunwenhao}`
+                                        "
+                                        target="_blank"
+                                        >{{ item.pijian.pizhunwenhao }}</a
+                                      >
+                                      <span v-else>{{
+                                        item.pijian.pizhunwenhao
+                                      }}</span
+                                      >)
+                                    </span>
+                                  </span>
+                                </span>
                               </td>
                             </tr>
                           </table>
@@ -614,11 +904,11 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import LaFooter from "@/components/layouts/footer.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import SlideSection from "@/components/common/slide-section.vue"
+import LaFooter from "@/components/layouts/footer.vue"
 import { mapState } from "vuex";
-import ExtendButton from "@/components/common/extend-button.vue";
+import ExtendButton from "@/components/common/extend-button.vue"
 import detailScrollMixins from "@/mixins/detailScroll.js";
 export default {
   components: {
@@ -660,23 +950,11 @@ export default {
   watch: {
     showPromtNotice(val) {
       if (val) {
-        setTimeout(() => {
-          if ($(".left-nav").css("top"))
-            $(".left-nav").css(
-              "top",
-              parseInt(
-                $(".left-nav")
-                  .css("top")
-                  .replace("px", "")
-              ) +
-                30 +
-                "px"
-            );
-        }, 600);
+        if ($(".left-nav").css("top")) {
+          $(".left-nav").css("top", "128px");
+        }
       } else {
-        setTimeout(() => {
-          if ($(".left-nav").css("top")) $(".left-nav").css("top", "88px");
-        }, 600);
+        if ($(".left-nav").css("top")) $(".left-nav").css("top", "98px");
       }
     }
   },
@@ -695,7 +973,7 @@ export default {
     getAtcNames(name) {
       return name ? name.replace(/\s+/g, "").split(";") : [];
     },
-    yflcLink(item, val) {
+    yflcLink(item, val, txt, txtKey) {
       let url;
       if (val === "shoulihao") {
         url = "/zhuce/";
@@ -705,16 +983,14 @@ export default {
       }
       if (val === "pizhunwenhao") {
         if (item.pizhunwenhao_type == 1) {
-          return `/cfdadrug/detail/${
-            item.pizhunwenhao_id
-          }?pizhunwenhao=${encodeURI(item.pizhunwenhao)}`;
+          return `/cfdadrug/detail/${txtKey}?pizhunwenhao=${encodeURI(txt)}`;
         } else if (item.pizhunwenhao_type == 2) {
-          return `/pijian_jinkou_olddata/${item.pizhunwenhao_id}`;
+          return `/pijian_jinkou_olddata/${txtKey}`;
         } else {
           return true;
         }
       }
-      return url + item.id;
+      return url + txtKey;
     },
 
     handleUpClick(e) {
@@ -758,12 +1034,22 @@ export default {
           if (res.data.code === 200 && res.data.data) {
             //放基本信息的data
             let jbxx = res.data.data.GroupList.jbxx;
+            for (let [key, val] of Object.entries(jbxx)) {
+              jbxx[key] = jbxx[key] === "/" ? "" : jbxx[key];
+              jbxx[key] = jbxx[key] === "否" ? "" : jbxx[key];
+              jbxx[key] = jbxx[key] === "非集采品种" ? "" : jbxx[key];
+            }
             this.jbxx = jbxx;
             // 获取国家医保信息
             let data = res.data.data.GroupList;
             this.drugInfos = data.ybxx;
             //放表头信息的title
             let title = data.title;
+            for (let [key, val] of Object.entries(title)) {
+              title[key] = title[key] === "/" ? "" : title[key];
+              title[key] = title[key] === "否" ? "" : title[key];
+              title[key] = title[key] === "非集采品种" ? "" : title[key];
+            }
             this.data = title;
             this.atc = data.atc;
             this.getExtendList("cfdadrug", res.data.data.extendList);
@@ -816,8 +1102,32 @@ export default {
     //   this.hasPartTwo = data
     // }
     // 循环前处理相关数据，并返回数组形式
-    resetTableObject(obj) {
+    resetTableObject(obj, key1) {
       let arr = [];
+      // 若研发历程展示过程中，药品名称和企业与顶端展示的企业名称一致时，需隐藏研发历程中的药品名称和企业；不一致时需要展示药品、企业名称信息内容。
+      if (obj.shengchanqiye == this.data.shengchanqiye) {
+        delete obj.shengchanqiye;
+      }
+
+      if (obj.company == this.data.shengchanqiye) {
+        delete obj.company;
+      }
+
+      if (obj.qiyemingcheng == this.data.shengchanqiye) {
+        delete obj.qiyemingcheng;
+      }
+
+      if (obj.name == this.data.name) {
+        delete obj.name;
+      }
+
+      // 状态开始时间zhuangtaikaishishijian、承办日期chengbanriqi、批准日期drugidTime、开始时间 start  当这几个时间和左侧显示的总时间相等的时候则不显示。
+      // key1 为左侧时间
+      if (obj.zhuangtaikaishishijian == key1) delete obj.zhuangtaikaishishijian;
+      if (obj.chengbanriqi == key1) delete obj.chengbanriqi;
+      if (obj.drugidTime == key1) delete obj.drugidTime;
+      if (obj.start == key1) delete obj.start;
+
       for (let key in obj) {
         // if (key != "id" && key != "drugid" && key != "drugidStatus" && key != "drugidTime") { // 将不需要在列表中循环的在此列出
         //   let new_obj = {
@@ -835,7 +1145,8 @@ export default {
             key != "drugidStatus" &&
             key != "zhuangtaikaishishijian" &&
             key != "pizhunwenhao_type" &&
-            key != "pizhunwenhao_id"
+            key != "pizhunwenhao_id" &&
+            key != "pijian"
           ) {
             // 将不需要在列表中循环的在此列出
             let new_obj = {
@@ -853,7 +1164,8 @@ export default {
             key != "drugidStatus" &&
             key != "drugidTime" &&
             key != "pizhunwenhao_type" &&
-            key != "pizhunwenhao_id"
+            key != "pizhunwenhao_id" &&
+            key != "pijian"
           ) {
             // 将不需要在列表中循环的在此列出
             let new_obj = {
@@ -868,19 +1180,8 @@ export default {
 
       let len = arr.length;
       let need_num = len % 3 == 0 ? 0 : 3 - (len % 3);
-      if (need_num == 1) {
-        let new_obj = {
-          thename: "none",
-          thevalue: ""
-        };
-        arr.push(new_obj);
-      } else if (need_num == 2) {
-        let new_obj = {
-          thename: "none",
-          thevalue: ""
-        };
-        arr.push(new_obj);
-        arr.push(new_obj);
+      if (need_num == 1 || need_num == 2) {
+        arr[arr.length - 1].col = need_num + 1;
       }
 
       return arr;
@@ -897,11 +1198,11 @@ export default {
     handleScroll() {
       let top = $(".main").offset().top,
         leftNav = $(".left-nav");
-      if (top <= 50) {
-        leftNav.css("top", (this.showPromtNotice ? 88 : 58) + "px");
-      } else {
-        leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
-      }
+      // if (top <= 50) {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 98) + "px");
+      // } else {
+      //   leftNav.css("top", (this.showPromtNotice ? 118 : 88) + "px");
+      // }
     }
   },
   created() {
@@ -931,8 +1232,11 @@ export default {
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
+.pzh {
+  color: #4877e8;
+}
 .part-five {
   .detail-nopms {
     width: 100%;
@@ -1212,14 +1516,19 @@ export default {
     }
   }
 }
-.td-line5 {
-  max-height: 110px !important;
-}
 .under_a {
   text-decoration: underline;
   &:hover {
     color: @PrimaryColor;
     font-weight: 600;
   }
+}
+.slide-section .tb-t tr td:nth-child(odd),
+.slide-section .tb-f tr td:nth-child(odd) {
+  min-width: 180px !important;
+  width: 230px !important;
+  max-width: 30vw !important;
+  padding: 0 0 0 50px !important;
+  background: #f6f8fc;
 }
 </style>

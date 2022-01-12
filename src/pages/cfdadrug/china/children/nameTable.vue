@@ -244,12 +244,12 @@
 </template>
 
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import List from "@/components/layouts/list.vue";
-import Export from "@/components/common/export.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import List from "@/components/layouts/list.vue"
+import Export from "@/components/common/export.vue"
 import { mapState } from "vuex";
 import tablehead from "@/config/tablehead";
-import listCheck from "@/components/common/list-check.vue";
+import listCheck from "@/components/common/list-check.vue"
 import setTableHMixins from "@/mixins/setTableH.js";
 import commonMixins from "@/mixins/common.js";
 const defaultFiled = tablehead.cfdadrug.chinatoname;
@@ -633,7 +633,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .el-table {
   .padLCell {
     // padding-left: 14px;
@@ -682,7 +682,7 @@ export default {
       &.active {
         color: @PrimaryColor;
         font-weight: 600;
-        background: url("@/assets/imgs/zhuce/el-icon-caret-top.png") no-repeat
+        background: url("~@/assets/imgs/zhuce/el-icon-caret-top.png") no-repeat
           30px bottom #f5f8fb;
         border: none;
       }
@@ -697,7 +697,7 @@ export default {
     &.active {
       color: @PrimaryColor;
       font-weight: 600;
-      background: url("@/assets/imgs/zhuce/el-icon-caret-top.png") no-repeat
+      background: url("~@/assets/imgs/zhuce/el-icon-caret-top.png") no-repeat
         30px bottom;
       border: none;
     }

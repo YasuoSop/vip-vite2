@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import * as echarts from 'echarts'
+  import echarts from 'echarts'
 
   export default {
     name: 'echarts',
@@ -106,7 +106,7 @@
       const $echartsDOM = document.getElementById(this.randomId)
       if (!$echartsDOM) return
 
-      const myEcharts = echarts.init($echartsDOM)
+      const myEcharts = echarts.init($echartsDOM, 'yaozh_theme')
 
       myEcharts.on('click', params => {
           this.echartsClicked(params)

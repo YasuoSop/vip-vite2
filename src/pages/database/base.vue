@@ -5,7 +5,7 @@
       <div slot="title" class="dialog-header">
         保存条件
       </div>
-      <SavedPop @closeSavedPop="closeSavedPop" vuex_name="Database"></SavedPop>
+      <SavedPop @closeSavedPop="closeSavedPop.vue"x_name="Database"></SavedPop>
     </el-dialog>
 
     <!-- 高级搜索弹出框 -->
@@ -148,11 +148,11 @@
   import Saved from '@/components/common/saved.vue'
   import SavedPop from '@/components/common/saved-pop.vue'
   import Optioned from '@/components/common/options.vue'
-  import Filters from './include/filters.vue'
+  import Filters from './include/filters'
   // import Filters from '@/components/common/filters.vue'
   import Main from '@/components/layouts/main.vue'
   import { mapState } from 'vuex'
-  import List from './list.vue'
+  import List from './list'
   import Ketcher from '@/components/common/ketcher.vue'
   import setTableHMixins from '@/mixins/setTableH.js'
 
@@ -346,7 +346,7 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
   .el-dialog {
     border-radius: 20px!important;
   }

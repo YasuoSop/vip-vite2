@@ -52,7 +52,7 @@
               <div
                 v-if="item.prop === 'PN'"
                 class="text"
-                style="cursor: pointer"
+                style="cursor: pointer;display: inline-block;"
                 @click="
                   linkTo(
                     `https://patent.yaozh.com/detail?id=${scope.row.id}&sourceType=cn`
@@ -141,7 +141,7 @@
               <div
                 v-if="item.prop === 'patent_no'"
                 class="text"
-                style="cursor: pointer"
+                style="cursor: pointer;display: inline-block;"
                 @click="
                   linkTo(
                     `https://patent.yaozh.com/list?words=KWS%3D+${scope.row.patent_no}`
@@ -232,7 +232,7 @@
               <div
                 v-if="item.prop === 'PN'"
                 class="text"
-                style="cursor: pointer"
+                style="cursor: pointer;display: inline-block;"
                 @click="
                   linkTo(
                     `https://patent.yaozh.com/detail?id=${scope.row.id}&sourceType=all`
@@ -275,10 +275,10 @@
 </template>
 <script>
 import html2canvas from "html2canvas";
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import pdfTable from "../pdfReport/table.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import pdfTable from "../pdfReport/table";
 import tablehead from "@/config/tablehead";
-import DetailKzxx from "./kzxx.vue";
+import DetailKzxx from "./kzxx";
 const cnTableFiled = tablehead.drugreport.parent.cn;
 const AllTableFiled = tablehead.drugreport.parent.all;
 const UsTableFiled = tablehead.drugreport.parent.us;
@@ -541,7 +541,8 @@ export default {
     },
     drawAtpPie() {
       Echarts.init(
-        document.getElementById(this.echartsIDcnPie)
+        document.getElementById(this.echartsIDcnPie),
+        "yaozh_theme"
       ).setOption({
         title: {
           text: "专利类型",
@@ -582,7 +583,8 @@ export default {
     },
     drawFlyLine() {
       Echarts.init(
-        document.getElementById(this.echartsIDcnLine)
+        document.getElementById(this.echartsIDcnLine),
+        "yaozh_theme"
       ).setOption({
         title: {
           text: "申请年份",
@@ -633,7 +635,8 @@ export default {
     },
     drawCotPie() {
       Echarts.init(
-        document.getElementById(this.echartsIDwoPie)
+        document.getElementById(this.echartsIDwoPie),
+        "yaozh_theme"
       ).setOption({
         title: {
           text: "司法管辖区",
@@ -677,7 +680,8 @@ export default {
     },
     drawTpiBar() {
       Echarts.init(
-        document.getElementById(this.echartsIDwoBar)
+        document.getElementById(this.echartsIDwoBar),
+        "yaozh_theme"
       ).setOption({
         title: {
           text: "技术类型",
@@ -762,7 +766,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 @import "../css/com.less";
 
 .charts {

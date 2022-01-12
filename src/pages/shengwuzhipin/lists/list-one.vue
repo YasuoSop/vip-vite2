@@ -9,7 +9,7 @@
           智能分析
         </span>
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Shengwuzhipin" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Shengwuzhipin" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"
@@ -223,7 +223,7 @@
   }
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
   .la-slh{
     min-height: 100px;
     .no-data-msg {

@@ -9,7 +9,7 @@
           智能分析
         </span>
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Zhuce" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Zhuce" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"
@@ -623,8 +623,8 @@
           });
           window.open(routeData.href, "_blank");
         } else {
-          window.vueSetCookie("rss_type", type);
-          window.vueSetCookie("rss_keyword", JSON.stringify(dataObj));
+          this.vueSetCookie("rss_type", type);
+          this.vueSetCookie("rss_keyword", JSON.stringify(dataObj));
           let routeData = this.$router.resolve({
             path: "/usercenter/take/new"
           });
@@ -670,7 +670,7 @@
 </script>
 
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
   .el-table {
     .padLCell {
       // padding-left: 24px;
@@ -726,7 +726,7 @@
         &.active{
           color: @PrimaryColor;
           font-weight: 600;
-          background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 10px bottom #f5f8fb;
+          background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 10px bottom #f5f8fb;
         }
       }
     }
@@ -739,7 +739,7 @@
       &.active{
         color: @PrimaryColor;
         font-weight: 600;
-        background:url('@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 10px bottom;
+        background:url('~@/assets/imgs/zhuce/el-icon-caret-top.png') no-repeat 10px bottom;
       }
     }
 

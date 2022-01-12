@@ -1,7 +1,7 @@
-import "@/assets/elementui/element-4877E8/index.css"; // #4877E8主题色：element自定义主题引入
+import "@/assets/elementui/element-#4877E8/index.css"; // #4877E8主题色：element自定义主题引入
 import "@/assets/iconfont/iconfont.css";
 import "@/assets/less/app.less";
-import App from "@/App.vue";
+import App from "@/App";
 import Vue from "vue";
 import Vuex from "vuex";
 import VueCookies from "vue-cookies";
@@ -16,6 +16,8 @@ import VueMatomo from "vue-matomo";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
+import "../static/js/echarts_theme";
+import "../static/js/trz_theme";
 import func from "@/assets/js/func";
 import "video.js/dist/video-js.css";
 import GlobalMethods from "./components/common/GlobalMethods";
@@ -26,21 +28,23 @@ import {
     Cell,
     CellGroup,
     DropdownMenu,
-    DropdownItem,
+    DropdownItem
 } from "vant";
 import "vant/lib/index.less";
+
 import md from "./md";
-import NewProjectGuide from "@/components/common/newProjectGuide.vue";
-import $ from "jquery";
-import _ from "lodash";
+import NewProjectGuide from "@/components/common/newProjectGuide.vue"
 
 Vue.component("NewProjectGuide", NewProjectGuide);
 Vue.use(Field);
 Vue.use(Icon);
 Vue.use(Button);
-Vue.use(Cell).use(CellGroup).use(DropdownMenu).use(DropdownItem);
+Vue.use(Cell)
+    .use(CellGroup)
+    .use(DropdownMenu)
+    .use(DropdownItem);
 Vue.use(VueCookies);
-import ("vue-quill-editor").then((VueQuillEditor) => {
+import ("vue-quill-editor").then(VueQuillEditor => {
     let ua = navigator.userAgent;
     if (/trident/i.test(ua)) {
         if (/msie/i.test(ua)) {
@@ -76,7 +80,7 @@ Vue.use(VueMatomo, {
     // // 最终的追踪js文件名
     // // 默认 'piwik'
     trackerFileName: "matomo",
-    debug: false,
+    debug: false
 });
 // GA初始化
 /*Vue.use(VueAnalytics, {
@@ -87,9 +91,11 @@ Vue.use(VueMatomo, {
     pageviewOnLoad: false // 当通过网址进来时已经GA在初始化时就发起一次pageview的统计，这里不要重复统计
   }
 })*/
-window._ = _;
-window.$ = $;
+
+/*window._ = _
+window.$ = $*/
 window.Qs = Qs;
+window.Echarts = echarts;
 window.Store = store;
 window.Axios = Axios;
 window.Axios.defaults.headers["Cache-Control"] = "no-cache";
@@ -100,8 +106,8 @@ setInterval(() => {
         Axios.post("/mlw/report", {
                 params: {
                     level: 2,
-                    short_message: localStorage.getItem("indexDB") || "",
-                },
+                    short_message: localStorage.getItem("indexDB") || ""
+                }
             })
             .then(function(response) {
                 console.log(response);
@@ -178,13 +184,50 @@ Vue.prototype.downloadFile = function(url = "") {
     store.commit("listLoading", false);
 };
 
+// 中英文判断超出指定长度显示...
+// 默认是七个字符
+Vue.prototype.labelLenLimit = (value, maxLen = 7) => {
+    let text = "",
+        arr = value.split(""),
+        count = maxLen;
+    arr.length > 0 &&
+        arr.forEach(item => {
+            // 英文
+            if (escape(item).indexOf("%u") < 0) {
+                if (count > 0) {
+                    text += item;
+                    count -= 0.5;
+                }
+            } else {
+                // 中文
+                if (count > 0) {
+                    text += item;
+                    count -= 1;
+                }
+            }
+        });
+    text = count == 0 ? text + "..." : text;
+    return text;
+};
+
+// 每隔三位用逗号分隔开
+Vue.prototype.thousandFormatter = value => {
+    if (value) {
+        var money =
+            value.toString().indexOf(".") !== -1 ?
+            value.toLocaleString() :
+            value.toString().replace(/(\d)(?=(?:\d{3})+$)/g, "$1,");
+        return money;
+    } else return 0;
+};
+
 // 问卷引导
 let questionnaireFun = function() {
     let gradeId = parseInt(localStorage.getItem("gradeId"));
     // console.log([55,62,63,64,68,84,85,86].some(e => e === gradeId), localStorage.getItem("accesstoken"))
     // 满足弹出对象
     if (
-        [62, 63, 64, 68, 84, 85, 86].some((e) => e === gradeId) &&
+        [62, 63, 64, 68, 84, 85, 86].some(e => e === gradeId) &&
         GETCOOKIEFUN("accesstoken")
     ) {
         window
@@ -192,14 +235,14 @@ let questionnaireFun = function() {
                 method: "get",
                 url: "/api/usercenter/checkdialog",
                 header: {
-                    "Cache-Control": "no-cache",
+                    "Cache-Control": "no-cache"
                 },
                 params: {
                     accesstoken: GETCOOKIEFUN("accesstoken"),
-                    timestap: new Date().getTime(),
-                },
+                    timestap: new Date().getTime()
+                }
             })
-            .then((res) => {
+            .then(res => {
                 if (res.data.code == 200) {
                     if (parseInt(res.data.data.is_pop)) {
                         store.dispatch("UserCenter/questionDialogA", true);
@@ -228,8 +271,8 @@ router.beforeEach((to, from, next) => {
     // console.error("修改后的路径：", to);
     if (to.meta.title) {
         /* let domUD = document.querySelector('.fix_box_udesk')
-domUD.className = to.path === '/introduce' ? 'fix_box_udesk fix_box_udesk_one' : 'fix_box_udesk'
-domUD.style.display = to.path === '/introduce' || to.path === '/login' ? 'block' : 'none' */
+  domUD.className = to.path === '/introduce' ? 'fix_box_udesk fix_box_udesk_one' : 'fix_box_udesk'
+  domUD.style.display = to.path === '/introduce' || to.path === '/login' ? 'block' : 'none' */
         window.document.title = to.meta.title;
     } else if (to.path == "/home" || to.path == "/login") {
         window.document.title = "药智数据企业版 - 智能决策，洞见未来";
@@ -257,8 +300,8 @@ domUD.style.display = to.path === '/introduce' || to.path === '/login' ? 'block'
                 path: "introducemobile",
                 query: Object.assign({}, to.query, {
                     ga_source: "vip",
-                    ga_name,
-                }),
+                    ga_name
+                })
             });
         }
     } else {
@@ -267,10 +310,10 @@ domUD.style.display = to.path === '/introduce' || to.path === '/login' ? 'block'
                 store.dispatch("UserCenter/handleAccountAxios").then(() => {
                     if (store.state.UserCenter.accountData.username) {
                         if (![62, 63, 64, 65, 68, 84, 85, 86].some(
-                                (e) => e === store.state.UserCenter.accountData.grade_id
+                                e => e === store.state.UserCenter.accountData.grade_id
                             )) {
                             next({
-                                path: "home",
+                                path: "home"
                             });
                         } else {
                             next();
@@ -299,16 +342,16 @@ domUD.style.display = to.path === '/introduce' || to.path === '/login' ? 'block'
                 method: "get",
                 url: "/api/config/view?dbname=yyxs",
                 params: {
-                    accesstoken: GETCOOKIEFUN("accesstoken"),
-                },
+                    accesstoken: GETCOOKIEFUN("accesstoken")
+                }
             })
-            .then((res) => {
+            .then(res => {
                 if (res.data.code === 200 && res.data.data) {
                     let data = res.data.data;
                     let flag =
                         data.norules.exclusive.length > 0 &&
                         data.norules.exclusive.every(
-                            (item) => item.action !== "yyxsdlfxenlarged_test"
+                            item => item.action !== "yyxsdlfxenlarged_test"
                         );
                     if (data.norules.exclusive.length === 0) {
                         flag = true;
@@ -318,7 +361,7 @@ domUD.style.display = to.path === '/introduce' || to.path === '/login' ? 'block'
                         next();
                     } else {
                         router.replace({
-                            path: "yyxs-large-no-permission",
+                            path: "yyxs-large-no-permission"
                         });
                     }
                 }
@@ -331,14 +374,14 @@ domUD.style.display = to.path === '/introduce' || to.path === '/login' ? 'block'
                 method: "get",
                 url: "/api/config/view?dbname=dailiangcaigou",
                 params: {
-                    accesstoken: GETCOOKIEFUN("accesstoken"),
-                },
+                    accesstoken: GETCOOKIEFUN("accesstoken")
+                }
             })
-            .then((res) => {
+            .then(res => {
                 if (res.data.code === 200 && res.data.data) {
                     let data = res.data.data;
                     let flag = data.norules.exclusive.every(
-                        (item) => item.action !== "dailiangcaigoujzfx"
+                        item => item.action !== "dailiangcaigoujzfx"
                     );
                     if (data.norules.exclusive.length === 0) {
                         flag = true;
@@ -347,16 +390,36 @@ domUD.style.display = to.path === '/introduce' || to.path === '/login' ? 'block'
                         next();
                     } else {
                         router.replace({
-                            path: "/no-permission",
+                            path: "/no-permission"
                         });
                     }
                 }
             });
     }
+
+    // if (to.name.includes("database_trz_rongzi_detail") == true) {
+    //     let isIE = () => {
+    //         if (!!window.ActiveXObject || "ActiveXObject" in window) {
+    //             return true;
+    //         } else {
+    //             return false;
+    //         }
+    //     };
+    //     console.log("是否是IE", isIE());
+    //     // 除IE以外的浏览器
+    //     if (isIE() == false) {
+    //         next();
+    //     } else {
+    //         next({
+    //             path: `trz/rongzi-ie/${to.params.id}`,
+    //             params: to.params
+    //         });
+    //     }
+    // }
     clearInterval(window.questCounter);
 });
 
-router.afterEach((to) => {
+router.afterEach(to => {
     //   ga处理方法
     function handleGa() {
         let cd1 = store.state.UserCenter.accountData.uid;
@@ -420,7 +483,7 @@ router.afterEach((to) => {
 });
 
 //处理loading chunk问题
-router.onError((error) => {
+router.onError(error => {
     const pattern = /Loading chunk (\d)+ failed/g;
     const isChunkLoadFailed = error.message.match(pattern);
 
@@ -437,21 +500,21 @@ const noeParams = [
     "/login",
     "/mobilelogin",
     "/forceLogin",
-    "/api/user/usercheck",
+    "/api/user/usercheck"
 ]; // 不需要加参数得接口路径
 Axios.interceptors.request.use(
-    (config) => {
+    config => {
         const decrypt =
             location.hostname !== "vip.yaozh.com" &&
             location.hostname !== "vip-master.yaozh.com";
         if (decrypt)
             config.params = Object.assign({}, config.params, {
-                is_laws: 1,
+                is_laws: 1
             });
 
         let accesstoken = GETCOOKIEFUN("accesstoken");
         if (!accesstoken) return config;
-        if (noeParams.some((val) => config.url.includes(val))) return config;
+        if (noeParams.some(val => config.url.includes(val))) return config;
 
         if (config.method === "get") {
             if (
@@ -462,7 +525,7 @@ Axios.interceptors.request.use(
                 return config;
             }
             config.params = Object.assign({}, config.params, {
-                accesstoken,
+                accesstoken
             });
         } else if (config.method === "post") {
             //post请求也有params?
@@ -471,13 +534,13 @@ Axios.interceptors.request.use(
                 return config;
             }
             config[dataKey] = Object.assign({}, config[dataKey], {
-                accesstoken,
+                accesstoken
             });
         }
         // 在发送请求之前做些什么
         return config;
     },
-    (error) => {
+    error => {
         // 对请求错误做些什么
         return Promise.reject(error);
     }
@@ -512,7 +575,7 @@ let lanjieFunc = function(data, response) {
             location.hostname === "vip-master.yaozh.com"
         ) {
             if (data.data && !(data.data instanceof Object))
-                data.data = JSON.parse(md.decryptResponse(data.data, "yaozh_vip2020"));
+                data.data = JSON.parse(md.decryptResponse(data.data, "VIP4.2.0"));
         }
         var CODE = data.code;
         if (CODE == 11029 || CODE == 11056) {
@@ -524,17 +587,24 @@ let lanjieFunc = function(data, response) {
             // if (!this.vueGetCookie('accesstoken')) {  //this用不了
             if (!GETCOOKIEFUN("accesstoken")) {
                 router.push({
-                    path: "/login",
+                    path: "/login"
                 });
                 return;
             }
-            console.log(CODE);
+            console.log(CODE, router);
             if (
                 response.request.responseURL.includes("devprocess") ||
                 response.request.responseURL.includes("timeline")
-            ) {} else {
-                router.push({
+            ) {} else if (router.history._startLocation.includes("/trz")) {
+                router.replace({
                     path: "/no-permission",
+                    query: {
+                        from: 'trz'
+                    }
+                });
+            } else {
+                router.replace({
+                    path: "/no-permission"
                 });
             }
         } else if (CODE == 11038 || CODE == 11039 || CODE == 11040) {
@@ -552,7 +622,7 @@ let lanjieFunc = function(data, response) {
                 let Payload = {
                     code: CODE,
                     msg: data.msg,
-                    show: true,
+                    show: true
                 };
                 console.info(console.info(Payload));
                 store.commit("UserCenter/errorEducation", Payload);
@@ -564,7 +634,7 @@ let lanjieFunc = function(data, response) {
 };
 
 Axios.interceptors.response.use(
-    (response) => {
+    response => {
         let data = response.data;
         if (data.byteLength && !response.headers["file_name_urlencode"]) {
             //导出功能失败的判断
@@ -576,7 +646,7 @@ Axios.interceptors.response.use(
             return lanjieFunc(data, response);
         }
     },
-    (error) => {
+    error => {
         // 对响应错误做点什么
         let status = error.response.status;
 
@@ -591,8 +661,11 @@ Axios.interceptors.response.use(
 
 /* eslint-disable no-new */
 new Vue({
+    el: "#app",
     router,
     i18n,
     store,
-    render: (h) => h(App),
-}).$mount("#app");
+    components: {
+        App
+    }
+});

@@ -1056,8 +1056,8 @@
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
-@import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/app.less";
 #ssyp {
 	@conWidth: 100%;
 	@Gray: #35384a;

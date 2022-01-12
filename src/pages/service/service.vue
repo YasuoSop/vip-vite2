@@ -7,13 +7,13 @@
             <transition name="el-fade-in-linear">
             <div v-if="showPromtNotice" class="prompt-notice">
                 <div class="prompt-content">
-                <img src="@/assets/imgs/notice_icon.png" />
+                <img src="~@/assets/imgs/notice_icon.png" />
                 <div class="text-container">
                     <marquee v-if="(noticeMsgStr.length - (61 * noticeMsg.length - 1)) > 70" onmouseover="this.stop()" onmouseout="this.start()" v-html="noticeMsgStr">
                     </marquee>
                     <div v-else v-html="noticeMsgStr"></div>
                 </div>
-                <img @click="closeNotice" class="close_notice_icon" src="@/assets/imgs/notice_close.png" />
+                <img @click="closeNotice" class="close_notice_icon" src="~@/assets/imgs/notice_close.png" />
                 </div>
             </div>
             </transition>
@@ -31,7 +31,7 @@
                      <div class="service_header">
                          <router-link tag="a" to="/introduce">
                             <div class="logo">
-                                <img src="@/assets/imgs/intro_logo.png">
+                                <img src="~@/assets/imgs/intro_logo.png">
                             </div>
                         </router-link>
                         <nav class="nav_right">
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                         <div class="wufu">
-                            <img src="@/assets/imgs/service/fuwu.png">
+                            <img src="~@/assets/imgs/service/fuwu.png">
                         </div>
                         <div class="container containertop">
                             <div class="title">药智咨询</div>
@@ -217,8 +217,8 @@
 <script>
 import LoadingGif from '@/components/common/globalCom/loading-gif.vue'
 import crypto from "crypto-js";
-import DialogProbation from "@/components/common/dialog-probation.vue";
-
+import DialogProbation from "@/components/common/dialog-probation.vue"
+import { setTimeout } from "timers";
 import { mapState } from 'vuex';
 import Footer1 from '@/components/layouts/footer1.vue'
 import Moment from "moment"
@@ -467,7 +467,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .fullscreen-loading {
     top: 0;
     left: 0;
@@ -594,7 +594,7 @@ export default {
             position: relative;
             width: 100%;
             height: 350px;
-            background: url(@/assets/imgs/service/header_bg.jpg) no-repeat center top;
+            background: url(~@/assets/imgs/service/header_bg.jpg) no-repeat center top;
             background-size: contain;
             text-align: center;
             .el-button{
@@ -682,13 +682,13 @@ export default {
                                     width: 22px;
                                     height: 13px;
                                     display: inline-block;
-                                    background:url('@/assets/imgs/service/email1.png') no-repeat;
+                                    background:url('~@/assets/imgs/service/email1.png') no-repeat;
                                 }
                                 .mobilephone{
                                     display:inline-block;
                                     width:14px;
                                     height:20px;
-                                    background:url('@/assets/imgs/service/phone_bg.png') no-repeat -58px -36px;
+                                    background:url('~@/assets/imgs/service/phone_bg.png') no-repeat -58px -36px;
                                     position: relative;
                                     top: 4px;
                                 }
@@ -700,7 +700,7 @@ export default {
                                 }
                                 .mail{
                                     display:inline-block;
-                                    background:url('@/assets/imgs/service/email1.png') no-repeat 0 27px;
+                                    background:url('~@/assets/imgs/service/email1.png') no-repeat 0 27px;
                                     padding-left: 28px;
                                     margin-left: 47px;
                                 }
@@ -720,7 +720,7 @@ export default {
                                         display: inline-block;
                                         width: 14px;
                                         height: 16px;
-                                        background: url(@/assets/imgs/service/qq1.png) no-repeat;
+                                        background: url(~@/assets/imgs/service/qq1.png) no-repeat;
                                         background-size: contain;
                                         vertical-align: middle;
                                         margin-right: 2px;
@@ -736,16 +736,16 @@ export default {
                             color:#fff;
                         }
                         .row1:hover .col1 .mail {
-                            background:url('@/assets/imgs/service/email2.png') no-repeat 0 27px;
+                            background:url('~@/assets/imgs/service/email2.png') no-repeat 0 27px;
                         }
                         .row1:hover .col1 .mobilephone{
-                            background:url('@/assets/imgs/service/phone_bg.png') no-repeat -58px -1px;
+                            background:url('~@/assets/imgs/service/phone_bg.png') no-repeat -58px -1px;
                         }
                         .row1:hover .col1 .number{
                             color:#fff;
                         }
                         .row1:hover .col1 .email{
-                                background:url('@/assets/imgs/service/email2.png') no-repeat;
+                                background:url('~@/assets/imgs/service/email2.png') no-repeat;
                         }
                         .row1:hover .col1 .qq{
                             background:#fff;
@@ -753,7 +753,7 @@ export default {
                             color:#4877e8;
                         }
                         .row1:hover .col1 .qq span{
-                            background:url('@/assets/imgs/service/qq2.png') no-repeat ;
+                            background:url('~@/assets/imgs/service/qq2.png') no-repeat ;
                         }
                     }
                 }
@@ -897,7 +897,7 @@ export default {
                         margin-right: 5px;
                         width: 14px;
                         height: 16px;
-                        background: url('@/assets/imgs/service/qq1.png') no-repeat;
+                        background: url('~@/assets/imgs/service/qq1.png') no-repeat;
                     }
                 }
                 .phone {
@@ -907,7 +907,7 @@ export default {
                     width: 14px;
                     height: 20px;
                     font-size: 16px;
-                    background: url('@/assets/imgs/service/phone_bg.png') no-repeat -58px -36px;
+                    background: url('~@/assets/imgs/service/phone_bg.png') no-repeat -58px -36px;
                 }
             }
             p:nth-child(2), p:nth-child(3) {
@@ -933,11 +933,11 @@ export default {
                     background: #fff;
                     color: #4877e8;
                     span {
-                        background: url('@/assets/imgs/service/qq2.png') no-repeat;
+                        background: url('~@/assets/imgs/service/qq2.png') no-repeat;
                     }
                 }
                 .phone {
-                    background: url('@/assets/imgs/service/phone_bg.png') no-repeat -58px 0;
+                    background: url('~@/assets/imgs/service/phone_bg.png') no-repeat -58px 0;
                 }
             }
         }

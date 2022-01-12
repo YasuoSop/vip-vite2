@@ -3,7 +3,7 @@
     <List :loading="listLoading" :nodata="res1Nodata">
       <div class="actions" :style="posi">
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Clinical" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" style="text-align:left;" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Clinical" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" style="text-align:left;" />
         <!-- 导出 -->
         <Export
         :out_max="allBase.out_max"
@@ -239,8 +239,8 @@ import { mapState } from 'vuex'
   }
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
-@import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/app.less";
 
   .el-table {
     .cell {

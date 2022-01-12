@@ -129,7 +129,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .classified-info{
   .fxxx_items{
     box-shadow: @BoxShadowHover;

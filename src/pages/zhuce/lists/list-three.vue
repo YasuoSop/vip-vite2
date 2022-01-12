@@ -589,8 +589,8 @@ export default {
         });
         window.open(routeData.href, "_blank");
       } else {
-        window.vueSetCookie("rss_type", type);
-        window.vueSetCookie("rss_keyword", JSON.stringify(dataObj));
+        this.vueSetCookie("rss_type", type);
+        this.vueSetCookie("rss_keyword", JSON.stringify(dataObj));
         let routeData = this.$router.resolve({
           path: "/usercenter/take/new"
         });
@@ -678,7 +678,7 @@ export default {
 }
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .row-class-position {
   position: relative;
   td:first-child {
@@ -732,7 +732,7 @@ export default {
       &.active {
         color: @PrimaryColor;
         font-weight: 600;
-        background: url("@/assets/imgs/zhuce/el-icon-caret-top.png") no-repeat
+        background: url("~@/assets/imgs/zhuce/el-icon-caret-top.png") no-repeat
           30px bottom #f5f8fb;
         border: none;
       }
@@ -747,7 +747,7 @@ export default {
     &.active {
       color: @PrimaryColor;
       font-weight: 600;
-      background: url("@/assets/imgs/zhuce/el-icon-caret-top.png") no-repeat
+      background: url("~@/assets/imgs/zhuce/el-icon-caret-top.png") no-repeat
         30px bottom;
       border: none;
     }

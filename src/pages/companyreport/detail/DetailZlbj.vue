@@ -195,7 +195,7 @@ export default {
   methods: {
     drawSqjxPie() {
       let dom = this.$refs.echarts_sz;
-      this.myChart = Echarts.init(dom);
+      this.myChart = Echarts.init(dom, "yaozh_theme");
       this.myChart.setOption({
         xAxis: {
           axisLabel: {
@@ -276,7 +276,7 @@ export default {
     },
     drawZllxPie() {
       let dom = this.$refs.echarts_zl;
-      this.myChart = Echarts.init(dom);
+      this.myChart = Echarts.init(dom, "yaozh_theme");
       this.myChart.setOption({
         tooltip: {
           trigger: "item",
@@ -316,7 +316,7 @@ export default {
     },
     drawSfgxPie() {
       let dom = this.$refs.echarts_js;
-      this.myChart = Echarts.init(dom);
+      this.myChart = Echarts.init(dom, "yaozh_theme");
       this.myChart.setOption({
         title: {
           text: "技术类型",
@@ -384,7 +384,7 @@ export default {
     },
     drawJslxPie() {
       let dom = this.$refs.echarts_sf;
-      this.myChart = Echarts.init(dom);
+      this.myChart = Echarts.init(dom, "yaozh_theme");
       this.myChart.setOption({
         tooltip: {
           trigger: "item",
@@ -518,7 +518,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .zlbj_items {
   box-shadow: @BoxShadowHover;
   background-color: #fff;

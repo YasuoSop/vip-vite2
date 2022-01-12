@@ -371,7 +371,7 @@
 <script>
   import List from "@/components/layouts/list.vue"
   import Export from "@/components/common/export.vue"
-  import TdCountCheckOut from "./tdCountCheckOut.vue"
+  import TdCountCheckOut from "./tdCountCheckOut"
   import listCheck from "@/components/common/list-check.vue"
   import { mapState } from "vuex"
   import commonMixins from '@/mixins/common.js'
@@ -588,9 +588,17 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-
-// @import "@/assets/less/app.less";
+@import "~@/assets/less/var.less";
+// ipad 层级太深样式不能继承
+/deep/ .el-table td .cell > div>span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 35px;
+}
+// @import "~@/assets/less/app.less";
 .List_content {
   #maginfy-img-wap {
     position: fixed;

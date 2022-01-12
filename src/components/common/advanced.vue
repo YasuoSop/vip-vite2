@@ -547,8 +547,8 @@
 </script>
 
 <style lang="less">
-  @import "@/assets/less/app.less";
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/app.less";
+  @import "~@/assets/less/var.less";
   .la-advanced{
     padding: 20px;
     width: 100%;

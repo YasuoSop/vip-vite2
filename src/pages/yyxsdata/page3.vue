@@ -72,10 +72,10 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
 import EchartsItem from "./components/echartsItem.vue";
-import CascaderSelect from "@/components/inputs/cascader-select.vue";
-import Select from "@/components/inputs/select.vue";
+import CascaderSelect from "@/components/inputs/cascader-select.vue"
+import Select from "@/components/inputs/select.vue"
 export default {
   props: {},
   components: {
@@ -703,7 +703,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .page-wrap {
   background: #fff;
   box-shadow: 0 0 5px #c4d3f8;

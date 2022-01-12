@@ -1,7 +1,5 @@
-/*
-  账号异地登录提示
- */
- <template>
+/* 账号异地登录提示 */
+<template>
   <div class="RemoteLogin">
     <el-dialog
       class="dialog-actions"
@@ -12,27 +10,36 @@
       <div slot="title" class="dialog-header">登录提示</div>
       <div class="clearfix zjl_body">
         <div class="fl body_left">
-          <img src="@/assets/imgs/RemoteLogin/answer.png" alt />
+          <img src="~@/assets/imgs/RemoteLogin/answer.png" alt />
         </div>
         <div class="fl body_right">
-          <div class="right_user">{{RemoteLoginInfo.inputname|| "未知"}}</div>
+          <div class="right_user">
+            {{ RemoteLoginInfo.inputname || "未知" }}
+          </div>
           <div class="right_info">
             该账号已在另一设备登录，若不是本人操作，请登录后在个人中心（账号管理）处
-            <a class="info_a" target="_black" href="https://www.yaozh.com/member/uppwd/">修改密码</a>
+            <a
+              class="info_a"
+              target="_black"
+              href="https://www.yaozh.com/member/uppwd/"
+              >修改密码</a
+            >
           </div>
           <div class="right_info right_infoT mt15">
             ip :
             <span
               class="info_gray"
               :title="RemoteLoginInfo.login_ip || '未知'"
-            >{{RemoteLoginInfo.login_ip || "未知"}}</span>
+              >{{ RemoteLoginInfo.login_ip || "未知" }}</span
+            >
           </div>
           <div class="right_info right_infoT">
             浏览器 :
             <span
               class="info_gray"
               :title="RemoteLoginInfo.browser || '未知'"
-            >{{RemoteLoginInfo.browser || "未知"}}</span>
+              >{{ RemoteLoginInfo.browser || "未知" }}</span
+            >
           </div>
         </div>
       </div>
@@ -46,12 +53,17 @@
           <el-button @click="Submit" type="primary">重新登录</el-button>
           <!-- <el-button @click="RemoteLoginClose" type="primary">重新登录</el-button> -->
         </div>
-        <div v-show="loginErr" class="tc error">登录失败，请输入账号密码重新登录</div>
+        <div v-show="handlerRight(loginErr, code)" class="tc error">
+          登录失败，请输入账号密码重新登录
+        </div>
+        <div v-show="!handlerRight(loginErr, code)" class="tc error">
+          {{ msg }}
+        </div>
       </div>
     </el-dialog>
   </div>
 </template>
- <script>
+<script>
 import { mapState } from "vuex";
 import crypto from "crypto-js";
 export default {
@@ -59,6 +71,8 @@ export default {
     return {
       isLoginPage: true,
       loginErr: false,
+      code: 200,
+      msg: ""
     };
   },
   mounted() {
@@ -93,12 +107,15 @@ export default {
   },
   computed: {
     ...mapState({
-      RemoteLoginR: (state) => state.UserCenter.RemoteLoginR,
-      RemoteLogin: (state) => state.UserCenter.RemoteLogin,
-      RemoteLoginInfo: (state) => state.UserCenter.RemoteLoginInfo,
-    }),
+      RemoteLoginR: state => state.UserCenter.RemoteLoginR,
+      RemoteLogin: state => state.UserCenter.RemoteLogin,
+      RemoteLoginInfo: state => state.UserCenter.RemoteLoginInfo
+    })
   },
   methods: {
+    handlerRight(loginErr, code) {
+      return loginErr && code != 11047;
+    },
     //关闭异地登录弹框
     /*RemoteLoginCloseCancer(){
        this.$store.commit("UserCenter/RemoteLogin",false);
@@ -119,14 +136,16 @@ export default {
       }
 
       let timeStamp = Date.now();
-      let randStr = Math.random().toString(36).slice(2); // 生成随机字符串+
+      let randStr = Math.random()
+        .toString(36)
+        .slice(2); // 生成随机字符串+
       let params = {
         name: this.RemoteLoginInfo.inputname,
         // name:'vernonn',
         timeStamp: timeStamp,
         randStr: randStr,
-        signature: this.getSignature([timeStamp + "", randStr, "newdb"]),
-      }
+        signature: this.getSignature([timeStamp + "", randStr, "newdb"])
+      };
       localStorage.setItem("forceLogin", JSON.stringify(params));
       // try {
       //     this.frontEndLog("/api/user/forceLogin",{ //强制登录日志
@@ -138,10 +157,12 @@ export default {
       //   }
       console.log(params);
       this.vueDelCookie("accesstoken");
-      Axios.post("/api/user/forceLogin",params )
-        .then((res) => {
+      Axios.post("/api/user/forceLogin", params)
+        .then(res => {
           let _data = res.data;
           let code = _data.code;
+          this.code = code;
+          this.msg = _data.msg;
           // try {
           //   this.frontEndLog("/api/user/forceLogin",{ //强制登录日志
           //     _data:_data,
@@ -153,9 +174,9 @@ export default {
 
           if (code == 200) {
             // alert(res.data.data.accessToken)
-            window.vueSetCookie("accesstoken", res.data.data.accessToken);
-            window.vueSetCookie("userPicture", res.data.data.picture);
-            window.vueSetCookie("userName", res.data.data.username);
+            this.vueSetCookie("accesstoken", res.data.data.accessToken);
+            this.vueSetCookie("userPicture", res.data.data.picture);
+            this.vueSetCookie("userName", res.data.data.username);
             // 清除store中的状态
             this.$store.commit(
               "UserCenter/accountData",
@@ -181,6 +202,13 @@ export default {
               // })
               window.open(openPath, "_self");
             }
+          } else if (code == 11047) {
+            this.loginErr = true;
+            let _this = this;
+            setTimeout(() => {
+              _this.RemoteLoginClose();
+              _this.loginErr = false;
+            }, 2000);
           } else {
             this.loginErr = true;
             let _this = this;
@@ -190,7 +218,7 @@ export default {
             }, 2000);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           this.loginErr = true;
           let _this = this;
           setTimeout(() => {
@@ -198,7 +226,7 @@ export default {
             _this.loginErr = false;
           }, 2000);
         });
-    },
+    }
     // 时间戳+随机字符串 生成签名
     /*getSignature (strArr) {
       let str = strArr.sort((a, b) => {
@@ -208,11 +236,11 @@ export default {
       }).join('');
       return crypto.MD5(crypto.SHA1(str).toString()).toString().toUpperCase();
     },*/
-  },
+  }
 };
 </script>
- <style lang="less" scoped>
-@import "@/assets/less/var.less";
+<style lang="less" scoped>
+@import "~@/assets/less/var.less";
 .RemoteLogin {
   /deep/.v-modal {
     background: rgba(102, 102, 102, 0.4);

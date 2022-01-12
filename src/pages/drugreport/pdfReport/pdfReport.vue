@@ -10,7 +10,7 @@
     <div id="pdf-part1">
       <div class="pdf-header">
         <div class="pdf-header-logo">
-          <img class="logo" src="@/assets/imgs/login-sign.jpg" />
+          <img class="logo" src="~@/assets/imgs/login-sign.jpg" />
           <div class="middle-logo m-logo">
             <div class="logo-zh">药智数据企业版</div>
             <div class="logo-url">vip.yaozh.com</div>
@@ -162,8 +162,8 @@
         class="pdf-item"
         v-if="
           Object.keys(this.infoData.api).length > 0 ||
-          this.infoData.api != '' ||
-          (this.infoData.cas != '' && this.infoData.cas != null)
+            this.infoData.api != '' ||
+            (this.infoData.cas != '' && this.infoData.cas != null)
         "
       >
         <div class="pdf-item-title">API信息</div>
@@ -292,11 +292,11 @@
         </div>
         <div class="fl-right">
           <div class="fl-left code-box">
-            <img src="@/assets/imgs/yzx/app_code.png" />
+            <img src="~@/assets/imgs/yzx/app_code.png" />
             <span>扫码下载APP</span>
           </div>
           <div class="fl-left code-box">
-            <img src="@/assets/imgs/yzx/gzh_code.png" />
+            <img src="~@/assets/imgs/yzx/gzh_code.png" />
             <span>扫码关注公众号</span>
           </div>
         </div>
@@ -305,24 +305,25 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
 import jspdf from "@/mixins/jspdf.js";
-import DetailAPIJbxx from "../detail/apijbxx.vue";
-import DetailJzgj from "../detail/jzgj.vue";
-import DetailPinn from "../detail/pinndetail.vue";
-import DetailJbxx from "../detail/jbxx.vue";
-import DetailZhuce from "../detail/zhuce.vue";
-import DetailClinical from "../detail/clinical.vue";
-import DetailSspz from "../detail/sspz.vue";
-import DetailBiaozhun from "../detail/biaozhun.vue";
-import DetailYpxs from "../detail/ypxs.vue";
-import DetailYaopinzhongbiao from "../detail/yaopinzhongbiao.vue";
-import DetailPatent from "../detail/patent.vue";
-import DetailInstruct from "../detail/instruct.vue";
-import DetailKzxx from "../detail/kzxx.vue";
+import DetailAPIJbxx from "../detail/apijbxx";
+import DetailJzgj from "../detail/jzgj";
+import DetailPinn from "../detail/pinndetail";
+import DetailJbxx from "../detail/jbxx";
+import DetailZhuce from "../detail/zhuce";
+import DetailClinical from "../detail/clinical";
+import DetailSspz from "../detail/sspz";
+import DetailBiaozhun from "../detail/biaozhun";
+import DetailYpxs from "../detail/ypxs";
+import DetailYaopinzhongbiao from "../detail/yaopinzhongbiao";
+import DetailPatent from "../detail/patent";
+import DetailInstruct from "../detail/instruct";
+import DetailKzxx from "../detail/kzxx";
 import { mapGetters, mapState } from "vuex";
 import Axios from "axios";
-import qs from "qs";
+import md from "@/md";
+
 export default {
   components: {
     DetailKzxx,
@@ -338,37 +339,37 @@ export default {
     DetailYpxs,
     DetailYaopinzhongbiao,
     DetailPatent,
-    DetailInstruct,
+    DetailInstruct
   },
   props: {
     extendList: Array,
     jspdf: {
-      type: Boolean,
+      type: Boolean
     },
     isPinn: {
-      type: Boolean,
+      type: Boolean
     },
     infoData: {
-      type: Object,
+      type: Object
     },
     moreData: {
-      type: Array,
+      type: Array
     },
     catalogues: {
-      type: Object,
+      type: Object
     },
     cnListRes: {
-      type: Object,
+      type: Object
     },
     usListRes: {
-      type: Object,
+      type: Object
     },
     allListRes: {
-      type: Object,
+      type: Object
     },
     ylbm: {
-      type: String,
-    },
+      type: String
+    }
   },
   mixins: [jspdf],
   data() {
@@ -390,12 +391,12 @@ export default {
       yaopinzhongbiao: {},
       dbgroupscn: {},
       dbgroupsall: {},
-      instruct: {},
+      instruct: {}
     };
   },
   computed: {
     ...mapState({
-      yfjdParams: (state) => state.DrugReport.yfjdParams,
+      yfjdParams: state => state.DrugReport.yfjdParams
     }),
     isAPI() {
       let status = false;
@@ -422,44 +423,44 @@ export default {
       let list = [
         {
           key: "apijbxx",
-          val: "API信息",
+          val: "API信息"
         },
         {
           key: "jzgj1",
-          val: "竞争格局",
+          val: "竞争格局"
         },
         {
           key: "jzgj2",
-          val: "竞争格局",
+          val: "竞争格局"
         },
         {
           key: "zhuce",
-          val: "中国注册申报",
+          val: "中国注册申报"
         },
         {
           key: "clinical",
-          val: "临床试验",
+          val: "临床试验"
         },
         {
           key: "sspz",
-          val: "上市批准",
+          val: "上市批准"
         },
         {
           key: "ypxs",
-          val: "市场销售",
+          val: "市场销售"
         },
         {
           key: "biaozhun",
-          val: "药品标准",
+          val: "药品标准"
         },
         {
           key: "instruct",
-          val: "药品说明书",
+          val: "药品说明书"
         },
         {
           key: "yaopinzhongbiao",
-          val: "中标信息",
-        },
+          val: "中标信息"
+        }
       ];
       let trueList = ["药物概述"];
       if (this.showJBXX() == true) {
@@ -490,7 +491,7 @@ export default {
         trueList.push("扩展信息");
       }
       return trueList;
-    },
+    }
   },
   created() {
     let obj = {
@@ -505,20 +506,24 @@ export default {
       ypxsEchart: "/api/report/ypxs",
       ypxsList: "/api/report/ypxslist",
       yaopinzhongbiao: "/api/report/yaopinzhongbiao",
-      instruct: "/api/report/instruct",
+      instruct: "/api/report/instruct"
     };
 
-    this.dbgroupscn = _.find(this.moreData, (o) => {
+    this.dbgroupscn = _.find(this.moreData, o => {
       return o.url === this.PATAPI_PROXY + "/dbgroups" && o.data.ATP;
     });
-    this.dbgroupsall = _.find(this.moreData, (o) => {
+    this.dbgroupsall = _.find(this.moreData, o => {
       return o.url === this.PATAPI_PROXY + "/dbgroups" && o.data.COT;
     });
 
     _.forIn(obj, (val, key) => {
       let findObj = _.find(this.moreData, { url: val });
       if (findObj) {
-        this[key] = findObj.data;
+        if (Array.isArray(findObj.data)) {
+          this[key] = findObj.data.length > 0 ? findObj.data : {};
+        } else {
+          this[key] = findObj.data;
+        }
       }
     });
     console.log(this.clinicalList);
@@ -528,8 +533,8 @@ export default {
       handler(newVal, oldVal) {
         this.imgs = newVal;
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   methods: {
     showJBXX() {
@@ -577,7 +582,7 @@ export default {
       if (basicInfoHeight > 0) {
         img.css("padding", `${(basicInfoHeight - img.height()) / 2 + 10}px 0`);
       }
-    },
+    }
   },
   mounted() {
     this.$nextTick(() => {
@@ -585,81 +590,119 @@ export default {
     });
     const _this = this;
     setTimeout(async () => {
+      console.time("导出时间：");
       var res1 = await _this.htmlConvertImg(
           "#pdf-part1",
-          `${
-            this.infoData.name || this.infoData.englishname
-          }-药智数据企业版药物报告`,
+          `${this.infoData.name ||
+            this.infoData.englishname}-药智数据企业版药物报告`,
           1
         ),
         res2 = await _this.htmlConvertImg(
           "#pdf-part2",
-          `${
-            this.infoData.name || this.infoData.englishname
-          }-药智数据企业版药物报告`,
+          `${this.infoData.name ||
+            this.infoData.englishname}-药智数据企业版药物报告`,
           2
         ),
         res3 = await _this.htmlConvertImg(
           "#pdf-part3",
-          `${
-            this.infoData.name || this.infoData.englishname
-          }-药智数据企业版药物报告`,
+          `${this.infoData.name ||
+            this.infoData.englishname}-药智数据企业版药物报告`,
           3
         ),
         images = [...res1, ...res2, ...res3],
         urls = [];
 
+      // if (res1.every(item => item != null && item != undefined && item != "")) {
+      //   images.concat(res1);
+      // } else {
+      //   res1 = await _this.htmlConvertImg(
+      //     "#pdf-part1",
+      //     `${this.infoData.name ||
+      //       this.infoData.englishname}-药智数据企业版药物报告`,
+      //     1
+      //   );
+      // }
+      // if (res2.every(item => item != null && item != undefined && item != "")) {
+      //   images.concat(res2);
+      // } else {
+      //   res2 = await _this.htmlConvertImg(
+      //     "#pdf-part2",
+      //     `${this.infoData.name ||
+      //       this.infoData.englishname}-药智数据企业版药物报告`,
+      //     1
+      //   );
+      // }
+      // if (res3.every(item => item != null && item != undefined && item != "")) {
+      //   images.concat(res3);
+      // } else {
+      //   res3 = await _this.htmlConvertImg(
+      //     "#pdf-part3",
+      //     `${this.infoData.name ||
+      //       this.infoData.englishname}-药智数据企业版药物报告`,
+      //     1
+      //   );
+      // }
+      let blobs = "data:image/jpeg;base64,";
       images &&
         images.forEach(async (item, index) => {
-          let formData = new FormData();
-          formData.append("base64_image_content", item);
-          formData.append("indexNo", index);
-          const instance = Axios.create({
-            withCredentials: true,
-          });
+          if (item) {
+            let formData = new FormData();
+            console.log(item);
+            formData.append("base64_image_content", item);
+            formData.append("indexNo", index);
+            const instance = Axios.create({
+              withCredentials: true
+            });
 
-          let res = await instance
-            .post("/api/handle/base64Image?is_laws=1", formData, {
-              headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            })
-            .catch((err) => console.log(err));
+            let res = await instance
+              .post("/api/handle/base64Image", formData, {
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded"
+                }
+              })
+              .catch(err => console.log(err));
 
-          if (res.data.code == 200) {
-            urls.push(res.data.data);
-            if (images.length == urls.length) {
-              urls = urls.sort(
-                (a, b) => parseInt(a.indexNo) - parseInt(b.indexNo)
-              );
-              urls.forEach((item) => {
-                this.imgs.push(item.url);
-              });
-              let res = await Axios.post("/api/handle/pdfExport", {
-                images: this.imgs,
-                title: this.infoData.name
-                  ? this.infoData.name
-                  : this.infoData.englishname + "-药智数据企业版药物报告",
-                filename: `${
-                  this.infoData.name || this.infoData.englishname
-                }-药智数据企业版药物报告`,
-              }).catch((err) => console.log(err));
-              if (res.data.code == 200) {
-                window.location.href =
-                  location.href.split("report")[0] +
-                  "api/handle/fileDown?outFile=" +
-                  res.data.data.url;
+            res.data.data = JSON.parse(
+              md.decryptResponse(res.data.data, "yaozh_vip2020")
+            );
+
+            if (res.data.code == 200) {
+              urls.push(res.data.data);
+              if (images.length == urls.length) {
+                urls = urls.sort(
+                  (a, b) => parseInt(a.indexNo) - parseInt(b.indexNo)
+                );
+                urls.forEach(item => {
+                  this.imgs.push(item.url);
+                });
+                let res = await Axios.post("/api/handle/pdfExport", {
+                  images: this.imgs,
+                  title: this.infoData.name
+                    ? this.infoData.name
+                    : this.infoData.englishname + "-药智数据企业版药物报告",
+                  filename: `${this.infoData.name ||
+                    this.infoData.englishname}-药智数据企业版药物报告`
+                }).catch(err => console.log(err));
+                if (res.data.code == 200) {
+                  window.location.href =
+                    location.href.split("report")[0] +
+                    "api/handle/fileDown?outFile=" +
+                    res.data.data.url;
+                }
+                console.timeEnd("导出时间：");
+                _this.$emit("update:jspdf", false);
+                _this.$emit("update:isloading", false);
               }
-              _this.$emit("update:jspdf", false);
-              _this.$emit("update:isloading", false);
             }
           }
         });
     }, 1000);
-  },
+  }
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 @import "../css/com.less";
 @textColor: #545b6d;
 .center() {
@@ -735,7 +778,7 @@ export default {
       height: 3px;
       display: inline-block;
       vertical-align: middle;
-      background: url(@/assets/imgs/pdf/dashed.png);
+      background: url(~@/assets/imgs/pdf/dashed.png);
     }
   }
 }

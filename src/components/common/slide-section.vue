@@ -11,6 +11,15 @@
         <div slot="content">计划日期由试验登记者提供</div>
         <i class="el-icon-question cl-green" style="margin-left:4px;"></i>
       </el-tooltip>
+      <el-tooltip
+        class=""
+        effect="light"
+        placement="right"
+        v-else-if="title === '批准历程'"
+      >
+        <div slot="content">按照活性成分的最早批准时间排列。</div>
+        <i class="el-icon-question cl-green" style="margin-left:4px;"></i>
+      </el-tooltip>
     </div>
     <div class="content">
       <slot></slot>
@@ -33,7 +42,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 @topbottom: 30px;
 
 .slide-section {
@@ -106,7 +115,7 @@ export default {
           background: @DetailTableLeftColor;
         }
         &:nth-child(even) {
-          width: 20vw;
+          width: 30vw;
           min-width: 270px;
           word-wrap: break-word;
           word-break: break-all;
@@ -122,6 +131,12 @@ export default {
   }
   .extend-list {
     padding: 20px 0 45px 60px;
+  }
+}
+
+.slide-section.zc-time-node {
+  .content {
+    padding-left: 0;
   }
 }
 .slide-section:hover {

@@ -74,8 +74,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import tableHead from '@/config/tablehead'
 
+import tableHead from '@/config/tablehead'
 const defaultFiled = tableHead.usercenter.sc_sjk
 export default {
   data() {
@@ -159,7 +159,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .mc {
   .right-view {
     .all-none {

@@ -112,7 +112,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .pdf-table {
   width: 100%;
   text-align: center;

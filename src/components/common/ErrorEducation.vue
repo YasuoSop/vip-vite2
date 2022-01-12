@@ -165,7 +165,7 @@ export default {
       //   } catch (error) {
       //     console.info(error)
       //   }
-      // window.vueSetCookie("accesstoken", '');
+      // this.vueSetCookie("accesstoken", '');
       this.vueDelCookie("accesstoken");
       Axios.post("/api/user/forceLogin", params)
         .then((res) => {
@@ -174,9 +174,9 @@ export default {
 
           if (code == 200) {
             // alert(res.data.data.accessToken)
-            window.vueSetCookie("accesstoken", res.data.data.accessToken);
-            window.vueSetCookie("userPicture", res.data.data.picture);
-            window.vueSetCookie("userName", res.data.data.username);
+            this.vueSetCookie("accesstoken", res.data.data.accessToken);
+            this.vueSetCookie("userPicture", res.data.data.picture);
+            this.vueSetCookie("userName", res.data.data.username);
             // 清除store中的状态
             this.$store.commit(
               "UserCenter/accountData",
@@ -214,7 +214,7 @@ export default {
 };
 </script>
  <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .ErrorEducation {
   .ml50 {
     margin-left: 40px;

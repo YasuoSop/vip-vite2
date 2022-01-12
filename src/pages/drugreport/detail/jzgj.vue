@@ -140,12 +140,12 @@
 
 <script>
 import { mapState } from "vuex";
-import China from "@/pages/newdrug/detail/components/china.vue";
-import Global from "./components/global.vue";
-import GlobalPDF from "./components/global-pdf.vue";
-import SlideSection from "@/components/common/slide-section.vue";
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import DetailKzxx from "./kzxx.vue";
+import China from "@/pages/newdrug/detail/components/china";
+import Global from "./components/global";
+import GlobalPDF from "./components/global-pdf";
+import SlideSection from "@/components/common/slide-section.vue"
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import DetailKzxx from "./kzxx";
 export default {
   components: {
     China,
@@ -434,8 +434,8 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
-@import "@/assets/less/detailCom.less";
+@import "~@/assets/less/var.less";
+@import "~@/assets/less/detailCom.less";
 @import "../css/com.less";
 
 .detail-items {

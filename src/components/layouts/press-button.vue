@@ -26,7 +26,7 @@
       <el-button type="primary" class="iconfont" v-html="btnText"></el-button>
       <!-- <span v-html="btnText"  class="iconfont"></span> -->
       <div class="erwei" v-show="isQrCodeShow">
-        <img src="@/assets/imgs/scan_vipty_bottomrightcorner_2.png" />
+        <img src="~@/assets/imgs/scan_vipty_bottomrightcorner_2.png" />
         <p style="padding-top:10px;">扫码免费下载APP</p>
       </div>
       <div class="pressButton-box-ou">
@@ -287,8 +287,8 @@ export default{
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/app.less";
-@import "@/assets/less/var.less";
+@import "~@/assets/less/app.less";
+@import "~@/assets/less/var.less";
   .popbox{
     .el-dialog {
       position: relative;

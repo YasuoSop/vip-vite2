@@ -170,7 +170,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .la-date {
   padding: 0 14px 0 10px;
   .title {

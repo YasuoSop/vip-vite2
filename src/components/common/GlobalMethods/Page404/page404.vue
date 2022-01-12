@@ -2,7 +2,7 @@
   <div class="page-404" v-if="show">
     <div class="page-404-flex">
       <div class="page-404-l">
-        <img src="@/assets/imgs/404.gif">
+        <img src="~@/assets/imgs/404.gif">
       </div>
       <div class="page-404-r">
         <div>
@@ -54,7 +54,7 @@ export default{
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .page-404 {
   width: 100%;
   height: 100%;

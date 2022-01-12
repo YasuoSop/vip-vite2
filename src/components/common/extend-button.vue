@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style lang="less">
-  @import "@/assets/less/var.less";
+  @import "~@/assets/less/var.less";
 
   .extend-link-btn {
     cursor: pointer;

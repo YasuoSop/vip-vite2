@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import SlideSection from "@/components/common/slide-section.vue";
-import ExtendButton from "@/components/common/extend-button.vue";
+import SlideSection from "@/components/common/slide-section.vue"
+import ExtendButton from "@/components/common/extend-button.vue"
 const pinnTableData = [
   {
     key: "ename",
@@ -158,7 +158,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .link-btn {
   color: @Blue;
   cursor: pointer;

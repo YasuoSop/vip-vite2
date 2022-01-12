@@ -210,9 +210,9 @@
   </div>
 </template>
 <script>
-import LoadingGif from "@/components/common/globalCom/loading-gif.vue";
-import Select from "@/components/inputs/select.vue";
-import SlideSection from "@/components/common/slide-section.vue";
+import LoadingGif from "@/components/common/globalCom/loading-gif.vue"
+import Select from "@/components/inputs/select.vue"
+import SlideSection from "@/components/common/slide-section.vue"
 import { mapState } from "vuex";
 import Axios from "axios";
 
@@ -472,11 +472,13 @@ export default {
     qiYeZhongXuan() {
       if (this.qiYeZhongXuanChart == null) {
         this.qiYeZhongXuanChart = Echarts.init(
-          document.getElementById("qiYeZhongXuan")
+          document.getElementById("qiYeZhongXuan"),
+          "yaozh_theme"
         );
       } else {
         this.qiYeZhongXuanChart = Echarts.getInstanceByDom(
-          document.getElementById("qiYeZhongXuan")
+          document.getElementById("qiYeZhongXuan"),
+          "yaozh_theme"
         );
       }
       console.log(this.qiYeZhongXuanChart);
@@ -645,12 +647,14 @@ export default {
       const _that = this;
       if (_that.shouNianYueDingQSChart == null) {
         _that.shouNianYueDingQSChart = Echarts.init(
-          document.getElementById("shouNianYueDingQS")
+          document.getElementById("shouNianYueDingQS"),
+          "yaozh_theme"
         );
         console.log(_that.shouNianYueDingQSChart);
       } else {
         _that.shouNianYueDingQSChart = Echarts.getInstanceByDom(
-          document.getElementById("shouNianYueDingQS")
+          document.getElementById("shouNianYueDingQS"),
+          "yaozh_theme"
         );
       }
       let option = {
@@ -761,11 +765,13 @@ export default {
       const _that = this;
       if (!_that.shouNianYueDingZZChart) {
         _that.shouNianYueDingZZChart = Echarts.init(
-          document.getElementById("shouNianYueDingZZ")
+          document.getElementById("shouNianYueDingZZ"),
+          "yaozh_theme"
         );
       } else {
         _that.shouNianYueDingZZChart = Echarts.getInstanceByDom(
-          document.getElementById("shouNianYueDingZZ")
+          document.getElementById("shouNianYueDingZZ"),
+          "yaozh_theme"
         );
       }
       console.log(_that.shouNianYueDingZZChart);
@@ -859,7 +865,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 
 @FontsizeSmall: 13px;
 @FontsizeSmallBold: bold;

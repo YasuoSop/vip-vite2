@@ -1,6 +1,6 @@
 <template >
   <div v-if="homefooter" :class="{'la-footer-home': homefooter, 'la-footer-other': otherfooter}" class="la-footer">
-    Copyright © 2009-2021  YAOZH.COM All Rights Reserved
+    Copyright © 2009-2022  YAOZH.COM All Rights Reserved
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less"; 
+@import "~@/assets/less/var.less";
   .la-footer {
     position: absolute;
     bottom: 0;

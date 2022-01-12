@@ -280,7 +280,7 @@
 <script>
 import { mapState } from "vuex";
 //筛选条件默认显示数 修改此值 需要修改对应的css值
-const FILTER_DEFAULT_SHOW_LENGTH = 5;
+const FILTER_DEFAULT_SHOW_LENGTH = 6;
 export default {
   props: {
     vuex_name: {
@@ -599,11 +599,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .turn {
   height: 20px;
   width: 20px;
-  background: url("@/assets/imgs/icon-loading.png") center center no-repeat;
+  background: url("~@/assets/imgs/icon-loading.png") center center no-repeat;
   animation: turn 1.5s linear infinite;
 }
 @keyframes turn {
@@ -641,7 +641,7 @@ export default {
   .el-collapse-item {
     padding: 0px 14px 0 10px;
     .el-checkbox-group {
-      max-height: 24 * 5px; /*5是与FILTER_DEFAULT_SHOW_LENGTH的值保持一致*/
+      max-height: 21 * 6px; /*5是与FILTER_DEFAULT_SHOW_LENGTH的值保持一致*/
       overflow-y: hidden;
       &.all-group {
         max-height: none;

@@ -9,7 +9,7 @@
           智能分析
         </span>
         <!-- 显示 -->
-        <list-check :defaultFiled="defaultFiled" vuex_name="Yaopinxiaoshou" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
+        <list-check :defaultFiled="defaultFiled.vue"x_name="Yaopinxiaoshou" :showArray="tableHead" @changeTableHeader="(list)=>changeTableHeader(this,list)" />
         <!-- 导出 -->
         <Export
           :out_max="allBase.out_max"
@@ -110,7 +110,7 @@
   import listCheck from "@/components/common/list-check.vue"
   import commonMixins from '@/mixins/common.js'
   import setTableHMixins from '@/mixins/setTableH.js'
-  import selectNuit from '../selectNuit.vue'
+  import selectNuit from '../selectNuit'
   const defaultFiled = tablehead.yaopinxiaoshou.xsnf
   export default{
     components: {
@@ -304,7 +304,7 @@
   }
 </script>
 <style lang="less">
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
   .la-slh{
 
   }

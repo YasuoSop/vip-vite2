@@ -86,7 +86,7 @@
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .saved-options {
   .item-title {
     display: block;

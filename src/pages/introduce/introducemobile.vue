@@ -30,8 +30,8 @@
 <script>
 import LoadingGif from '@/components/common/globalCom/loading-gif.vue'
 import crypto from "crypto-js";
-import DialogProbation from "@/components/common/dialog-probation-mobile.vue";
-
+import DialogProbation from "@/components/common/dialog-probation-mobile.vue"
+import { setTimeout } from "timers";
 import { mapState } from 'vuex'
 export default {
   components: {
@@ -430,7 +430,7 @@ function getScrollTop() {
 }
 </script>
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
 .fullscreen-loading{
   top: 0;
   left: 0;
@@ -450,7 +450,7 @@ p {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url(@/assets/imgs/shiyongbg.png) no-repeat;
+  background: url(~@/assets/imgs/shiyongbg.png) no-repeat;
   background-size: 100% 100%;
 
   .logos{

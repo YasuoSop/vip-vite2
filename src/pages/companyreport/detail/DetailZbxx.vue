@@ -321,7 +321,7 @@ const zbxxHead = tablehead.companyreport.DetailZbxx
 			// 中标趋势图 - 折线图
 			drawZbqsLine () {
 				let dom = this.$refs.echarts_zbqs
-        let ec = Echarts.init(dom)
+        let ec = Echarts.init(dom, 'yaozh_theme')
       	ec.setOption({
 					xAxis: {
 						type: 'category',
@@ -375,7 +375,7 @@ const zbxxHead = tablehead.companyreport.DetailZbxx
 			// 中标药品（top20） - 柱形图
 			drawZbypBar () {
 				let dom = this.$refs.echarts_zbyp
-        let ec = Echarts.init(dom)
+        let ec = Echarts.init(dom, 'yaozh_theme')
       	ec.setOption({
 					xAxis: [
 						{
@@ -461,8 +461,8 @@ const zbxxHead = tablehead.companyreport.DetailZbxx
 </script>
 
 <style lang="less">
-	@import "@/assets/less/var.less";
-	@import "@/assets/less/app.less";
+	@import "~@/assets/less/var.less";
+	@import "~@/assets/less/app.less";
 
 	#zbxx {
 		@conWidth: 100%;

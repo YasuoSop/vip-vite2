@@ -182,7 +182,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "@/assets/less/var.less";
+@import "~@/assets/less/var.less";
   /deep/.el-dialog__footer{
     .blue_listCheck{
       border-color: white;
